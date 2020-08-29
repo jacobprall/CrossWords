@@ -5,7 +5,8 @@ const db = require("./config/keys").mongoURI;
 const users = require("./routes/api/users");
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
+require('./config/passport')(passport);
 
 
 mongoose
@@ -14,7 +15,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
-app.get("/", (req, res) => res.send("Hello World"));
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/users", users);
