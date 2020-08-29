@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const User = require('../../models/User');
-const validateRegisterInput = require('../../validations/register')
-const validateLoginInput = require('../../validations/login')
+const validateRegisterInput = require('../../validation/register')
+const validateLoginInput = require('../../validation/login')
 const passport = require('passport');
 
 
@@ -77,7 +77,7 @@ router.post('/login', (req, res) => {
     })
     .then(user => {
       if (!user) {
-        errors.email = "This user does not exist"
+        errors.email = "This email has not been registered"
         return res.status(404).json({
           errors
         });
