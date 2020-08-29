@@ -77,7 +77,7 @@ router.post('/login', (req, res) => {
     })
     .then(user => {
       if (!user) {
-        errors.email = "This user does not exist"
+        errors.email = "This email has not been registered"
         return res.status(404).json({
           errors
         });
