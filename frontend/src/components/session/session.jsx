@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 export default function Session({props}) {
-  console.log(props)
-  const {formType, errors, isSignedIn, processForm} = props
+ 
+  const {formType, errors, isSignedIn, processForm, processDemoForm} = props
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -16,12 +16,17 @@ export default function Session({props}) {
 
   const setDemoUser = () => {
     setUser({
-      email: "demo@email.com",
-      username: "test",
-      password: "password",
-    });
-    return handleSubmit
-  };
+        email: "demo@email.com",
+        username: "test",
+        password: "password",
+      });
+  }
+
+  const handleDemoSubmit = (e) => {
+    e.preventDefault();
+    processDemoForm(user)
+  }
+
 
   const update = (field) => {
     return (e) => setUser({ [field]: e.currentTarget.value });
@@ -57,13 +62,14 @@ export default function Session({props}) {
     return (
     <div>
       <label>
-        Email
+        Email: 
         <input type="text" value={user.email} onChange={update("email")} />
       </label>
       <br />
       {renderUsername()}
+      <br/>
       <label>
-        Password
+        Password:
         <input type="password" value={user.password} onChange={update("password")} />
       </label>
     </div>
@@ -82,7 +88,7 @@ export default function Session({props}) {
     return (
       <div>
         {formHeader()}
-        <form>
+        <form onSubmit={handleDemoSubmit}>
           {renderInputs()}
           <button onClick={handleSubmit}>Submit</button>
           <button onClick={setDemoUser}>Sign in as Demo User</button>

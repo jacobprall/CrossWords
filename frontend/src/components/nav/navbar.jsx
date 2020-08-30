@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/session_actions'
 import { NavLink } from 'react-router-dom';
-
+import { clearSessionErrors } from '../../actions/session_actions'
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -10,8 +10,10 @@ export default function Navbar() {
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
+  };
+  const handleAlt = (e) => {
+    dispatch(clearSessionErrors())
   }
-
   const getLinks = () => {
     if (loggedIn) {
       return (
@@ -27,8 +29,8 @@ export default function Navbar() {
     } else {
       return (
         <nav>
-          <NavLink to={"/signup"}>Sign Up</NavLink>
-          <NavLink to={"/login"}>Log In</NavLink>
+          <NavLink to={"/signup"} onClick={handleAlt}>Sign Up</NavLink>
+          <NavLink to={"/login"}  onClick={handleAlt}>Log In</NavLink>
         </nav>
       );
     }

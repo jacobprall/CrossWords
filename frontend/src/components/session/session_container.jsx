@@ -10,7 +10,7 @@ import { login, signup } from '../../actions/session_actions'
 function SessionContainer(props) {
 
   const formType = props.match.path
-  const errors = useSelector(state => state.errors.session);
+  const errors = useSelector(state => Object.values(state.errors.session));
   const isSignedIn = useSelector(state => state.session.isSignedIn)
   const dispatch = useDispatch();
   const loginDispatch = (user) => dispatch(login(user));
@@ -24,6 +24,9 @@ function SessionContainer(props) {
     }
   };
 
+  const processDemoForm = (user) => {
+    loginDispatch(user);
+  }
 
   
   const sessionProps = {
@@ -31,9 +34,10 @@ function SessionContainer(props) {
     errors,
     isSignedIn,
     processForm,
+    processDemoForm
 
   }
-  console.log(sessionProps)
+
   return (
     <>
       <Session props={sessionProps}/>
