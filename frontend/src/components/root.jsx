@@ -13,4 +13,4 @@ export default function Root({ store }) {
   );
 }
 
-export default Root;
+

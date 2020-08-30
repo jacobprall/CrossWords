@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const Auth = ({ component: Component, path, loggedIn, exact }) => (
     !loggedIn ? (
       <Component {...props} />
     ) : (
-      <Redirect to="/tweets" />
+      <Redirect to="/overview" />
     )
   )} />
 )
@@ -17,7 +17,7 @@ const Protected = ({ component: Component, loggedIn, ...rest }) => (
     {...rest}
     render={props =>
       loggedIn ? (
-        <Comoponent {...props} />
+        <Component {...props} />
       ) : (
         <Redirect to="/login" />
       )

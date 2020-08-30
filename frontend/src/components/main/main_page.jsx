@@ -10,4 +10,4 @@ export default function MainPage() {
 };
 
 
-export default MainPage;
+
