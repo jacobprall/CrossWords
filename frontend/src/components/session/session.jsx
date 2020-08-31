@@ -54,17 +54,17 @@ export default function Session({props}) {
     }
   };
 
-  const renderErrors = () => {
-    return (
-      <ul className="session-errors">
-        {errors.map((error, i) => (
-          <li className="session-error" key={`error-${i}`}>
-            {error}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  // const renderErrors = () => {
+  //   return (
+  //     <ul className="session-errors">
+  //       {errors.map((error, i) => (
+  //         <li className="session-error" key={`error-${i}`}>
+  //           {error}
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   );
+  // };
 
 
   const renderInputs = () => {
@@ -102,7 +102,7 @@ export default function Session({props}) {
           <button>Submit</button>
           <button onClick={handleDemoSubmit}>Sign in as Demo User</button>
         </form>
-        {renderErrors()}
+        {/* {renderErrors()} */}
       </div>
     )
   }
