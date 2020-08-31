@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../actions/session_actions'
+import { logout } from '../../actions/session_actions';
 import { NavLink } from 'react-router-dom';
-import { clearSessionErrors } from '../../actions/session_actions'; 
-import styled from "styled-components"; 
-import logo from '../../images/logo.png'; 
+import { clearSessionErrors } from '../../actions/session_actions';
 
 const NavContainer = styled.div`
   display: flex; 
@@ -69,8 +67,8 @@ export default function Navbar({stick, ele}) {
     dispatch(logout());
   };
   const handleAlt = (e) => {
-    dispatch(clearSessionErrors())
-  }
+    dispatch(clearSessionErrors());
+  };
   const getLinks = () => {
     let links; 
     if (loggedIn) {
