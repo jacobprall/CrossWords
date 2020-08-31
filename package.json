@@ -8,7 +8,9 @@
     "server": "nodemon app.js",
     "frontend-install": "npm install --prefix frontend",
     "frontend": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run frontend \""
+    "dev": "concurrently \"npm run server\" \"npm run frontend \"",
+    "eslint": "eslint --fix frontend/",
+    "commit": "git-cz"
   },
   "author": "Jacob Prall, Phil Gresham, Aatef Baransy, Tim Harding, Nick Sercel",
   "license": "ISC",
@@ -25,6 +27,25 @@
     "validator": "^13.1.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
