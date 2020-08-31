@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { NavLink } from 'react-router-dom';
 import { clearSessionErrors } from '../../actions/session_actions';
-import logo from '../../images/logo.png'; 
+import logo from '../../images/logo.png'
 import styled from 'styled-components'; 
-
 
 const NavContainer = styled.div`
   display: flex; 
@@ -31,10 +30,36 @@ const LinksContainer = styled.div`
 `
 
 const LoggedInNavigationSection = styled.div`
+  width: 30rem; 
   display: flex; 
+  justify-content: space-around; 
+  align-items: center; 
 `
 
-const LoggedInNavLink = styled.div`
+const LoggedInNavLink = styled(NavLink)`
+    padding: 0.5rem 0.5rem 0rem 0.5rem; 
+    height: 1.7rem; 
+    width: 6rem;
+    font-weight: 600; 
+    text-align: center; 
+    background-color: #A8A8A8; 
+    border-radius: 0.2rem; 
+    &:hover {
+      background-color: #696969; 
+    cursor: pointer; 
+  }
+`
+
+const LogoutButton = styled.div`
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem; 
+    width: 4rem;
+    font-weight: 600; 
+    text-align: center; 
+    background-color: #A8A8A8; 
+    border-radius: 1rem; 
+    &:hover {
+      background-color: #696969; 
+    cursor: pointer; 
 `
 
 const Links = styled.div`
@@ -77,12 +102,12 @@ export default function Navbar({stick, ele}) {
     if (loggedIn) {
         links = (
           <LoggedInNavigationSection>
-            <Links className="nav-left">
+            {/* <Links className="nav-left"> */}
               <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
               <LoggedInNavLink to={"/"}>New Game</LoggedInNavLink>
               <LoggedInNavLink to={"/"}>Stats</LoggedInNavLink>
-            </Links>
-            <LoggedInNavLink className="nav-right" onClick={logoutUser}>Logout</LoggedInNavLink>
+            {/* </Links> */}
+            <LogoutButton className="nav-right" onClick={logoutUser}>Logout</LogoutButton>
           </LoggedInNavigationSection>
         )
     } else {
@@ -101,7 +126,9 @@ export default function Navbar({stick, ele}) {
   return (
     <NavContainer ref={ele} stick={stick}>
       <LogoAndLinks>
-        <Logo src={logo}></Logo>
+        <NavLink to={"/"}>
+          <Logo src={logo}></Logo>
+        </NavLink>
         <LinksContainer>
           {getLinks()} 
         </LinksContainer>
