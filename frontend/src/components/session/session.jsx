@@ -3,35 +3,44 @@ import React, { useState } from 'react'
 export default function Session({props}) {
  
   const {formType, errors, isSignedIn, processForm, processDemoForm} = props
-  const [user, setUser] = useState({
-    email: "",
-    username: "",
-    password: ""
-  });
+  
+  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    processForm(user)
-  }
-
-  const setDemoUser = () => {
-    setUser({
-        email: "demo@email.com",
-        username: "test",
-        password: "password",
-      });
+    const currentUser = {email: email, username: username, password: password}
+    processForm(currentUser)
   }
 
   const handleDemoSubmit = (e) => {
     e.preventDefault();
-    processDemoForm(user)
+    const demoUser = {
+      'email': 'demo@email.com',
+      'password': 'password',
+    }
+    processDemoForm(demoUser)
   }
 
 
   const update = (field) => {
-    return (e) => setUser({ [field]: e.currentTarget.value });
-  };
-
+    return (e) => {
+      switch (field) {
+        case 'email':
+          setEmail(e.currentTarget.value);
+          break;
+        case 'username':
+          setUsername(e.currentTarget.value);
+          break;
+        case 'password':
+          setPassword(e.currentTarget.value)
+          break;
+        default:
+          return null;
+      } 
+    }
+  }
 
 
 
@@ -39,7 +48,7 @@ export default function Session({props}) {
     if (formType === '/signup') {
       return (
         <label> Username:
-          <input type="text" value={user.username} onChange={update('username')}/>
+          <input type="text" value={username} onChange={update('username')}/>
         </label>
       );
     }
@@ -63,14 +72,14 @@ export default function Session({props}) {
     <div>
       <label>
         Email: 
-        <input type="text" value={user.email} onChange={update("email")} />
+        <input type="text" value={email} onChange={update("email")} />
       </label>
       <br />
       {renderUsername()}
       <br/>
       <label>
         Password:
-        <input type="password" value={user.password} onChange={update("password")} />
+        <input type="password" value={password} onChange={update("password")} />
       </label>
     </div>
     );
@@ -88,10 +97,10 @@ export default function Session({props}) {
     return (
       <div>
         {formHeader()}
-        <form onSubmit={handleDemoSubmit}>
+        <form onSubmit={handleSubmit}>
           {renderInputs()}
-          <button onClick={handleSubmit}>Submit</button>
-          <button onClick={setDemoUser}>Sign in as Demo User</button>
+          <button>Submit</button>
+          <button onClick={handleDemoSubmit}>Sign in as Demo User</button>
         </form>
         {renderErrors()}
       </div>

@@ -12,8 +12,9 @@ export const receiveCurrentUser = currentUser => ({
   currentUser
 });
 
-export const receiveUserSignIn = () => ({
-  type: RECEIVE_USER_SIGN_IN
+export const receiveUserSignIn = (user) => ({
+  type: RECEIVE_USER_SIGN_IN,
+  user
 });
 
 export const receiveErrors = errors => ({
@@ -35,8 +36,8 @@ export const clearSessionErrors = () => ({
 
 
 export const signup = user => dispatch => (
-  APIUtil.signup(user).then(() => (
-    dispatch(receiveUserSignIn())
+  APIUtil.signup(user).then((user) => (
+    dispatch(receiveCurrentUser(user))
   ), err => (
     dispatch(receiveErrors(err.response.data))
   ))
