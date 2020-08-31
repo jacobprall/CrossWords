@@ -1,5 +1,5 @@
 {
-  "name": "crosswords",
+  "name": "AcrossWords",
   "version": "1.0.0",
   "description": "crosswords game",
   "main": "app.js",
