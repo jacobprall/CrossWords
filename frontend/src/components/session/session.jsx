@@ -47,11 +47,13 @@ export default function Session({ props }) {
   const renderUsername = () => {
     if (formType === '/signup') {
       return (
-        <label>
-          {' '}
-          Username:
-          <input type="text" value={username} onChange={update('username')} />
-        </label>
+        <>
+          <label>
+            {' '}
+            Username:
+            <input type="text" value={username} onChange={update('username')} />
+          </label>
+        </>
       );
     }
   };
@@ -75,9 +77,9 @@ export default function Session({ props }) {
           Email:
           <input type="text" value={email} onChange={update('email')} />
         </label>
-        <br />
+
         {renderUsername()}
-        <br />
+
         <label>
           Password:
           <input

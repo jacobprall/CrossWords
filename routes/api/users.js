@@ -35,33 +35,37 @@ router.post('/register', (req, res) => {
           email: req.body.email,
           password: req.body.password
         })
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser.save()
-              .then(user => {
-                const payload = {
-                  id: user.id,
-                  username: user.username
-                };
+        
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser.save()
+                .then(user => {
+                  const payload = {
+                    id: user.id,
+                    username: user.username
+                  };
 
-                jwt.sign(payload, keys.secretOrKey, {
-                  expiresIn: 3600
-                }, (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
+                  jwt.sign(payload, keys.secretOrKey, {
+                    expiresIn: 3600
+                  }, (err, token) => {
+                    res.json({
+                      success: true,
+                      token: "Bearer " + token
+                    })
+
                   });
-                });
+                })
+                .catch(err => res.status(400).json(err));
+          
               })
-              .catch(err => console.log(err));
-          })
-        })
-      }
-    })
+            })
+          }})
   return res.token
 });
+
+
 
 router.post('/login', (req, res) => {
   
