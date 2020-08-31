@@ -77,6 +77,7 @@ export default function Session({ props }) {
           Email:
           <input type="text" value={email} onChange={update('email')} />
         </label>
+
         {renderUsername()}
 
         <label>

@@ -15,6 +15,9 @@ function SessionContainer(props) {
     if (formType === '/login') {
       loginDispatch(user);
     } else {
+
+
+
       signupDispatch(user);
     }
   };
