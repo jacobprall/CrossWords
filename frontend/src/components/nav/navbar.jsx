@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { NavLink } from 'react-router-dom';
 import { clearSessionErrors } from '../../actions/session_actions';
+import logo from '../../images/logo.png'; 
+import styled from 'styled-components'; 
+
 
 const NavContainer = styled.div`
   display: flex; 
