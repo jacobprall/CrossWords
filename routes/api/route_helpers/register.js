@@ -1,16 +1,11 @@
-const express = require("express");
-const router = express.Router();
+/* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../../config/keys');
 const User = require('../../../models/User');
-const validateRegisterInput = require('../../../validation/register')
-const passport = require('passport');
+const validateRegisterInput = require('../../../validation/register');
 
-
-const registerCallback = (req, res) => {}
-
-(req, res) => {
+const registerCallback = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
@@ -24,43 +19,44 @@ const registerCallback = (req, res) => {}
       return res.status(400).json({
         username: 'A user has already registered that username',
       });
-    } else {
-      const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then((user) => {
-              const payload = {
-                id: user.id,
-                username: user.username,
-              };
-
-              jwt.sign(
-                payload,
-                keys.secretOrKey,
-                {
-                  expiresIn: 3600,
-                },
-                (err, token) => {
-                  res.json({
-                    success: true,
-                    token: 'Bearer ' + token,
-                  });
-                },
-              );
-            })
-            .catch((err) => res.status(400).json(err));
-        });
-      });
     }
+    const newUser = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    bcrypt.genSalt(10, (_err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser
+          .save()
+          .then((u) => {
+            const payload = {
+              id: u.id,
+              username: u.username,
+            };
+
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 3600,
+              },
+              (_e, token) => {
+                res.json({
+                  success: true,
+                  token: `Bearer  + ${token}`,
+                });
+              },
+            );
+          })
+          .catch((error) => res.status(400).json(error));
+      });
+    });
   });
   return res.token;
 };
+
+module.exports = registerCallback;
