@@ -1,13 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 export default function MainPage() {
   return (
     <div>
-      <h1>CrossWords</h1>
-      <footer>Copyright &copy; 2020 CrossWords</footer>
+      <h1>AcrossWords</h1>
+      <footer>Copyright &copy; 2020 AcrossWords</footer>
     </div>
-  )
-};
-
-
-
+  );
+}
