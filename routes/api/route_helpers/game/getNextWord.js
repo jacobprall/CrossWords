@@ -6,6 +6,20 @@
 // if no word is returned from query, query again with 1 letter
 const Word = require('../../../../models/Word');
 
+function shuffle(a) {
+  let j;
+  let x;
+  const newArr = [...a];
+
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    newArr[i] = a[j];
+    newArr[j] = x;
+  }
+  return newArr;
+}
+
 const getDifficulty = (guessed) => {
   let difficulty = 1;
   if (guessed.length > 5) {
@@ -17,7 +31,10 @@ const getDifficulty = (guessed) => {
 };
 
 const getWordSub = (guessed, dir, len) => {
-  const currWord = guessed[guessed.length - 1];
+  let currWord = guessed[guessed.length - 1];
+  if (guessed.length === 0) {
+    return shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))[0];
+  }
   switch (dir) {
     case true:
       return currWord.slice(currWord.length - len);
@@ -36,13 +53,15 @@ const getWordSub = (guessed, dir, len) => {
  * @param {Integer} length
  * @param {Boolean} dir
  */
-const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
+const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
   let wordSub;
   if (guessed.length > 0) {
     wordSub = getWordSub(guessed, dir, len);
   } else {
     wordSub = getWordSub(guessed, dir, len);
   }
+
+  console.log(wordSub);
 
   let direction;
   if (!dir) {
@@ -56,22 +75,10 @@ const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
   })
     .where('difficulty')
     .equals(difficulty)
-    .exec();
+    .exec()
+    .catch((err) => console.log(err));
 };
 
-function shuffle(a) {
-  let j;
-  let x;
-  const newArr = [...a];
-
-  for (let i = a.length - 1; i > 0; i -= 1) {
-    j = Math.floor(Math.random() * (i + 1));
-    x = a[i];
-    newArr[i] = a[j];
-    newArr[j] = x;
-  }
-  return newArr;
-}
 const getNextWord = async (guessed, direction, maxLength) => {
   const boardWidth = 20;
   let length = 3;
@@ -81,7 +88,7 @@ const getNextWord = async (guessed, direction, maxLength) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
-
+  console.log(word);
   if (word) {
     return word;
   } else {
