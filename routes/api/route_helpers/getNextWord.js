@@ -7,7 +7,7 @@
 const Word = require('../../../models/Word');
 const mongoose = require('mongoose');
 //
-const getDifficulty = (wordsArray) => {
+const getDifficulty = (guessed) => {
   let difficulty = 1;
   if (guessed.length > 5) {
     difficulty = 2;
@@ -28,25 +28,47 @@ const getWordStart = (guessed, direction) => {
   return wordStart;
 };
 
+const getDirection = (spacesLeft) => {};
+
 //direction
 // w defaults
 
-const wordQuery = (prefix, difficulty, direction) => {
-  if (direction) {
-    direction = 'suffix';
-  } else {
-    direction = 'prefix';
-  }
-  const possWords = Word.find({
-    [direction]: `${prefix}`,
+const wordQuery = (prefix, difficulty, length) => {
+  let possibleWords = [];
+  possibleWords = Word.find({
+    suffixes: `${prefix}`,
   })
     .where('difficulty')
-    .equals(difficulty);
+    .equals(difficulty)
+    .exec(function (err, data) {
+      if (err) {
+        return [];
+      } else {
+        return data;
+      }
+    });
+
+  if (possibleWords.length === 0) {
+    possibleWords = Word.find({
+      prefixes: `${prefix}`,
+    })
+      .where('difficulty')
+      .equals(difficulty)
+      .exec(function (err, data) {
+        if (err) {
+          return [];
+        } else {
+          return data;
+        }
+      });
+  }
+
+  return possibleWords;
 };
 
 //
 
-export const getNextWord = (guessed, direction) => {
+export const getNextWord = (guessed, length) => {
   const currDifficulty = getDifficulty(guessed);
-  const prefix = getWordStart(guessed, direction);
+  
 };

@@ -21,8 +21,8 @@ router.post(
   },
 );
 
-// User sends score, words guessed, (timer?)
-// needs getNextWord method
+// User sends score, words guessed, spaces left?
+
 router.patch(
   '/game/:id',
   passport.authenticate('jwt', { session: false }),
@@ -30,7 +30,7 @@ router.patch(
     Game.findById(req.params.id).then((game) => {
       game.score = req.score;
       game.wordsGuessed = req.wordsGuessed; //add
-      game.wordsSent = req.wordsSent.push(); // getNextWord method 
+      game.wordsSent = req.wordsSent.push(); // getNextWord method
       return res.json(game);
     });
   },
