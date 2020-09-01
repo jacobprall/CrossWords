@@ -47,7 +47,7 @@ const registerCallback = (req, res) => {
               (_e, token) => {
                 res.json({
                   success: true,
-                  token: `Bearer  + ${token}`,
+                  token: `Bearer ${token}`,
                 });
               },
             );
