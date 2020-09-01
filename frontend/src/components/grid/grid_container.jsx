@@ -1,6 +1,8 @@
 import React from 'react'; 
 import styled from 'styled-components'; 
 import { GridItem } from './grid_item'; 
+export const HEIGHT = 20; 
+export const WIDTH = 20; 
 
 const Grid = styled.div`
     display: grid; 
