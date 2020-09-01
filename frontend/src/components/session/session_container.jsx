@@ -51,11 +51,11 @@ function SessionContainer(props) {
   
   if (props.isShowing) {
     return (
-      <Modal isShowing={props.isShowing} Comp={Session} sessionProps={sessionProps}>
-        <Session props={sessionProps} />
-      </Modal>
+      <Modal 
+        isShowing={props.isShowing} 
+        Comp={Session} 
+        sessionProps={sessionProps}/>
     )  
-
     } else {
       return <div></div>
     }

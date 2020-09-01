@@ -9,6 +9,9 @@ import styled from 'styled-components';
 import regeneratorRuntime from "regenerator-runtime";
 
 const NavContainer = styled.div`
+  box-sizing:border-box; 
+  width: 100vw; 
+  position: ${props => props.sticky ? "fixed;" : "relative;"}
   display: flex; 
   justify-content: center; 
   padding-left: 1rem; 
@@ -18,7 +21,7 @@ const NavContainer = styled.div`
   background-color: #E8E8E8;
   border-bottom: 0.05rem solid #A0A0A0; 
   box-shadow: 0px 0px 5px #D3D3D3;
-  position: ${props => props.stick ? "fixed;" : ";"}
+  z-index: 3;
 `
 const LogoAndLinks = styled.div`
   display: flex; 
@@ -82,8 +85,6 @@ const SignUpAndLogin = styled(NavLink)`
     background-color: #696969; 
     cursor: pointer; 
   }
-  position: relative; 
-  z-index: 1000;
 `
 
 const Logo = styled.img`
@@ -91,7 +92,7 @@ const Logo = styled.img`
   height: 2rem; 
 `
 
-export default function Navbar({ stick, ele, history}) {
+export default function Navbar({sticky, ele}) {
   const [out, setOut] = useState(false); 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
@@ -104,7 +105,8 @@ export default function Navbar({ stick, ele, history}) {
 
   useEffect(() => {
     let isSubscribed = true; 
-    logoutUser(); 
+    if (out) logoutUser();
+    setOut(false);  
     return () => isSubscribed = false; 
   }, [out])
 
@@ -122,7 +124,7 @@ export default function Navbar({ stick, ele, history}) {
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
           <LoggedInNavLink to={"/"}>New Game</LoggedInNavLink>
           <LoggedInNavLink to={"/"}>Stats</LoggedInNavLink>
-          <LogoutButton className="nav-right" onClick={() => setOut(!out)}>Logout</LogoutButton>
+          <LogoutButton className="nav-right" onClick={() => setOut(true)}>Logout</LogoutButton>
         </LoggedInNavigationSection>
       )
     } else {
@@ -139,7 +141,7 @@ export default function Navbar({ stick, ele, history}) {
   }
 
   return (
-    <NavContainer ref={ele} stick={stick}>
+    <NavContainer sticky={sticky} ref={ele}>
       <LogoAndLinks>
         <NavLink to={"/"}>
           <Logo src={logo}></Logo>
