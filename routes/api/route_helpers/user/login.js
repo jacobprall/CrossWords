@@ -1,8 +1,9 @@
+/* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const keys = require('../../../config/keys');
-const User = require('../../../models/User');
-const validateLoginInput = require('../../../validation/login');
+const keys = require('../../../../config/keys');
+const User = require('../../../../models/User');
+const validateLoginInput = require('../../../../validation/login');
 
 const loginCallback = (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
@@ -10,8 +11,7 @@ const loginCallback = (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   User.findOne({
     email,
@@ -32,10 +32,10 @@ const loginCallback = (req, res) => {
           {
             expiresIn: 3600,
           },
-          (err, token) => {
+          (_err, token) => {
             res.json({
               success: true,
-              token: 'Bearer ' + token,
+              token: `Bearer ${token}`,
             });
           },
         );
