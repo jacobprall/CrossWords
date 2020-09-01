@@ -38,13 +38,13 @@ class Word {
 }
 
 class Crossword {
-    constructor() {
+    constructor(width) {
 
         this.words = {} // word.answer: [word, direction]
         // this.words = [];
         this.wordInitKey = "";
         this.currPos = [0, 0];
-        this.lengthLimit = 20; // used to check sides of the grid => constant value
+        this.lengthLimit = width; // used to check sides of the grid => constant value
         Object.freeze(this.lengthLimit); // is this legal?
         this.spacesRight = this.lengthLimit;
         this.spacesLeft = 0;
@@ -62,14 +62,19 @@ class Crossword {
         this.words[this.wordInitKey][0].guess += char;
         this.words[this.wordInitPos][0].tiles[this.currPos].char = char;
        
-        if (this.words[this.wordInitKey[1][1]] === 1) { // go right or left depending on dir of word
+        if (this.words[this.wordInitKey][1][1] === 1) { // go right or left depending on dir of word
             this.currPos[1] -= 1;
             this.spacesRight -= 1;
             this.spacesLeft += 1;
-        } else {
+        } else if (this.words[this.wordInitKey][1][1] === -1) {
             this.currPos[1] += 1;
             this.spacesRight += 1;
             this.spacesLeft -= 1;
+        }
+        if (this.words[this.wordInitKey][1][0] === 1) { // +1 = down the screen, minus = up screen
+            this.currPos[0] += 1;
+        } else if (this.words[this.wordInitKey][1][0] === -1) {
+            this.currPos[0] -= 1;
         }
     }
 
