@@ -24,13 +24,17 @@ router.post(
 
 // User sends score, words guessed, (timer?)
 // needs getNextWord method
-router.patch('/game/:id', (req, res) => {
-  Game.findById(req.params.id).then((game) => {
-    game.score = req.score;
-    game.wordsGuessed = req.wordsGuessed;
-    game.wordsSent = req.wordsSent.push(); // getNextWord method
-    return res.json(game);
-  });
-});
+router.patch(
+  '/game/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Game.findById(req.params.id).then((game) => {
+      game.score = req.score;
+      game.wordsGuessed = req.wordsGuessed;
+      game.wordsSent = req.wordsSent.push(); // getNextWord method
+      return res.json(game);
+    });
+  },
+);
 
 module.exports = router;
