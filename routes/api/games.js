@@ -11,12 +11,6 @@ router.get(
   newGameCallback,
 );
 
-router.post(
-  '/new',
-  passport.authenticate('jwt', { session: false }),
-  newGameCallback,
-);
-
 // User sends score, words guessed, spaces left?
 
 router.patch(
