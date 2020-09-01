@@ -75,22 +75,19 @@ function shuffle(a) {
 
 const getNextWord = async (guessed, length, direction) => {
   const currDifficulty = getDifficulty(guessed);
-  const word = await possibleWords(
-    guessed,
-    currDifficulty,
-    length,
-    direction,
-  ).then((res) => {
-    return shuffle(res)[0];
-  });
+  const word = await possibleWords(guessed, currDifficulty, length, direction)
+    .then((res) => {
+      return shuffle(res)[0];
+    })
+    .catch((err) => console.error(err));
 
   if (word) {
     return word;
   }
 
-  return possibleWords(guessed, currDifficulty, length, !direction).then(
-    (res) => shuffle(res)[0],
-  );
+  return possibleWords(guessed, currDifficulty, length, !direction)
+    .then((res) => shuffle(res)[0])
+    .catch((err) => console.error(err));
 };
 
 // have not incorporated logic to prevent repeat words
