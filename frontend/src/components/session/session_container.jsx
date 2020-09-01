@@ -15,6 +15,7 @@ function SessionContainer(props) {
   const dispatch = useDispatch();
   const loginDispatch = (user) => dispatch(login(user));
   const signupDispatch = (user) => dispatch(signup(user));
+  const loggedIn = useSelector((state) => state.session.isAuthenticated);
   let history = useHistory(); 
   
   useEffect(() => {
@@ -34,14 +35,14 @@ function SessionContainer(props) {
       await loginDispatch(user);
     } else {
       await signupDispatch(user);
-    }
-
-    history.push('/'); 
+    } 
+  
+    if (loggedIn) history.push('/'); 
   };
 
   const processDemoForm = async () => {
     await loginDispatch(demoLogin);
-    history.push('/'); 
+    if (loggedIn) history.push('/'); 
   };
 
   const sessionProps = {

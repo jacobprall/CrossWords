@@ -16,13 +16,13 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-const getWordSub = (guessed, dir) => {
+const getWordSub = (guessed, dir, len) => {
   const currWord = guessed[guessed.length - 1];
   switch (dir) {
     case true:
-      return currWord.slice(currWord.length - 3);
+      return currWord.slice(currWord.length - len);
     default:
-      return currWord.slice(0, 3);
+      return currWord.slice(0, len);
   }
 };
 
@@ -36,12 +36,12 @@ const getWordSub = (guessed, dir) => {
  * @param {Integer} length
  * @param {Boolean} dir
  */
-const possibleWords = (guessed, difficulty, length, dir) => {
+const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
   let wordSub;
   if (guessed.length > 0) {
-    wordSub = getWordSub(guessed, dir);
+    wordSub = getWordSub(guessed, dir, len);
   } else {
-    wordSub = 'ASSOCIATION';
+    wordSub = getWordSub(guessed, dir, len);
   }
 
   let direction;
@@ -72,8 +72,9 @@ function shuffle(a) {
   }
   return newArr;
 }
-
-const getNextWord = async (guessed, length, direction) => {
+const getNextWord = async (guessed, direction, maxLength) => {
+  const boardWidth = 20;
+  let length = 3;
   const currDifficulty = getDifficulty(guessed);
   const word = await possibleWords(guessed, currDifficulty, length, direction)
     .then((res) => {
@@ -83,6 +84,34 @@ const getNextWord = async (guessed, length, direction) => {
 
   if (word) {
     return word;
+  } else {
+    while (!word) {
+      if (length === 1) {
+        length = 3;
+        maxLength = boardWidth - maxLength;
+        return possibleWords(
+          guessed,
+          currDifficulty,
+          length,
+          !direction,
+          maxLength,
+        )
+          .then((res) => shuffle(res)[0])
+          .catch((err) => console.log(err));
+      } else {
+        length -= 1;
+        maxLength -= 1;
+        return possibleWords(
+          guessed,
+          currDifficulty,
+          length,
+          direction,
+          maxLength,
+        )
+          .then((res) => shuffle(res)[0])
+          .catch((err) => console.log(err));
+      }
+    }
   }
 
   return possibleWords(guessed, currDifficulty, length, !direction)

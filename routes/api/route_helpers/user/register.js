@@ -6,6 +6,7 @@ const User = require('../../../../models/User');
 const validateRegisterInput = require('../../../../validation/register');
 
 const registerCallback = (req, res) => {
+  console.log(JSON.stringify(req.body));
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
