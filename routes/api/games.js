@@ -6,9 +6,8 @@ const Game = require('../../models/Game');
 // const getFirstWord method required to fetch first word from database
 // getNextWord
 
-
 // Frontend sends userId in post request
-router.post('/', (req, res) => {
+router.post('/game', (req, res) => {
   //is this the route we want?
   const userId = req.userId;
   const newGame = new Game({
@@ -22,13 +21,12 @@ router.post('/', (req, res) => {
 
 // User sends score, words guessed, (timer?)
 // needs getNextClue method
-router.patch('/', (req, res) => {
-  Game.findById(req.params.id)
-  .then((game) => {
+router.patch('/game/:id', (req, res) => {
+  Game.findById(req.params.id).then((game) => {
     game.score = req.score;
     game.wordsGuessed = req.wordsGuessed;
-    game.wordsSent = req.wordsSent.push() // getNextWord method
-    return res.json(game)
+    game.wordsSent = req.wordsSent.push(); // getNextWord method
+    return res.json(game);
   });
 });
 
