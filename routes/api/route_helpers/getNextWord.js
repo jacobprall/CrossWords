@@ -30,7 +30,12 @@ const getWordSub = (guessed, dir) => {
 // w defaults
 
 const possibleWords = (guessed, difficulty, length, dir) => {
-  let wordSub = getWordSub(guessed, dir);
+  let wordSub;
+  if (guessed.length > 0) {
+    wordSub = getWordSub(guessed, dir);
+  } else {
+    wordSub = 'ASSOCIATION';
+  }
   let possibleWords = [];
   let direction;
   if (!dir) {
@@ -39,21 +44,27 @@ const possibleWords = (guessed, difficulty, length, dir) => {
     direction = 'prefixes';
   }
 
-  possibleWords = Word.find({
+  return Word.find({
     [direction]: `${wordSub}`,
   })
     .where('difficulty')
     .equals(difficulty)
 
-    .exec(function (err, data) {
-      if (err) {
-        return [];
-      } else {
-        return data;
-      }
-    });
+    .exec
+    // function (err, data) {
+    // if (err) {
+    //   return [];
+    // } else {
+    //   console.log(data);
+    //   return data;
+    // }
+    // }
+    ();
 
-  return possibleWords;
+  // exec( callback (err, data))
+
+  // console.log(possibleWords);
+  // return possibleWords;
 };
 
 function shuffle(a) {
@@ -66,15 +77,28 @@ function shuffle(a) {
   }
   return a;
 }
-export const getNextWord = (guessed, length, direction) => {
+const getNextWord = async (guessed, length, direction) => {
   const currDifficulty = getDifficulty(guessed);
-  let words = possibleWords(guessed, currDifficulty, length, direction);
-  if (words.length === 0) {
-    direction = !direction;
-    words = possibleWords(guessed, currDifficulty, length, direction);
+  const word = await possibleWords(
+    guessed,
+    currDifficulty,
+    length,
+    direction,
+  ).then((res) => {
+    // console.log('words in get next word: ', res);
+    return shuffle(res)[0];
+  });
+  if (word) {
+    console.log('word entered return: ', word);
+    return word;
+  } else {
+    return possibleWords(guessed, currDifficulty, length, !direction).then(
+      (res) => shuffle(res)[0],
+    );
   }
-  return shuffle(words)[0];
 };
+
+module.exports = getNextWord;
 
 // have not incorporated logic to prevent repeat words
 // have not incorporated length logic

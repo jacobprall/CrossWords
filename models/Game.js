@@ -15,7 +15,7 @@ const GameSchema = new Schema(
       required: true,
     },
     wordsGuessed: {
-      type: [Word],
+      // type: [Word],
     },
     score: {
       type: Number,

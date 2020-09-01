@@ -24,7 +24,7 @@ const GuessSchema = new Schema(
       uppercase: true,
     },
     position: {
-      type: [Number],
+      // type: [Number],
       required: true,
     },
     points: {
