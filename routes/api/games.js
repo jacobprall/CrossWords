@@ -1,20 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+// const passport = require('passport');
+// const jwt = require('jsonwebtoken');
+
 const getNextWord = require('./route_helpers/getNextWord');
-const jwt = require('jsonwebtoken');
 const Game = require('../../models/Game');
 // const getFirstWord method required to fetch first word from database
 // getNextWord
 
-// Frontend sends userId in post request
-router.get('/new', (req, res) => {
-  return res.json('hello');
-});
-
 router.post(
   '/new',
-  // passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     const nextWord = await getNextWord([], 5, true);
     const userId = req.userId;
@@ -25,14 +21,17 @@ router.post(
       score: 0,
     });
     console.log('new game: ', newGame);
-    newGame.save().then((game) => res.json(game));
+    newGame
+      .save()
+      .then((game) => res.json(game))
+      .catch((err) => console.log(err));
   },
 );
 
 // User sends score, words guessed, spaces left?
 
 router.patch(
-  '/game/:id',
+  '/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Game.findById(req.params.id)
