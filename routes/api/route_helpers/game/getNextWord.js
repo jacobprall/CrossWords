@@ -4,9 +4,8 @@
 // boolean determines if query prefix or suffix
 // if no word is returned from query, query again with 2 letters
 // if no word is returned from query, query again with 1 letter
-const Word = require('../../../models/Word');
-const mongoose = require('mongoose');
-//
+const Word = require('../../../../models/Word');
+
 const getDifficulty = (guessed) => {
   let difficulty = 1;
   if (guessed.length > 5) {
@@ -21,14 +20,22 @@ const getWordSub = (guessed, dir) => {
   const currWord = guessed[guessed.length - 1];
   switch (dir) {
     case true:
-      return currWord.slice(word.length - 3);
-    case false:
+      return currWord.slice(currWord.length - 3);
+    default:
       return currWord.slice(0, 3);
   }
 };
-//direction
+
+// direction
 // w defaults
 
+/**
+ * Queries DB for a word with given characteristics
+ * @param {Array} guessed
+ * @param {Integer} difficulty
+ * @param {Integer} length
+ * @param {Boolean} dir
+ */
 const possibleWords = (guessed, difficulty, length, dir) => {
   let wordSub;
   if (guessed.length > 0) {
@@ -36,7 +43,7 @@ const possibleWords = (guessed, difficulty, length, dir) => {
   } else {
     wordSub = 'ASSOCIATION';
   }
-  let possibleWords = [];
+
   let direction;
   if (!dir) {
     direction = 'suffixes';
@@ -49,34 +56,23 @@ const possibleWords = (guessed, difficulty, length, dir) => {
   })
     .where('difficulty')
     .equals(difficulty)
-
-    .exec
-    // function (err, data) {
-    // if (err) {
-    //   return [];
-    // } else {
-    //   console.log(data);
-    //   return data;
-    // }
-    // }
-    ();
-
-  // exec( callback (err, data))
-
-  // console.log(possibleWords);
-  // return possibleWords;
+    .exec();
 };
 
 function shuffle(a) {
-  var j, x, i;
-  for (i = a.length - 1; i > 0; i--) {
+  let j;
+  let x;
+  const newArr = [...a];
+
+  for (let i = a.length - 1; i > 0; i -= 1) {
     j = Math.floor(Math.random() * (i + 1));
     x = a[i];
-    a[i] = a[j];
-    a[j] = x;
+    newArr[i] = a[j];
+    newArr[j] = x;
   }
-  return a;
+  return newArr;
 }
+
 const getNextWord = async (guessed, length, direction) => {
   const currDifficulty = getDifficulty(guessed);
   const word = await possibleWords(
@@ -85,20 +81,19 @@ const getNextWord = async (guessed, length, direction) => {
     length,
     direction,
   ).then((res) => {
-    // console.log('words in get next word: ', res);
     return shuffle(res)[0];
   });
-  if (word) {
-    console.log('word entered return: ', word);
-    return word;
-  } else {
-    return possibleWords(guessed, currDifficulty, length, !direction).then(
-      (res) => shuffle(res)[0],
-    );
-  }
-};
 
-module.exports = getNextWord;
+  if (word) {
+    return word;
+  }
+
+  return possibleWords(guessed, currDifficulty, length, !direction).then(
+    (res) => shuffle(res)[0],
+  );
+};
 
 // have not incorporated logic to prevent repeat words
 // have not incorporated length logic
+
+module.exports = getNextWord;
