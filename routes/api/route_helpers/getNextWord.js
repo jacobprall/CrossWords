@@ -17,29 +17,34 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-const getWordStart = (guessed, direction) => {
+const getWordSub = (guessed, dir) => {
   const currWord = guessed[guessed.length - 1];
-  let wordStart;
-  if (direction) {
-    wordStart = currWord.slice(word.length - 3);
-  } else {
-    wordStart = currWord.slice(0, 3);
+  switch (dir) {
+    case true:
+      return currWord.slice(word.length - 3);
+    case false:
+      return currWord.slice(0, 3);
   }
-  return wordStart;
 };
-
-const getDirection = (spacesLeft) => {};
-
 //direction
 // w defaults
 
-const wordQuery = (prefix, difficulty, length) => {
+const possibleWords = (guessed, difficulty, length, dir) => {
+  let wordSub = getWordSub(guessed, dir);
   let possibleWords = [];
+  let direction;
+  if (!dir) {
+    direction = 'suffixes';
+  } else {
+    direction = 'prefixes';
+  }
+
   possibleWords = Word.find({
-    suffixes: `${prefix}`,
+    [direction]: `${wordSub}`,
   })
     .where('difficulty')
     .equals(difficulty)
+
     .exec(function (err, data) {
       if (err) {
         return [];
@@ -48,27 +53,28 @@ const wordQuery = (prefix, difficulty, length) => {
       }
     });
 
-  if (possibleWords.length === 0) {
-    possibleWords = Word.find({
-      prefixes: `${prefix}`,
-    })
-      .where('difficulty')
-      .equals(difficulty)
-      .exec(function (err, data) {
-        if (err) {
-          return [];
-        } else {
-          return data;
-        }
-      });
-  }
-
   return possibleWords;
 };
 
-//
-
-export const getNextWord = (guessed, length) => {
+function shuffle(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
+  }
+  return a;
+}
+export const getNextWord = (guessed, length, direction) => {
   const currDifficulty = getDifficulty(guessed);
-  
+  let words = possibleWords(guessed, currDifficulty, length, direction);
+  if (words.length === 0) {
+    direction = !direction;
+    words = possibleWords(guessed, currDifficulty, length, direction);
+  }
+  return shuffle(words)[0];
 };
+
+// have not incorporated logic to prevent repeat words
+// have not incorporated length logic
