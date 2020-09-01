@@ -7,6 +7,7 @@ const WordSchema = new Schema(
     answer: {
       type: String,
       required: true,
+      uppercase: true,
     },
     clue: {
       type: String,
