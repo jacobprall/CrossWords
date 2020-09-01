@@ -20,6 +20,7 @@ app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api/users', users);
+app.use('/api/games', games);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'));
@@ -28,4 +29,3 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use('/api/games', games);

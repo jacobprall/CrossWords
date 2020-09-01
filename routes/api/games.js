@@ -14,7 +14,7 @@ router.get(
 // User sends score, words guessed, spaces left?
 
 router.patch(
-  '/game/:id',
+  '/:id',
   passport.authenticate('jwt', { session: false }),
   patchGame,
 );
