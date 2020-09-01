@@ -20,22 +20,15 @@ const getWordSub = (guessed, dir, len) => {
   const currWord = guessed[guessed.length - 1];
   switch (dir) {
     case true:
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
-      return currWord.slice(currWord.length - 3);
+      return currWord.slice(currWord.length - len);
     default:
-      return currWord.slice(0, 3);
-=======
-      return currWord.slice(word.length - len);
-    case false:
       return currWord.slice(0, len);
->>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   }
 };
 
 // direction
 // w defaults
 
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
 /**
  * Queries DB for a word with given characteristics
  * @param {Array} guessed
@@ -43,10 +36,7 @@ const getWordSub = (guessed, dir, len) => {
  * @param {Integer} length
  * @param {Boolean} dir
  */
-const possibleWords = (guessed, difficulty, length, dir) => {
-=======
 const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
->>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   let wordSub;
   if (guessed.length > 0) {
     wordSub = getWordSub(guessed, dir, len);
@@ -66,10 +56,6 @@ const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
   })
     .where('difficulty')
     .equals(difficulty)
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
-=======
-
->>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
     .exec();
 };
 
@@ -86,37 +72,18 @@ function shuffle(a) {
   }
   return newArr;
 }
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
-
-const getNextWord = async (guessed, length, direction) => {
-=======
 const getNextWord = async (guessed, direction, maxLength) => {
   const boardWidth = 20;
   let length = 3;
->>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   const currDifficulty = getDifficulty(guessed);
-<<<<<<< HEAD
-  const word = await possibleWords(
-    guessed,
-    currDifficulty,
-    length,
-    direction,
-    maxLength,
-  ).then((res) => {
-    return shuffle(res)[0];
-  });
-=======
   const word = await possibleWords(guessed, currDifficulty, length, direction)
     .then((res) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
->>>>>>> 906e963b3a23bd27c191720bfeadccfe4943ed05
 
   if (word) {
     return word;
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
-=======
   } else {
     while (!word) {
       if (length === 1) {
@@ -145,7 +112,6 @@ const getNextWord = async (guessed, direction, maxLength) => {
           .catch((err) => console.log(err));
       }
     }
->>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   }
 
   return possibleWords(guessed, currDifficulty, length, !direction)
