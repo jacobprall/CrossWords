@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   height: auto;
-  width: 17rem;
+  width: 23rem;
   padding-bottom: 1rem; 
   display: flex; 
   flex-direction: column; 
@@ -79,31 +79,45 @@ const LoginAndDemo = styled.button`
   }
 `
 
+const Errors = styled.div`
+  padding-top: 1rem; 
+  margin-left: 1rem; 
+  align-self: flex-start; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+`
+
+const Error = styled.p`
+`
 
 
 export default function Session({ props }) {
   const { formType, errors, setUser, setDemoLogin } = props;
-
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const currentUser = {
       email: email,
       username: username,
       password: password,
     };
+
     setUser(currentUser);
   };
 
   const handleDemoSubmit = (e) => {
     e.preventDefault();
+
     const demoUser = {
       email: 'demo@email.com',
       password: 'password',
     };
+
     setDemoLogin(demoUser);
   };
 
@@ -139,17 +153,17 @@ export default function Session({ props }) {
     }
   };
 
-  // const renderErrors = () => {
-  //   return (
-  //     <ul className="session-errors">
-  //       {errors.map((error, i) => (
-  //         <li className="session-error" key={`error-${i}`}>
-  //           {error}
-  //         </li>
-  //       ))}
-  //     </ul>
-  //   );
-  // };
+  const renderErrors = () => {
+    return (
+      <Errors >
+        {errors.map((error, i) => (
+          <Error key={`error-${i}`}>
+            {error}
+          </Error>
+        ))}
+      </Errors>
+    );
+  };
 
   const renderInputs = () => {
     return (
@@ -192,7 +206,7 @@ export default function Session({ props }) {
             <LoginAndDemo onClick={handleDemoSubmit}>Demo</LoginAndDemo>
           </Buttons>
         </Form>
-        {/* {renderErrors()} */}
+        {renderErrors()}
       </Container>
     );
   };
