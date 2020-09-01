@@ -31,7 +31,7 @@ router.patch(
     Game.findById(req.params.id).then((game) => {
       game.score = req.score;
       game.wordsGuessed = req.wordsGuessed;
-      game.wordsSent = req.wordsSent.push(); // getNextWord method
+      game.wordsSent = req.wordsSent.push(); // getNextWord method 
       return res.json(game);
     });
   },
