@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'; 
+import { useEffect, useState, useRef } from 'react';
 
 function useStick() {
     const [stick, setStick] = useState(false)
@@ -13,36 +13,35 @@ function useStick() {
     }
     const debounce = (fun, wait = 25, immediate = false) => {
         let timer;
-        
+
         return () => {
             let context = this;
             let args = arguments;
-            
+
             const postpone = () => {
                 timer = null;
                 if (!immediate) fun.apply(context, args);
             }
-            
+
             const callNow = immediate && !timer;
             clearTimeout(timer);
             timer = setTimeout(postpone, wait);
             if (callNow) fun.apply(context, args);
         }
     }
-    
+
     useEffect(() => {
         window.addEventListener("scroll", debounce(handleScroll));
         return () => {
             window.removeEventListener("scroll", () => handleScroll);
         }
     })
-    
+
     return { stick, ele };
 }
 
 export default useStick;
-
-//Analysis of how debouncing works: 
+//Analysis of how debouncing works:
 
 //This incredibly interesting function works like this: 
 //Suppose immediate is false: 
