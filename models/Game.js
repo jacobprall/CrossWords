@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Word = require('./Word');
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
@@ -14,9 +13,12 @@ const GameSchema = new Schema(
       type: Array,
       required: true,
     },
-    wordsGuessed: {
-      // type: [Word],
-    },
+    wordsGuessed: [
+      {
+        type: ObjectId,
+        ref: 'Word', // https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/
+      },
+    ],
     score: {
       type: Number,
       required: true,

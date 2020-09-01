@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'; 
 
 const MainContainer = styled.div`
-  height: 100%
+  height: 5000px;
   display: flex; 
   flex-direction: column; 
   justify-content: space-around; 
