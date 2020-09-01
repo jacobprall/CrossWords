@@ -19,6 +19,7 @@ const App = () => {
     !loggedIn ? toggle(true) : toggle(false);
   }, [loggedIn])
 
+
   const AppContainer = styled.div`
     height: 100%; 
     position: relative; 
