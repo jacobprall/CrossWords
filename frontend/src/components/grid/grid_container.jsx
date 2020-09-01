@@ -6,7 +6,7 @@ export const WIDTH = 20;
 
 const Grid = styled.div`
   display: grid;
-  grid: repeat(20, 3rem) / repeat(20, 3rem);
+  grid: repeat(WIDTH, 3rem) / repeat(HEIGHT, 3rem);
   height: auto;
   height: 60rem;
   width: 60rem;
@@ -16,8 +16,8 @@ const Grid = styled.div`
 export const GridContainer = (props) => {
     let inputs = []; 
 
-    for(let i = 0; i < 20; i++) {
-        for(let j = 0; j < 20; j++) {
+    for(let i = 0; i < WIDTH; i++) {
+        for(let j = 0; j < HEIGHT; j++) {
             inputs.push(
                 <GridItem key={`${i} ${j}`} 
                     rowStart={i + 1} 
