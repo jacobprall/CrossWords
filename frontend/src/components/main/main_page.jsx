@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components'; 
 
 const MainContainer = styled.div`
+  height: 100%
   display: flex; 
   flex-direction: column; 
   justify-content: space-around; 
-  height: 5000px
 `
 
 const Footer = styled.h1`

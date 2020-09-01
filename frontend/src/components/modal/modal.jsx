@@ -6,7 +6,7 @@ const ModalOverlay = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: 10;
     width: 100vw;
     height: 100vh;
     background-color: #000;
@@ -30,5 +30,6 @@ export const Modal = ({ isShowing, hide, Comp, sessionProps}) => isShowing ? Rea
             <Comp props={sessionProps}/>
         </ModalWrapper>
     </React.Fragment>, document.body
+
 ) : null; 
 
