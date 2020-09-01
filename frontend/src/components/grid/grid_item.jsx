@@ -27,10 +27,10 @@ export const GridItem = ({ rowStart, rowEnd, colStart, colEnd }) => {
             let input = e.target.value;
             console.log(input); 
             let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
-            if (input.length > 1 || !chars.split("").concat("").includes(input)) {
+            if (!chars.split("").concat("").includes(input[input.length - 1])) {
                 return;
             }
-            setChar(input); 
+            setChar(input[input.length - 1]); 
         }
     }
 
