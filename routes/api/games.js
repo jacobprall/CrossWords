@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const passport = require('passport');
 const Game = require('../../models/Game');
 // const getFirstWord method required to fetch first word from database
@@ -14,7 +13,7 @@ router.post(
     const userId = req.userId;
     const newGame = new Game({
       user: userId,
-      wordsSent: [], // send result of getFirstWord
+      wordsSent: [], // send result of getNextWord 
       wordsGuessed: [],
       score: 0,
     });
@@ -30,7 +29,7 @@ router.patch(
   (req, res) => {
     Game.findById(req.params.id).then((game) => {
       game.score = req.score;
-      game.wordsGuessed = req.wordsGuessed;
+      game.wordsGuessed = req.wordsGuessed; //add
       game.wordsSent = req.wordsSent.push(); // getNextWord method 
       return res.json(game);
     });
