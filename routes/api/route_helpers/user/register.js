@@ -6,6 +6,7 @@ const User = require('../../../../models/User');
 const validateRegisterInput = require('../../../../validation/register');
 
 const registerCallback = (req, res) => {
+  console.log(JSON.stringify(req.body));
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
@@ -47,7 +48,7 @@ const registerCallback = (req, res) => {
               (_e, token) => {
                 res.json({
                   success: true,
-                  token: `Bearer  + ${token}`,
+                  token: `Bearer ${token}`,
                 });
               },
             );
