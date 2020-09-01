@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/session_actions';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { clearSessionErrors } from '../../actions/session_actions';
+import { Route, Redirect } from 'react-router-dom';
 import logo from '../../images/logo.png'
 import styled from 'styled-components';
+import regeneratorRuntime from "regenerator-runtime";
 
 const NavContainer = styled.div`
   display: flex; 
@@ -80,6 +82,8 @@ const SignUpAndLogin = styled(NavLink)`
     background-color: #696969; 
     cursor: pointer; 
   }
+  position: relative; 
+  z-index: 1000;
 `
 
 const Logo = styled.img`
@@ -87,27 +91,38 @@ const Logo = styled.img`
   height: 2rem; 
 `
 
-export default function Navbar({ stick, ele }) {
+export default function Navbar({ stick, ele, history}) {
+  const [out, setOut] = useState(false); 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
-  const logoutUser = (e) => {
-    e.preventDefault();
-    dispatch(logout());
+  const logoutUser = async () => {
+    await dispatch(logout());
+    return <Route
+      render={props => <Redirect to="/" />}
+      />
   };
+
+  useEffect(() => {
+    let isSubscribed = true; 
+    logoutUser(); 
+    return () => isSubscribed = false; 
+  }, [out])
+
   const handleAlt = (e) => {
     dispatch(clearSessionErrors());
   };
+
+  
+
   const getLinks = () => {
     let links;
     if (loggedIn) {
       links = (
         <LoggedInNavigationSection>
-          {/* <Links className="nav-left"> */}
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
           <LoggedInNavLink to={"/"}>New Game</LoggedInNavLink>
           <LoggedInNavLink to={"/"}>Stats</LoggedInNavLink>
-          {/* </Links> */}
-          <LogoutButton className="nav-right" onClick={logoutUser}>Logout</LogoutButton>
+          <LogoutButton className="nav-right" onClick={() => setOut(!out)}>Logout</LogoutButton>
         </LoggedInNavigationSection>
       )
     } else {

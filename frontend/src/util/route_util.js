@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-const Auth = ({ component: Component, path, loggedIn, exact }) => (
-  <Route path={path} exact={exact} render={(props) => (
+const Auth = ({ component: Component, path, loggedIn, exact, isShowing }) => {
+  return <Route path={path} exact={exact} render={(props) => (
     !loggedIn ? (
-      <Component {...props} />
+      <Component isShowing={isShowing} {...props} />
     ) : (
-      <Redirect to="/overview" />
+      <Redirect to="/login" />
     )
   )} />
-)
+}
 
 const Protected = ({ component: Component, loggedIn, ...rest }) => (
   <Route 
@@ -19,7 +19,7 @@ const Protected = ({ component: Component, loggedIn, ...rest }) => (
       loggedIn ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/signup" />
       )
     }
   />
