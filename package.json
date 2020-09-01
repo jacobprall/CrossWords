@@ -10,7 +10,9 @@
     "frontend": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run frontend \"",
     "eslint": "eslint --fix frontend/",
-    "commit": "git-cz"
+    "deploy": "eslint --fix frontend/ && git push heroku master",
+    "commit": "git-cz",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Jacob Prall, Phil Gresham, Aatef Baransy, Tim Harding, Nick Sercel",
   "license": "ISC",
