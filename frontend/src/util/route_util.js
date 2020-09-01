@@ -13,7 +13,6 @@ const Auth = ({ component: Component, path, loggedIn, exact, isShowing }) => {
 }
 
 const Protected = ({ component: Component, loggedIn, ...rest }) => {
-  console.log("HERE------------------------");
   return <Route 
     {...rest}
     render={props =>

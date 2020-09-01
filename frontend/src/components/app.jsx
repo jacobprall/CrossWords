@@ -8,7 +8,7 @@ import SessionContainer from './session/session_container';
 import { useModal } from './custom_hooks/useModal';
 import useStick from './custom_hooks/useStick'; 
 import styled from 'styled-components'; 
-import { Route } from 'react-router-dom';
+import { GridContainer } from './grid/grid_container'; 
 
 const App = () => {
   const { stick, ele } = useStick();
@@ -27,12 +27,13 @@ const App = () => {
 
   return (
     <AppContainer>
-      <Navbar sticky={stick} ele={ele}/>
+      <GridContainer/>
+      {/* <Navbar sticky={stick} ele={ele}/>
       <Switch>
         <ProtectedRoute exact path="/" component={MainPage}/>
         <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
         <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>
-      </Switch>
+      </Switch> */}
     </AppContainer>
   )
 };
