@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { NavLink, Link } from 'react-router-dom';
 import { clearSessionErrors } from '../../actions/session_actions';
-import { Route, Redirect } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import logo from '../../images/logo.png'
 import styled from 'styled-components';
 import regeneratorRuntime from "regenerator-runtime";
@@ -21,7 +21,7 @@ const NavContainer = styled.div`
   background-color: #E8E8E8;
   border-bottom: 0.05rem solid #A0A0A0; 
   box-shadow: 0px 0px 5px #D3D3D3;
-  z-index: 3;
+  z-index: 1000;
 `
 const LogoAndLinks = styled.div`
   display: flex; 
@@ -96,11 +96,10 @@ export default function Navbar({sticky, ele}) {
   const [out, setOut] = useState(false); 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
+  let history = useHistory(); 
   const logoutUser = async () => {
     await dispatch(logout());
-    return <Route
-      render={props => <Redirect to="/" />}
-      />
+    history.push('/');
   };
 
   useEffect(() => {

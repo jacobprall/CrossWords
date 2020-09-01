@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import Session from './session';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, signup } from '../../actions/session_actions';
@@ -14,6 +15,7 @@ function SessionContainer(props) {
   const dispatch = useDispatch();
   const loginDispatch = (user) => dispatch(login(user));
   const signupDispatch = (user) => dispatch(signup(user));
+  let history = useHistory(); 
   
   useEffect(() => {
     let isSubscribed = true; 
@@ -27,18 +29,19 @@ function SessionContainer(props) {
       return () => isSubscribed = false; 
   }, [demoLogin]);
 
-  const processForm = async (user) => {
+  const processForm = async () => {
     if (formType === '/login') {
       await loginDispatch(user);
     } else {
       await signupDispatch(user);
     }
-    if (user) props.history.replace("/");
+
+    history.push('/'); 
   };
 
-  const processDemoForm = async (user) => {
-    await loginDispatch(user);
-    if (demoLogin) props.history.replace("/");
+  const processDemoForm = async () => {
+    await loginDispatch(demoLogin);
+    history.push('/'); 
   };
 
   const sessionProps = {
