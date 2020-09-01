@@ -95,6 +95,7 @@ const getNextWord = async (guessed, direction, maxLength) => {
   let length = 3;
 >>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   const currDifficulty = getDifficulty(guessed);
+<<<<<<< HEAD
   const word = await possibleWords(
     guessed,
     currDifficulty,
@@ -104,6 +105,13 @@ const getNextWord = async (guessed, direction, maxLength) => {
   ).then((res) => {
     return shuffle(res)[0];
   });
+=======
+  const word = await possibleWords(guessed, currDifficulty, length, direction)
+    .then((res) => {
+      return shuffle(res)[0];
+    })
+    .catch((err) => console.error(err));
+>>>>>>> 906e963b3a23bd27c191720bfeadccfe4943ed05
 
   if (word) {
     return word;
@@ -140,9 +148,9 @@ const getNextWord = async (guessed, direction, maxLength) => {
 >>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   }
 
-  return possibleWords(guessed, currDifficulty, length, !direction).then(
-    (res) => shuffle(res)[0],
-  );
+  return possibleWords(guessed, currDifficulty, length, !direction)
+    .then((res) => shuffle(res)[0])
+    .catch((err) => console.error(err));
 };
 
 // have not incorporated logic to prevent repeat words

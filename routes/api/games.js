@@ -9,9 +9,7 @@ const router = express.Router();
 router.get(
   '/new',
   passport.authenticate('jwt', { session: false }),
-  (_req, res) => {
-    return res.json('hello');
-  },
+  newGameCallback,
 );
 
 router.post(
