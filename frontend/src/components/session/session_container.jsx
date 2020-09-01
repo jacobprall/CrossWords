@@ -50,12 +50,11 @@ function SessionContainer(props) {
 
   
   if (props.isShowing) {
-    return (
-      <Modal 
+    return <Modal 
         isShowing={props.isShowing} 
         Comp={Session} 
-        sessionProps={sessionProps}/>
-    )  
+        sessionProps={sessionProps}
+      />
     } else {
       return <div></div>
     }
