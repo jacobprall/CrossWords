@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const keys = require('../../../config/keys');
-const User = require('../../../models/User');
-const validateRegisterInput = require('../../../validation/register');
+const keys = require('../../../../config/keys');
+const User = require('../../../../models/User');
+const validateRegisterInput = require('../../../../validation/register');
 
 const registerCallback = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);

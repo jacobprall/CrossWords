@@ -1,12 +1,8 @@
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys');
-const User = require('../../models/User');
 const passport = require('passport');
-const registerCallback = require('./route_helpers/register');
-const loginCallback = require('./route_helpers/login');
+
+const router = express.Router();
+const { registerCallback, loginCallback } = require('./route_helpers/user');
 
 router.post('/register', (req, res) => registerCallback(req, res));
 
