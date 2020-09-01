@@ -1,4 +1,78 @@
 import React, { useState } from 'react';
+import styled from 'styled-components'; 
+
+const Container = styled.div`
+  height: auto;
+  width: 17rem;
+  padding-bottom: 1rem; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  background-color: #E8E8E8; 
+  border: 0.1rem solid #101010;
+  box-shadow: 0px 0px 1rem #D3D3D3;
+`
+
+const Welcome = styled.h1`
+  font-weight: 500; 
+  color: 	#101010;
+  height: 3rem;
+`
+
+const Form = styled.form` 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+`
+
+const Inputs = styled.div`
+  height: ${props => props.formType === "login" ? "4rem;" : "6rem;"}
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-around;  
+`
+
+const LabelText = styled.p`
+  margin-right: 0.5rem; 
+  font-weight: 300;
+`
+
+const Input = styled.input`
+  height: 1.2rem;
+  outline-color: #696969;
+  padding: 0rem 0.3rem 0rem 0.3rem; 
+`
+
+const Label = styled.label`
+  display: flex; 
+  justify-content: flex-end; 
+  align-items: center; 
+`
+
+const Buttons = styled.div`
+  height: 4.7rem; 
+  margin-top: 0.2rem;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+  position: relative; 
+  right: -0.3rem;
+`
+
+const LoginAndDemo = styled.div`
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem; 
+  width: 4rem;
+  font-weight: 600; 
+  text-align: center; 
+  background-color: #A8A8A8; 
+  border-radius: 0.2rem; 
+  &:hover {
+    background-color: #696969; 
+    cursor: pointer; 
+  }
+`
+
+
 
 export default function Session({ props }) {
   const { formType, errors, processForm, processDemoForm } = props;
@@ -48,11 +122,11 @@ export default function Session({ props }) {
     if (formType === '/signup') {
       return (
         <>
-          <label>
+          <Label>
             {' '}
-            Username:
-            <input type="text" value={username} onChange={update('username')} />
-          </label>
+            <LabelText>Username:</LabelText>
+            <Input type="text" value={username} onChange={update('username')} />
+          </Label>
         </>
       );
     }
@@ -72,45 +146,47 @@ export default function Session({ props }) {
 
   const renderInputs = () => {
     return (
-      <div>
-        <label>
-          Email:
-          <input type="text" value={email} onChange={update('email')} />
-        </label>
+      <Inputs formType={formType.split('/')[1]}>
+        <Label>
+          <LabelText>Email:</LabelText>
+          <Input type="text" value={email} onChange={update('email')} />
+        </Label>
 
         {renderUsername()}
 
-        <label>
-          Password:
-          <input
+        <Label>
+          <LabelText>Password:</LabelText>
+          <Input
             type="password"
             value={password}
             onChange={update('password')}
           />
-        </label>
-      </div>
+        </Label>
+      </Inputs>
     );
   };
 
   const formHeader = () => {
     if (formType === '/login') {
-      return <div>Welcome Back!</div>;
+      return <Welcome>Welcome Back!</Welcome>;
     } else {
-      return <div>Welcome!</div>;
+      return <Welcome>Welcome!</Welcome>;
     }
   };
 
   const renderForm = () => {
     return (
-      <div>
+      <Container>
         {formHeader()}
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           {renderInputs()}
-          <button>Submit</button>
-          <button onClick={handleDemoSubmit}>Sign in as Demo User</button>
-        </form>
+          <Buttons>
+            <LoginAndDemo>{formType === "/login" ? "Log In" : "Sign Up"}</LoginAndDemo>
+            <LoginAndDemo onClick={handleDemoSubmit}>Demo</LoginAndDemo>
+          </Buttons>
+        </Form>
         {/* {renderErrors()} */}
-      </div>
+      </Container>
     );
   };
 
