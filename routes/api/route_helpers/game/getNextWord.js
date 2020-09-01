@@ -70,7 +70,7 @@ function shuffle(a) {
     newArr[i] = a[j];
     newArr[j] = x;
   }
-  return a;
+  return newArr;
 }
 
 const getNextWord = async (guessed, length, direction) => {
