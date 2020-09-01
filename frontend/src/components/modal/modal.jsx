@@ -66,7 +66,7 @@ const Disclosure = styled.div`
 
 const Button = styled.button`
     font-size: 20px; 
-    font-weight: 750;
+    font-weight: 700;
     border: none;
     border-radius: 3px;
     padding: 10px 10px;
@@ -77,26 +77,26 @@ const Button = styled.button`
     }  
 `
 export const Modal = ({isShowing, hide, title, body}) => isShowing ? ReactDOM.createPortal(
-    <React.Fragment>
-        <ModalOverlay/>
-        <ModalWrapper>
-            <ModalEle>
-                <ModalHeader>
-                    <Button onClick={hide}>
-                        x
-                    </Button>
-                </ModalHeader>
-                <Disclosure>
-                    <h1>
-                        {title}
-                    </h1>
-                    <br/>
-                    <p>
-                        {body}
-                    </p>
-                </Disclosure>
-            </ModalEle>
-        </ModalWrapper>
-    </React.Fragment>, document.body
+  <React.Fragment>
+    <ModalOverlay/>
+    <ModalWrapper>
+      <ModalEle>
+        <ModalHeader>
+          <Button onClick={hide}>
+              x
+          </Button>
+        </ModalHeader>
+        <Disclosure>
+          <h1>
+            {title}
+          </h1>
+          <br/>
+          <p>
+            {body}
+          </p>
+        </Disclosure>
+      </ModalEle>
+    </ModalWrapper>
+  </React.Fragment>, document.body
 ) : null; 
 
