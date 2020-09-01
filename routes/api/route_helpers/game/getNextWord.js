@@ -16,19 +16,26 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-const getWordSub = (guessed, dir) => {
+const getWordSub = (guessed, dir, len) => {
   const currWord = guessed[guessed.length - 1];
   switch (dir) {
     case true:
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
       return currWord.slice(currWord.length - 3);
     default:
       return currWord.slice(0, 3);
+=======
+      return currWord.slice(word.length - len);
+    case false:
+      return currWord.slice(0, len);
+>>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   }
 };
 
 // direction
 // w defaults
 
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
 /**
  * Queries DB for a word with given characteristics
  * @param {Array} guessed
@@ -37,11 +44,14 @@ const getWordSub = (guessed, dir) => {
  * @param {Boolean} dir
  */
 const possibleWords = (guessed, difficulty, length, dir) => {
+=======
+const possibleWords = (guessed, difficulty, len, dir, maxLength) => {
+>>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   let wordSub;
   if (guessed.length > 0) {
-    wordSub = getWordSub(guessed, dir);
+    wordSub = getWordSub(guessed, dir, len);
   } else {
-    wordSub = 'ASSOCIATION';
+    wordSub = getWordSub(guessed, dir, len);
   }
 
   let direction;
@@ -56,6 +66,10 @@ const possibleWords = (guessed, difficulty, length, dir) => {
   })
     .where('difficulty')
     .equals(difficulty)
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
+=======
+
+>>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
     .exec();
 };
 
@@ -72,20 +86,58 @@ function shuffle(a) {
   }
   return newArr;
 }
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
 
 const getNextWord = async (guessed, length, direction) => {
+=======
+const getNextWord = async (guessed, direction, maxLength) => {
+  const boardWidth = 20;
+  let length = 3;
+>>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   const currDifficulty = getDifficulty(guessed);
   const word = await possibleWords(
     guessed,
     currDifficulty,
     length,
     direction,
+    maxLength,
   ).then((res) => {
     return shuffle(res)[0];
   });
 
   if (word) {
     return word;
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
+=======
+  } else {
+    while (!word) {
+      if (length === 1) {
+        length = 3;
+        maxLength = boardWidth - maxLength;
+        return possibleWords(
+          guessed,
+          currDifficulty,
+          length,
+          !direction,
+          maxLength,
+        )
+          .then((res) => shuffle(res)[0])
+          .catch((err) => console.log(err));
+      } else {
+        length -= 1;
+        maxLength -= 1;
+        return possibleWords(
+          guessed,
+          currDifficulty,
+          length,
+          direction,
+          maxLength,
+        )
+          .then((res) => shuffle(res)[0])
+          .catch((err) => console.log(err));
+      }
+    }
+>>>>>>> clean-up-getNextWord:routes/api/route_helpers/getNextWord.js
   }
 
   return possibleWords(guessed, currDifficulty, length, !direction).then(
