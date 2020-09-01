@@ -10,13 +10,15 @@ const Container = styled.div`
   align-items: center; 
   background-color: #E8E8E8; 
   border: 0.1rem solid #101010;
+  border-radius: 0.2rem; 
   box-shadow: 0px 0px 1rem #D3D3D3;
 `
 
 const Welcome = styled.h1`
-  font-weight: 500; 
-  color: 	#101010;
   height: 3rem;
+  margin-top: 0.5rem; 
+  color: 	#101010;
+  font-weight: 500; 
 `
 
 const Form = styled.form` 
@@ -59,9 +61,14 @@ const Buttons = styled.div`
   right: -0.3rem;
 `
 
-const LoginAndDemo = styled.div`
+const LoginAndDemo = styled.button`
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem; 
-  width: 4rem;
+  width: 5rem;
   font-weight: 600; 
   text-align: center; 
   background-color: #A8A8A8; 
@@ -75,7 +82,7 @@ const LoginAndDemo = styled.div`
 
 
 export default function Session({ props }) {
-  const { formType, errors, processForm, processDemoForm } = props;
+  const { formType, errors, setUser, setDemoLogin } = props;
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -88,7 +95,7 @@ export default function Session({ props }) {
       username: username,
       password: password,
     };
-    processForm(currentUser);
+    setUser(currentUser);
   };
 
   const handleDemoSubmit = (e) => {
@@ -97,7 +104,7 @@ export default function Session({ props }) {
       email: 'demo@email.com',
       password: 'password',
     };
-    processDemoForm(demoUser);
+    setDemoLogin(demoUser);
   };
 
   const update = (field) => {
