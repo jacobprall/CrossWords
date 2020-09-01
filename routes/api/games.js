@@ -7,20 +7,23 @@ const Game = require('../../models/Game');
 // getNextWord
 
 // Frontend sends userId in post request
-router.post('/game', (req, res) => {
-  //is this the route we want?
-  const userId = req.userId;
-  const newGame = new Game({
-    user: userId,
-    wordsSent: [], // send result of getFirstWord
-    wordsGuessed: [],
-    score: 0,
-  });
-  newGame.save().then((game) => res.json(game));
-});
+router.post(
+  '/game',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const userId = req.userId;
+    const newGame = new Game({
+      user: userId,
+      wordsSent: [], // send result of getFirstWord
+      wordsGuessed: [],
+      score: 0,
+    });
+    newGame.save().then((game) => res.json(game));
+  },
+);
 
 // User sends score, words guessed, (timer?)
-// needs getNextClue method
+// needs getNextWord method
 router.patch('/game/:id', (req, res) => {
   Game.findById(req.params.id).then((game) => {
     game.score = req.score;
