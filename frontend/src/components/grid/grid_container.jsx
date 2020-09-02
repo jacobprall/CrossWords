@@ -8,9 +8,10 @@ const Grid = styled.div`
   box-sizing: border-box; 
   display: grid;
   grid: repeat(${props => props.height}, 2.5rem) / repeat(${props => props.width}, 2.5rem);
+  place-items: center center;
+  align-content: center center;
   height: 50.4rem;
-  width: 50.6rem;
-  border: 0.2rem solid #101010;
+  width: 50.4rem;
 `;
 
 export const GridContainer = (props) => {

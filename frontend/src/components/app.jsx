@@ -41,7 +41,7 @@ const App = () => {
         <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
         <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>
       </Switch>
-      <Footer/>
+      <Footer loggedIn={loggedIn}/>
     </AppContainer>
   )
 };

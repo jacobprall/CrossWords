@@ -5,7 +5,6 @@ const Input = styled.input`
   width: 2.3rem; 
   height: 2.3rem; 
   border-radius: 0 0 0 0;
-  border: 0.1rem solid #101010;
   grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart} /
     ${(props) => props.rowEnd} / ${(props) => props.colEnd};
   caret-color: transparent;
