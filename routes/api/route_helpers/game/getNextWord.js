@@ -70,6 +70,7 @@ const getWordSub = (guessed, dir, len) => {
  * @param {Integer} maxLength
  * @param {Boolean} dir
  */
+
 const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
   let wordSub;
   if (guessed.length > 0) {
@@ -87,13 +88,20 @@ const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
     direction = 'prefixes';
   }
 
-  return Word.find({
-    [direction]: `${wordSub}`,
-  })
-    .where('difficulty')
-    .equals(difficulty)
-    .exec()
-    .catch((err) => console.error(err));
+  const options = {
+    len: { $lte: maxLength },
+    difficulty: { $lte: difficulty },
+    [direction]: { $in: wordSubArray },
+    answer: { $nin: guessedWords },
+  };
+
+  return Word.find(options)
+    .sort({
+      len: -1,
+      [direction]: -1,
+    })
+    .limit(1)
+    .exec();
 };
 
 const getNextWord = async (guessed, direction, maxLength) => {
