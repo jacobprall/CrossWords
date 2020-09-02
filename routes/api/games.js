@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const { newGameCallback, patchGame } = require('./route_helpers/game');
 const Word = require('../../models/Word');
-
+const getNextWord = require('./route_helpers/game/getNextWord');
 const router = express.Router();
 
 const genWordSubArray = (wordSub, suffix = true) => {
@@ -72,6 +72,15 @@ router.get('/test', (req, res) => {
     // console.log(word);
     res.json(words.map((word) => word.answer));
   });
+});
+
+router.get('/test2', async (req, res) => {
+  const { maxLength, direction, guessedWords, answersList } = req.body;
+  const guessed = JSON.parse(guessedWords);
+  const dir = JSON.parse(direction);
+  const answersSent = JSON.parse(answersList)
+  const nextWord = await getNextWord(guessed, dir, maxLength, answersSent);
+  res.json(nextWord);
 });
 
 module.exports = router;

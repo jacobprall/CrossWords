@@ -1,6 +1,6 @@
 const Game = require('../../../../../models/Game');
 const { updateGameState, getNewGameState } = require('./utils');
-const { getNextWord } = require('../getNextWord');
+const getNextWord = require('../getNextWord');
 
 module.exports = (req, res) => {
   Game.findById(req.params.id)
@@ -10,8 +10,9 @@ module.exports = (req, res) => {
       // Generate a new clue based on current conditions
       const [nextWord, nextIndex, nextDir] = await getNextWord(
         game.wordsGuessed,
+        // game.answersSent
         game.maxLength || 12,
-        game.dir || true,
+        game.dir || false,
       );
 
       const { id, clue, difficulty, len } = nextWord;
@@ -38,3 +39,12 @@ module.exports = (req, res) => {
 
   // newGame.wordsGuessed = req.wordsGuessed;
 };
+
+// router.get('/test2', async (req, res) => {
+//   const { maxLength, direction, guessedWords, answersList } = req.body;
+//   const guessed = JSON.parse(guessedWords);
+//   const dir = JSON.parse(direction);
+//   const answersSent = JSON.parse(answersList);
+//   const nextWord = await getNextWord(guessed, dir, maxLength, answersSent);
+//   res.json(nextWord);
+// });
