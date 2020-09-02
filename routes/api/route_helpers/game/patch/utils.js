@@ -104,14 +104,16 @@ const checkGuess = (guess, game) => {
 };
 
 const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
-  const { score, timer } = game;
+  const { score, timeRemaining } = game;
   const newScore = score + scoreChange;
-  const newTimer = moment(timer).add(secondsChange, 'seconds');
+  // game timeRemaining field is in seconds, so we can just secondsChange to the previous value
+  // const newTimer = moment(timer).add(secondsChange, 'seconds');
+  const newTime = timeRemaining + secondsChange;
 
   return game.update({
     $set: {
       score: newScore,
-      timer: newTimer,
+      timeRemaining: newTime,
     },
     $push: {
       wordsGuessed: guess.guessedWord,
