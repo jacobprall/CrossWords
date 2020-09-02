@@ -17,6 +17,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    games: {
+      type: Array,
+      required: true,
+    },
   },
   {
     timestamps: true,

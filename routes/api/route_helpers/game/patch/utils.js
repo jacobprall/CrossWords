@@ -87,7 +87,9 @@ const checkGuess = (guess, game) => {
     .then(async (word) => {
       let isCorrect = word.answer === guess.guessWord;
       let difficulty = word.difficulty;
+
       let length = word.length;
+
       //let timeRemaining =
       // let secondsChange = handleTime(isCorrect, timeRemaining, gameStartTime);
       // let scoreChange = handleScore(
@@ -101,7 +103,6 @@ const checkGuess = (guess, game) => {
       //      scoreChange,
       //      secondsChange
       // }
-      //
     })
     .catch((err) => err);
 };
