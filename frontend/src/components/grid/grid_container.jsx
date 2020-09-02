@@ -7,10 +7,9 @@ export const WIDTH = 20;
 const Grid = styled.div`
   display: grid;
   grid: repeat(${props => props.height}, 3rem) / repeat(${props => props.width}, 3rem);
-  height: auto;
   height: 60rem;
   width: 60rem;
-  border: 0.1rem solid #101010;
+  border: 0.2rem solid #101010;
 `;
 
 export const GridContainer = (props) => {
