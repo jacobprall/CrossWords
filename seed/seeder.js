@@ -1,32 +1,18 @@
-import seeder from 'mongoose-seeder';
-const fs = require('fs');
+const seeder = require('mongoose-seed');
 const db = require('../config/keys').mongoURI;
+const clues = require('./clues');
+require('../models/Word');
 
-fs.readFile('./clues.json', 'utf8', (err, jsonData) => {
-  if (err) {
-    console.log("Error reading file from disk:", err);
-    return;
-  }
-  try {
-    const clues = JSON.parse(jsonData);
-  } catch (err) {
-    console.log('Error parsing JSON string:', err);
-  }
-});
-
-const data = {
+const data = [{
   'model': 'Word',
   'documents': clues,
-}
-
+}];
 
 seeder.connect(db, () => {
-  seeder.loadModels([
-    '../models/Word.js'
-  ]);
+  seeder.loadModels(['models/Word'])
   seeder.clearModels(['Word'], () => {
     seeder.populateModels(data, () => {
       seeder.disconnect();
-    });
-  });
+    })
+  })
 });
