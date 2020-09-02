@@ -20,6 +20,23 @@ function shuffle(a) {
   return newArr;
 }
 
+/**
+ * Generates an array to pass into a MongoDB query
+ * @param {String} wordSub - Substring to match a new word up to
+ * @param {Boolean} suffix - True if we're trying to match a new word
+ * to the suffix of the last word
+ * @returns {Model{Word}}
+ */
+const genWordSubArray = (wordSub, suffix = true) => {
+  if (suffix) {
+    return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
+  }
+  return wordSub
+    .split('')
+    .map((_ele, i) => wordSub.slice(0, i + 1))
+    .reverse();
+};
+
 const getDifficulty = (guessed) => {
   let difficulty = 1;
   if (guessed.length > 5) {
@@ -31,7 +48,7 @@ const getDifficulty = (guessed) => {
 };
 
 const getWordSub = (guessed, dir, len) => {
-  let currWord = guessed[guessed.length - 1];
+  const currWord = guessed[guessed.length - 1];
   if (guessed.length === 0) {
     return shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))[0];
   }
@@ -76,48 +93,43 @@ const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
     .where('difficulty')
     .equals(difficulty)
     .exec()
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 };
 
 const getNextWord = async (guessed, direction, maxLength) => {
+  let maxL = maxLength;
   const boardWidth = 20;
   let length = 3;
   const currDifficulty = getDifficulty(guessed);
+
   let word = await possibleWords(guessed, currDifficulty, length, direction)
     .then((res) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
-  // console.log(word);
+
   if (word) {
     return word;
-  } else {
-    while (!word) {
-      if (length === 1) {
-        length = 3;
-        maxLength = boardWidth - maxLength;
-        word = possibleWords(
-          guessed,
-          currDifficulty,
-          length,
-          !direction,
-          maxLength,
-        )
-          .then((res) => shuffle(res)[0])
-          .catch((err) => console.log(err));
-      } else {
-        length -= 1;
-        maxLength -= 1;
-        word = possibleWords(
-          guessed,
-          currDifficulty,
-          length,
-          direction,
-          maxLength,
-        )
-          .then((res) => shuffle(res)[0])
-          .catch((err) => console.log(err));
-      }
+  }
+  while (!word) {
+    if (length === 1) {
+      length = 3;
+      maxL = boardWidth - maxL;
+      word = possibleWords(guessed, currDifficulty, length, !direction, maxL)
+        .then((res) => shuffle(res)[0])
+        .catch((err) => console.error(err));
+    } else {
+      length -= 1;
+      maxL -= 1;
+      word = possibleWords(
+        guessed,
+        currDifficulty,
+        length,
+        direction,
+        maxLength,
+      )
+        .then((res) => shuffle(res)[0])
+        .catch((err) => console.error(err));
     }
   }
 
