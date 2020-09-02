@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'; 
 import { GridContainer } from '../grid/grid_container'; 
-import { Clue } from '../clue/clue'; 
+import { TimeScoreClue } from '../time_score_clue/time_score_clue';
 
 const Container = styled.div`
   display: flex; 
@@ -24,14 +24,15 @@ const Footer = styled.h1`
   margin-bottom: 0.5rem; 
 `
 
-export default function MainPage() {
+export default function MainPage(props) {
+  let newGame = props.history.location.pathname === "/newGame";
+  
   return (
     <Container>
-      <MainContainer>
+    <MainContainer>
       <GridContainer/>
-      <Clue/>
+      <TimeScoreClue newGame={newGame}/>
     </MainContainer>
-      <Footer>Copyright &copy; 2020 AcrossWords</Footer>
     </Container>
   );
 }

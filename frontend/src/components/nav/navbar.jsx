@@ -123,7 +123,7 @@ export default function Navbar({sticky, ele}) {
       links = (
         <LoggedInNavigationSection>
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
-          <LoggedInNavLink to={"/"}>New Game</LoggedInNavLink>
+          <LoggedInNavLink to={"/newGame"}>New Game</LoggedInNavLink>
           <LoggedInNavLink to={"/"}>Stats</LoggedInNavLink>
           <LogoutButton className="nav-right" onClick={() => setOut(true)}>Logout</LogoutButton>
         </LoggedInNavigationSection>

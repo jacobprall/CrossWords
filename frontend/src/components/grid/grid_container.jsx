@@ -5,10 +5,11 @@ export const HEIGHT = 20;
 export const WIDTH = 20; 
 
 const Grid = styled.div`
+  box-sizing: border-box; 
   display: grid;
-  grid: repeat(${props => props.height}, 3rem) / repeat(${props => props.width}, 3rem);
-  height: 60rem;
-  width: 60rem;
+  grid: repeat(${props => props.height}, 2.5rem) / repeat(${props => props.width}, 2.5rem);
+  height: 50.4rem;
+  width: 50.6rem;
   border: 0.2rem solid #101010;
 `;
 

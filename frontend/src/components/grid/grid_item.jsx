@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components'; 
 
 const Input = styled.input`
+  width: 2.3rem; 
+  height: 2.3rem; 
   border-radius: 0 0 0 0;
   border: 0.1rem solid #101010;
   grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart} /
@@ -10,7 +12,7 @@ const Input = styled.input`
   text-align: center;
   font-size: 2.5rem;
   font-weight: 500;
-  padding-bottom: 0.1rem;
+  padding-bottom: 0rem;
   &:focus {
     outline-style: none;
     background-color: #c8c8c8;
