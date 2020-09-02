@@ -9,11 +9,11 @@ const GameSchema = new Schema(
       type: ObjectId,
       required: true,
     },
-    wordsSent: {
+    wordsGuessed: {
       type: Array,
       required: true,
     },
-    wordsGuessed: [
+    wordsSent: [
       {
         type: ObjectId,
         ref: 'Word', // https://alexanderzeitler.com/articles/mongoose-referencing-schema-in-properties-and-arrays/
