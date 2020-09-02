@@ -81,6 +81,8 @@ const checkGuess = (guess, game) => {
       let isCorrect = word.answer === guess.guessWord;
       let difficulty = word.difficulty;
       let length = word.len;
+      let timeRemaining = game.tileRemaining // not sure what its gonna be named
+      let gameStartTime = game.startTime; // not sure what this is named yet
       //let timeRemaining =
       let secondsChange = handleTime(
         isCorrect,
@@ -98,7 +100,6 @@ const checkGuess = (guess, game) => {
       //      scoreChange,
       //      secondsChange
       // }
-      //
     })
     .catch((err) => err);
 };
