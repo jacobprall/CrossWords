@@ -6,7 +6,7 @@ export const WIDTH = 20;
 
 const Grid = styled.div`
   display: grid;
-  grid: repeat(WIDTH, 3rem) / repeat(HEIGHT, 3rem);
+  grid: repeat(${props => props.height}, 3rem) / repeat(${props => props.width}, 3rem);
   height: auto;
   height: 60rem;
   width: 60rem;
@@ -29,7 +29,7 @@ export const GridContainer = (props) => {
     }
 
     return (
-        <Grid>
+        <Grid height={HEIGHT} width={WIDTH}>
             {inputs}
         </Grid>
     )

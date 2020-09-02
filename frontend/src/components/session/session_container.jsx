@@ -9,24 +9,41 @@ import regeneratorRuntime from "regenerator-runtime";
 
 function SessionContainer(props) {
   const [user, setUser] = useState(null); 
-  const [demoLogin, setDemoLogin] = useState(null); 
+  const [demoLogin, setDemoUser] = useState(null); 
   const formType = props.match.path;
   const errors = useSelector((state) => Object.values(state.errors.session));
   const dispatch = useDispatch();
   const loginDispatch = (user) => dispatch(login(user));
   const signupDispatch = (user) => dispatch(signup(user));
-  const loggedIn = useSelector((state) => state.session.isAuthenticated);
-  let history = useHistory(); 
   
+  const handleUser = (user) => {
+    setUser(user); 
+  }
+
+  const handleDemoUser = (demoUser) => {
+    setDemoUser(demoUser); 
+  }
+
   useEffect(() => {
     let isSubscribed = true; 
-    if (user) processForm(user);
+    if (isSubscribed) {
+      if (user) {
+        processForm(user);
+        setUser(null);
+   
+      }
+    }
     return () => isSubscribed = false; 
   }, [user]);
 
   useEffect(() => {
       let isSubscribed = true; 
-      if (demoLogin) processDemoForm(demoLogin); 
+      if (isSubscribed) {
+        if (demoLogin) {
+          processDemoForm(demoLogin); 
+          setDemoUser(null); 
+        }
+      }
       return () => isSubscribed = false; 
   }, [demoLogin]);
 
@@ -36,20 +53,17 @@ function SessionContainer(props) {
     } else {
       await signupDispatch(user);
     } 
-  
-    if (loggedIn) history.push('/'); 
   };
 
   const processDemoForm = async () => {
     await loginDispatch(demoLogin);
-    if (loggedIn) history.push('/'); 
   };
 
   const sessionProps = {
     formType,
     errors,
-    setUser,
-    setDemoLogin,
+    handleUser,
+    handleDemoUser,
   };
 
   

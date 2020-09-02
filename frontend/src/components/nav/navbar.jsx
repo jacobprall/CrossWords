@@ -104,8 +104,10 @@ export default function Navbar({sticky, ele}) {
 
   useEffect(() => {
     let isSubscribed = true; 
-    if (out) logoutUser();
-    setOut(false);  
+    if (isSubscribed) {
+      if (out) logoutUser();
+      setOut(false);  
+    }
     return () => isSubscribed = false; 
   }, [out])
 
