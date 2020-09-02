@@ -14,6 +14,7 @@ const newGameCallback = async (req, res) => {
     wordsSent: [nextWord], // send result of getNextWord
     wordsGuessed: [],
     score: 0,
+    maxLength: 20
   });
   newGame.save().then((game) => res.json(game));
 };

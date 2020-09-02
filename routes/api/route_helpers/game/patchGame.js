@@ -6,7 +6,7 @@ module.exports = (req, res) => {
       const newGame = { ...game };
       newGame.score = req.score;
       newGame.wordsGuessed = req.wordsGuessed;
-      newGame.len = req.len;
+      newGame.maxlength = req.maxLength;
       newGame.dir = req.dir;
       newGame.wordsSent = req.wordsSent.push(); // getNextWord(game.wordsGuessed, game.len, game.dir)
       return newGame;

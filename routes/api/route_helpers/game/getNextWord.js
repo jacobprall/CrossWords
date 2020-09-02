@@ -50,7 +50,7 @@ const getWordSub = (guessed, dir, len) => {
  * Queries DB for a word with given characteristics
  * @param {Array} guessed
  * @param {Integer} difficulty
- * @param {Integer} length
+ * @param {Integer} maxLength
  * @param {Boolean} dir
  */
 const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
