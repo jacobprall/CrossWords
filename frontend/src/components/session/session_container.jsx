@@ -26,25 +26,14 @@ function SessionContainer(props) {
 
   useEffect(() => {
     let isSubscribed = true; 
-    if (isSubscribed) {
-      if (user) {
-        processForm(user);
-        setUser(null);
-   
-      }
-    }
+    if (isSubscribed && user) processForm(user);
     return () => isSubscribed = false; 
   }, [user]);
 
   useEffect(() => {
-      let isSubscribed = true; 
-      if (isSubscribed) {
-        if (demoLogin) {
-          processDemoForm(demoLogin); 
-          setDemoUser(null); 
-        }
-      }
-      return () => isSubscribed = false; 
+    let isSubscribed = true; 
+    if (isSubscribed && demoLogin) processDemoForm(demoLogin); 
+    return () => isSubscribed = false; 
   }, [demoLogin]);
 
   const processForm = async () => {

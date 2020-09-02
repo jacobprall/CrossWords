@@ -91,7 +91,6 @@ const Errors = styled.div`
 const Error = styled.p`
 `
 
-
 export default function Session({ props }) {
   const { formType, errors, handleUser, handleDemoUser } = props;
   const [email, setEmail] = useState('');
