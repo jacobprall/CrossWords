@@ -6,6 +6,7 @@ import { Clue } from '../clue/clue';
 const Container = styled.div`
   display: flex; 
   flex-direction: column; 
+  overflow-x: hidden; 
 `
 
 const MainContainer = styled.div`

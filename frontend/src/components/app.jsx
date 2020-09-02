@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
-import { Switch } from "react-router-dom";
+import { Switch, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'; 
 import Navbar from "./nav/navbar";
 import MainPage from "./main/main_page";
@@ -14,9 +14,15 @@ const App = () => {
   const { stick, ele } = useStick();
   const { isShowing, toggle } = useModal();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
+  const history = useHistory(); 
 
   useEffect(() => {
-    !loggedIn ? toggle(true) : toggle(false);
+    if (loggedIn) {
+      toggle(false);
+      history.push("/");
+    } else {
+      toggle(true); 
+    }
   }, [loggedIn])
 
 
