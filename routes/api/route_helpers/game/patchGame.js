@@ -4,7 +4,6 @@ module.exports = (req, res) => {
    
   Game.findById(req.params.id)
     .then((game) => {
-      //added
       const nextWordResult = await getNextWord(game.wordsGuessed, game.maxLength, game.dir)[0];
       const nextWord = nextWordResult[0];
       const nextIndex = nextWordResult[1];

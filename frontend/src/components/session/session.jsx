@@ -93,7 +93,7 @@ const Error = styled.p`
 
 
 export default function Session({ props }) {
-  const { formType, errors, setUser, setDemoLogin } = props;
+  const { formType, errors, handleUser, handleDemoUser } = props;
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -107,7 +107,7 @@ export default function Session({ props }) {
       password: password,
     };
 
-    setUser(currentUser);
+    handleUser(currentUser);
   };
 
   const handleDemoSubmit = (e) => {
@@ -118,7 +118,7 @@ export default function Session({ props }) {
       password: 'password',
     };
 
-    setDemoLogin(demoUser);
+    handleDemoUser(demoUser);
   };
 
   const update = (field) => {
