@@ -7,7 +7,7 @@ const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
   const { id: userId } = jwtDecode(jwt, res);
-  const nextWord = await getNextWord([], 5, true);
+  const nextWord = await getNextWord([], true, 5);
 
   const newGame = new Game({
     user: userId,
