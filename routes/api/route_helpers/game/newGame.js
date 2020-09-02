@@ -21,7 +21,8 @@ const newGameCallback = async (req, res) => {
     maxLength: 20,
     //added
     nextIndex,
-    nextDirection
+    nextDir,
+    timeRemaining: 60.0, // new games initialized with 60sec on the clock
   });
   newGame.save().then((game) => res.json(game));
 };
