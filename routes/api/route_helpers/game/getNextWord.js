@@ -6,6 +6,7 @@
 // if no word is returned from query, query again with 1 letter
 const Word = require('../../../../models/Word');
 
+// shuffle function
 function shuffle(a) {
   let j;
   let x;
@@ -20,22 +21,7 @@ function shuffle(a) {
   return newArr;
 }
 
-/**
- * Generates an array to pass into a MongoDB query
- * @param {String} wordSub - Substring to match a new word up to
- * @param {Boolean} suffix - True if we're trying to match a new word
- * to the suffix of the last word
- * @returns {Model{Word}}
- */
-const genWordSubArray = (wordSub, suffix = true) => {
-  if (suffix) {
-    return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
-  }
-  return wordSub
-    .split('')
-    .map((_ele, i) => wordSub.slice(0, i + 1))
-    .reverse();
-};
+// gets difficulty
 
 const getDifficulty = (guessed) => {
   let difficulty = 1;
@@ -47,21 +33,79 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-const getWordSub = (guessed, dir, len) => {
-  const currWord = guessed[guessed.length - 1];
-  if (guessed.length === 0) {
-    return shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))[0];
+// gets where word start, ie, current index
+
+const getIndex = (oldWord, newWord, dir) => {
+  if (!oldWord) {
+    return 0;
   }
-  switch (dir) {
-    case true:
-      return currWord.slice(currWord.length - len);
-    default:
-      return currWord.slice(0, len);
+  if (dir) {
+    let counter = 0;
+    let i = 0;
+    while (i < oldWord.length) {
+      if (oldWord[oldWord.length - 1 - i] === newWord[i]) {
+        counter += 1;
+      }
+      i += 1;
+    }
+    return counter;
+  } else {
+    let counter = 0;
+    let i = 0;
+    while (i < oldWord.length) {
+      if (oldWord[i] === newWord[newWord.length - 1 - i]) {
+        counter += 1;
+      }
+      i += 1;
+    }
+    return counter;
   }
 };
 
-// direction
-// w defaults
+// get word sub. If dir = false, board moving from left to right, suffix of last word == prefix of next word
+// If true, moving from right to left, prefix of last word == suffix of next word
+
+const getWordSub = (prevWord, dir) => {
+  if (dir) {
+    return prevWord.slice(0, 3);
+  } else {
+    return prevWord.slice(prevWord.length - 3);
+  }
+};
+
+// Get array of subs of word sub.
+// word is JAMES
+// If dir is false, NIP becomes [MES, ES, S]; left to right
+// if dir is true, PAR becomes [JAM, JA, J]; right to left
+
+const genWordSubArray = (guessed, dir) => {
+  if (guessed.length === 0) {
+    return [shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))[0]];
+  }
+
+  const prevWord = guessed[guessed.length - 1];
+  const wordSub = getWordSub(prevWord, dir);
+
+  if (dir) {
+      return wordSub
+        .split('')
+        .map((_ele, i) => wordSub.slice(0, i + 1))
+        .reverse();
+  }
+    return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
+
+
+};
+
+// queries database for possible next words list of 10 words
+
+/**
+ * Generates an array to pass into a MongoDB query
+ * @param {String} wordSub - Substring to match a new word up to
+ * @param {Boolean} suffix - True if we're trying to match a new word
+ * to the suffix of the last word
+ * @returns {Model{Word}}
+ */
 
 /**
  * Queries DB for a word with given characteristics
@@ -71,28 +115,26 @@ const getWordSub = (guessed, dir, len) => {
  * @param {Boolean} dir
  */
 
-const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
-  let wordSub;
-  if (guessed.length > 0) {
-    wordSub = getWordSub(guessed, dir, len);
-  } else {
-    wordSub = getWordSub(guessed, dir, len);
-  }
-
-  console.log(wordSub);
-
+const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
+  console.log(dir);
+  const wordSubArray = genWordSubArray(guessed, dir);
+  console.log(wordSubArray);
+  const difficulty = getDifficulty(guessed);
   let direction;
-  if (!dir) {
+  if (dir) {
     direction = 'suffixes';
   } else {
     direction = 'prefixes';
   }
 
+  maxLength = Number(maxLength);
+
   const options = {
-    len: { $lte: maxLength },
+    length: { $lte: maxLength },
     difficulty: { $lte: difficulty },
     [direction]: { $in: wordSubArray },
-    answer: { $nin: guessedWords },
+    answer: { $nin: guessed },
+    _id: { $nin: answersSent }
   };
 
   return Word.find(options)
@@ -100,54 +142,32 @@ const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
       len: -1,
       [direction]: -1,
     })
-    .limit(1)
-    .exec();
+    .limit(40)
+    .exec()
+    .catch((err) => console.log(err));
 };
 
-const getNextWord = async (guessed, direction, maxLength) => {
-  let maxL = maxLength;
-  const boardWidth = 20;
-  let length = 3;
-  const currDifficulty = getDifficulty(guessed);
+async function getNextWord(guessed, dir, maxLength = 12, answersSent) {
+  let guessedWord = guessed[guessed.length - 1];
 
-  let word = await possibleWords(guessed, currDifficulty, length, direction)
+  let word = await possibleNextWords(guessed, dir, maxLength, answersSent)
     .then((res) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
 
-  if (word) {
-    return word;
+  if (!word) {
+    word = await possibleNextWords(guessed, !dir, maxLength, answersSent)
+      .then((res) => {
+        return shuffle(res)[0];
+      })
+      .catch((err) => console.error(err));
+    let overlap = getIndex(guessedWord, word, !dir);
+    return [word, overlap, !dir];
   }
-  while (!word) {
-    if (length === 1) {
-      length = 3;
-      maxL = boardWidth - maxL;
-      word = possibleWords(guessed, currDifficulty, length, !direction, maxL)
-        .then((res) => shuffle(res)[0])
-        .catch((err) => console.error(err));
-    } else {
-      length -= 1;
-      maxL -= 1;
-      word = possibleWords(
-        guessed,
-        currDifficulty,
-        length,
-        direction,
-        maxLength,
-      )
-        .then((res) => shuffle(res)[0])
-        .catch((err) => console.error(err));
-    }
-  }
-
-  // return possibleWords(guessed, currDifficulty, length, !direction)
-  //   .then((res) => shuffle(res)[0])
-  //   .catch((err) => console.error(err));
-  return [word, length, direction];
-};
-
-// have not incorporated logic to prevent repeat words
-// have not incorporated length logic
+  const overlap = getIndex(guessedWord, word.answer, dir);
+  // console.log(overlap);
+  return [word, overlap, dir];
+}
 
 module.exports = getNextWord;
