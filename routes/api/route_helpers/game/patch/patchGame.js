@@ -1,36 +1,44 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-console */
 const Game = require('../../../../../models/Game');
 const { updateGameState, getNewGameState } = require('./utils');
 const getNextWord = require('../getNextWord');
 
 module.exports = (req, res) => {
-  Game.findById(req.params.id)
+  return Game.findById(req.params.id)
     .then((game) => getNewGameState(game, req.body))
     .then(updateGameState)
     .then(async (game) => {
       // Generate a new clue based on current conditions
-      const [nextWord, nextIndex, nextDir] = await getNextWord(
-        game.wordsGuessed,
-        // game.answersSent
-        game.maxLength || 12,
-        game.dir || false,
-      );
+      // REMOVE JSON FOR PRODUCTION
 
-      const { id, clue, difficulty, len } = nextWord;
+      const [nextWord, overlap, nextDir] = await getNextWord(
+        game.wordsGuessed,
+        game.wordsSent,
+        game.nextDir || false,
+        game.maxLength || 12,
+      );
+      game.wordsSent.push(nextWord._id);
+      game = await game.save();
+
+      const { id, clue, difficulty, length } = nextWord;
 
       const returnObject = {
+        gameId: game._id,
         timer: game.timer,
         score: game.score,
         nextClue: {
           id,
           clue,
           difficulty,
-          len,
+          length,
         },
-        nextIndex,
+        overlap,
         nextDir,
       };
 
-      return returnObject;
+      res.json(returnObject);
     })
     .catch((err) => {
       console.error(err);
