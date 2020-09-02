@@ -7,13 +7,21 @@ const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
   const { id: userId } = jwtDecode(jwt, res);
-  const nextWord = await getNextWord([], true, 5);
+  //added
+  const nextWordResult = await getNextWord([], true, 5)[0];
+  const nextWord = nextWordResult[0];
+  const nextIndex = nextWordResult[1];
+  const nextDirection = nextWordResult[2];
 
   const newGame = new Game({
     user: userId,
     wordsSent: [nextWord], // send result of getNextWord
     wordsGuessed: [],
     score: 0,
+    maxLength: 20,
+    //added
+    nextIndex,
+    nextDirection
   });
   newGame.save().then((game) => res.json(game));
 };

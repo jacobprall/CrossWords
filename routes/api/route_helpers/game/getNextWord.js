@@ -50,7 +50,7 @@ const getWordSub = (guessed, dir, len) => {
  * Queries DB for a word with given characteristics
  * @param {Array} guessed
  * @param {Integer} difficulty
- * @param {Integer} length
+ * @param {Integer} maxLength
  * @param {Boolean} dir
  */
 const possibleWords = (guessed, difficulty, len = 3, dir, maxLength) => {
@@ -83,12 +83,12 @@ const getNextWord = async (guessed, direction, maxLength) => {
   const boardWidth = 20;
   let length = 3;
   const currDifficulty = getDifficulty(guessed);
-  const word = await possibleWords(guessed, currDifficulty, length, direction)
+  let word = await possibleWords(guessed, currDifficulty, length, direction)
     .then((res) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
-  console.log(word);
+  // console.log(word);
   if (word) {
     return word;
   } else {
@@ -96,7 +96,7 @@ const getNextWord = async (guessed, direction, maxLength) => {
       if (length === 1) {
         length = 3;
         maxLength = boardWidth - maxLength;
-        return possibleWords(
+        word = possibleWords(
           guessed,
           currDifficulty,
           length,
@@ -108,7 +108,7 @@ const getNextWord = async (guessed, direction, maxLength) => {
       } else {
         length -= 1;
         maxLength -= 1;
-        return possibleWords(
+        word = possibleWords(
           guessed,
           currDifficulty,
           length,
@@ -121,9 +121,10 @@ const getNextWord = async (guessed, direction, maxLength) => {
     }
   }
 
-  return possibleWords(guessed, currDifficulty, length, !direction)
-    .then((res) => shuffle(res)[0])
-    .catch((err) => console.error(err));
+  // return possibleWords(guessed, currDifficulty, length, !direction)
+  //   .then((res) => shuffle(res)[0])
+  //   .catch((err) => console.error(err));
+  return [word, length, direction];
 };
 
 // have not incorporated logic to prevent repeat words
