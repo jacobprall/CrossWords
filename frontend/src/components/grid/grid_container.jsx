@@ -34,6 +34,7 @@ export const GridContainer = () => {
     const [state, dispatch] = useStateValue(); 
     const [focus, setFocus] = useState(false); 
     const [row, setRow] = useState(null); 
+    const [col, setCol] = useState(null); 
 
     const grid = state["grid"];
 
@@ -65,23 +66,35 @@ export const GridContainer = () => {
         for(let j = 0; j < HEIGHT; j++) {
             let possibleVal = grid[i + 1][j + 1]; 
             let val = possibleVal ? possibleVal : ""; 
-        
-            let foc; 
-            if (j + 1 === 1 && i > 1) {
-                foc = !possibleVal && grid[i][WIDTH] ? true : false;
+            let prevVal; 
+            if (j + 1 === 1) { 
+                if (grid[i]) prevVal = grid[i][WIDTH];
             } else {
-                foc = !possibleVal && grid[i + 1][j] ? true : false; 
+                prevVal = grid[i + 1][j]; 
             }
-       
+
+            let foc = false;  
+
+            if (!focus) {
+                if (j + 1 === 1 && i > 1) {
+                    foc = !possibleVal && grid[i][WIDTH] ? true : false;
+                } else {
+                    foc = !possibleVal && grid[i + 1][j] ? true : false;
+                }
+            } else if (focus && prevVal && row === i + 1 && col === j + 1)  {
+                foc = true; 
+            }
+
             inputs.push(
                 <GridItem key={`${i} ${j}`} 
                     rowStart={i + 1} 
                     colStart={j + 1} 
                     value={val}
                     addGridItem={addGridItem}
-                    focus={foc && !focus && (row && i + 1 === row) ? foc : false}
+                    focus={foc}
                     setFocus={setFocus}
                     setRow={setRow}
+                    setCol={setCol}
                     width={WIDTH}
                 />
             )

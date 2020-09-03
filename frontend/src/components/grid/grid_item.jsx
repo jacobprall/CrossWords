@@ -23,7 +23,7 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width}) => {
+export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width, setCol}) => {
     const [char, setChar] = useState(""); 
 
     const update = () => {
@@ -62,9 +62,12 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFoc
         setFocus(true); 
         if (colStart === width) {
             setRow(rowStart + 1); 
+            setCol(1)
         } else {
             setRow(rowStart); 
+            setCol(colStart + 1);
         }
+
     }
 
     return (
