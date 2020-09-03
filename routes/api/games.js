@@ -1,7 +1,11 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { newGameCallback, patchGame } = require('./route_helpers/game');
+const {
+  newGameCallback,
+  patchGame,
+  getPlayedGameCallback,
+} = require('./route_helpers/game');
 
 // const keepJWTBecauseItsNeededSomehow = jwt;
 
@@ -17,9 +21,15 @@ router.get(
 // User sends score, words guessed, spaces left?
 
 router.patch(
-  '/:id',
+  '/:gameId',
   passport.authenticate('jwt', { session: false }),
   patchGame,
+);
+
+router.get(
+  '/:gameId',
+  passport.authenticate('jwt', { session: false }),
+  getPlayedGameCallback,
 );
 
 // router.get('/test', (req, res) => {
