@@ -31,8 +31,9 @@ const patchGameCallback = (req, res) => {
       const { id, clue, difficulty, length } = nextWord;
 
       const returnObject = {
-        timeRemaining: game.timeRemaining,
         gameId: game._id,
+        timeRemaining: game.timeRemaining,
+        timeElapsed: game.timeElapsed,
         score: game.score,
         nextClue: {
           id,
