@@ -46,7 +46,6 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
     }
 
     useEffect(() => {
-
         setChar(value); 
     }, [value])
 
