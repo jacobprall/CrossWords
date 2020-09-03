@@ -5,7 +5,7 @@ const Game = require('../../../../../models/Game');
 const Word = require('../../../../../models/Word');
 
 const { updateGameState, getNewGameState, cleanReqBody } = require('./utils');
-const getNextWord = require('../getNextWord');
+const getNextWord = require('./getNextWord');
 
 /**
  * Receive a guessed word and retrieve the next clue and updated game state
@@ -17,7 +17,6 @@ const getNextWord = require('../getNextWord');
  * @returns {gameDetails}
  */
 const patchGameCallback = (req, res) => {
-  console.log(req);
   const cleanedReqBody = cleanReqBody(req.body);
 
   return Game.findById(req.params.gameId)
@@ -26,14 +25,12 @@ const patchGameCallback = (req, res) => {
     .then(async (game) => {
       const [nextWord, overlap] = await getNextWord(game);
 
-      console.log([nextWord, overlap]);
       const prevWordId = game.wordsSent[game.wordsSent.length - 1];
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
 
-      game = await game.save().then(res => console.log(res));
-
+      game = await game.save().then((g) => g);
 
       const { id, clue, difficulty, length } = nextWord;
 
