@@ -1,4 +1,6 @@
 import { getNewGame, patchGame } from '../util/game_util';
+import { setAuthToken } from '../util/session_api_util';
+import jwt_decode from 'jwt-decode';
 
 export const RECEIVE_GAME = 'RECEIVE_GAME';
 export const RECEIVE_GAME_DETAILS = 'RECEIVE_NEXT_CLUE';

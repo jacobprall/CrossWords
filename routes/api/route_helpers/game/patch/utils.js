@@ -122,7 +122,7 @@ const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
 };
 
 const getNewGameState = async (game, reqBody) => {
-  // added logic to update game from front-end state BEFORE any guess-based modifiers to timeRemaining
+  // added logic to update game times from front-end state BEFORE any guess-based modifiers to timeRemaining
   const { guess, timeRemaining, timeElapsed } = reqBody;
 
   game.timeRemaining = timeRemaining;
