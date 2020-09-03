@@ -15,6 +15,7 @@ const newGameCallback = async (req, res) => {
     wordsGuessed: [],
     score: 0,
     timeRemaining: 60,
+    timeElapsed: 0,
     overlap: 0,
     nextDirection: true,
   });

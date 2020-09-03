@@ -23,9 +23,9 @@ module.exports = (req, res) => {
         avgWordsSent += 1;
         avgGameTime += games[i].timeElapsed;
       }
-      avgScore = avgScore / games.length;
-      avgWordsSent = avgWordsSent / games.length;
-      avgGameTime = avgGameTime / games.length;
+      avgScore /= games.length;
+      avgWordsSent /= games.length;
+      avgGameTime /= games.length;
       res.json({
         gamesArr,
         avgScore,
