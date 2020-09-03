@@ -17,7 +17,7 @@ const getNextWord = require('../getNextWord');
 const patchGameCallback = (req, res) => {
   const cleanedReqBody = cleanReqBody(req.body);
 
-  return Game.findById(req.params.id)
+  return Game.findById(req.params.gameId)
     .then((game) => getNewGameState(game, cleanedReqBody))
     .then(updateGameState)
     .then(async (game) => {
