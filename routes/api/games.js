@@ -3,7 +3,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { newGameCallback, patchGame } = require('./route_helpers/game');
 
-const keepJWTBecauseItsNeededSomehow = jwt;
+// const keepJWTBecauseItsNeededSomehow = jwt;
 
 const router = express.Router();
 
