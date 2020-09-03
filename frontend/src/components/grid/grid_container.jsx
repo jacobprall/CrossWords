@@ -37,9 +37,8 @@ export const GridContainer = () => {
             )
         }
 
-        if (isSubscribed) updateState(); 
-
-        return () => updateState();
+        if (isSubscribed) updateState();  
+        return () => isSubscribed = false;
     }, [gridItems])
 
     let inputs = []; 
