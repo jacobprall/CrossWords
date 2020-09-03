@@ -7,7 +7,6 @@ const {
   loginCallback,
   currentUserCallback,
   currentUserStats,
-
 } = require('./route_helpers/user');
 
 router.post('/register', (req, res) => registerCallback(req, res));
@@ -20,8 +19,8 @@ router.get(
     session: false,
   }),
   currentUserCallback,
-  );
-  
-  router.get('/:id/stats', (req, res) => currentUserStats(req, res));
-  
+);
+
+router.get('/:id/stats', (req, res) => currentUserStats(req, res));
+
 module.exports = router;

@@ -32,7 +32,7 @@ const GameSchema = new Schema(
     timeElapsed: {
       type: Number,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
