@@ -1,11 +1,14 @@
-import { RECEIVE_GAME, RECEIVE_GAME_DETAILS } from '../actions/game_actions';
+import { RECEIVE_ACTIVE_GAME,
+  RECEIVE_GAME_DETAILS,
+  RECEIVE_SAVED_GAME,
+ } from '../actions/game_actions';
 
-export default (state={}, { type, game, gameDetails }) => {
+const activeGameReducer = (state={}, { type, game, gameDetails }) => {
   Object.freeze(state);
   let nextState = { ...state }
 
   switch(type) {
-    case RECEIVE_GAME:
+    case RECEIVE_ACTIVE_GAME:
       return Object.assign({}, state, { [game._id]: game });
     case RECEIVE_GAME_DETAILS:
       nextState[gameDetails.gameId] = Object.assign({}, nextState[gameDetails.gameId], gameDetails);
@@ -14,3 +17,17 @@ export default (state={}, { type, game, gameDetails }) => {
       return state;
   }
 }
+
+const savedGameReducer = (state={}, { type, game }) => {
+  Object.freeze(state);
+  let nextState = { ...state };
+  switch(type) {
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  active: activeGameReducer,
+  saved: savedGameReducer,
+})
