@@ -9,22 +9,23 @@ const Game = require('../../../../../models/Game');
 //   Determine how much time is added
 const maxTime = 60; // assuming the time comes in seconds as an int
 let lastTime;
-const handleTime = (isCorrect, timeRemaining, gameStartTime) => {
+const handleTime = (isCorrect, game) => {
   if (!isCorrect) {
     return 0;
   } // dont detract time for missed answer
-  gameStartTime = abs(Math.floor(gameStartTime / 1000));
-  const currentTime = abs(Math.floor(new Date().getTime() / 1000)); // should be in seconds
-  lastTime = currentTime;
-  const t = gameStartTime - currentTime;
+  // const currentTime = abs(Math.floor(new Date().getTime() / 1000)); // should be in seconds
+  // lastTime = currentTime;
+  let t = game.timeElapsed;
+  let timeRemaining = game.timeRemaining;
+  lastTime = t;
 
-  const timeConstant = 12; // in actual seconds
-  const a = Math.pow(60, 3); // normalizer const => 60 meaning over one minute
+  const gameDuration = 60; // in seconds
+  const timeConstant = 12; // in seconds
+  const a = Math.pow(gameDuration, 3); // normalizer const => 60
+  const b = (7/6); // baseline time addition => ((7/6) - 1) * timeConstant
 
-  if (t < 0) {
-    t = 0;
-  }
-  let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + 1 / 6) * timeConstant);
+  if (t > a) { t = a; }
+  let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + b) * timeConstant); // between (7/6 * 12) and (1/6 * 12)
   timeAddition = Math.floor(
     timeAddition * (abs(1 - timeRemaining / maxTime) + 1),
   );
@@ -36,7 +37,7 @@ const handleTime = (isCorrect, timeRemaining, gameStartTime) => {
   // time modified by timeRemaining, time = Math.floor(time * (abs(double(1 - timeRemaining/maxTime)) + 1))
 };
 
-const handleScore = (isCorrect, difficulty, length) => {
+const handleScore = (isCorrect, game, difficulty, length) => {
   let pointsEarned = 0;
 
   const pointsConstant = 6; // baseline value for points per word char in length
@@ -61,8 +62,8 @@ const handleScore = (isCorrect, difficulty, length) => {
   }
 
   // time modifier(s)
-  const currentTime = Math.floor(new Date().getTime() / 1000); // should be in seconds
-  const timeDifferential = lastTime - currentTime;
+  const currentTime = game.timeElapsed; // should be in seconds
+  const timeDifferential = currentTime - lastTime;
 
   if (timeDifferential < 0) {
     pointsEarned = Math.floor(pointsEarned * 0.75);
@@ -87,14 +88,25 @@ const checkGuess = (guess, game, lastClueIdSent) => {
   return Word.findById(lastClueIdSent)
     .then(async (word) => {
       const isCorrect = word.answer === guess;
-      // let difficulty = word.difficulty;
+      const difficulty = word.difficulty;
+      // const length = word.length; // might have a problem -> reserved word
+      const length = word.answer.length;
 
-      const scoreChange = isCorrect ? 60 : 0;
-      const secondsChange = isCorrect ? 60 : 0;
+      //    for testing only
+      // const scoreChange = isCorrect ? 60 : 0;
+      // const secondsChange = isCorrect ? 60 : 0;
+
+      // return {
+      //   scoreChange,
+      //   secondsChange,
+      // };
+
+      const scoreChange = handleScore(isCorrect, game, difficulty, length);
+      const timeChange = handleTime(isCorrect, game);
 
       return {
         scoreChange,
-        secondsChange,
+        timeChange,
       };
     })
     .catch((err) => err);
