@@ -22,9 +22,11 @@ const handleTime = (isCorrect, game) => {
   const gameDuration = 60; // in seconds
   const timeConstant = 12; // in seconds
   const a = Math.pow(gameDuration, 3); // normalizer const => 60
-  const b = (7/6); // baseline time addition => ((7/6) - 1) * timeConstant
+  const b = 7 / 6; // baseline time addition => ((7/6) - 1) * timeConstant
 
-  if (t > a) { t = a; }
+  if (t > a) {
+    t = a;
+  }
   let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + b) * timeConstant); // between (7/6 * 12) and (1/6 * 12)
   timeAddition = Math.floor(
     timeAddition * (abs(1 - timeRemaining / maxTime) + 1),
@@ -115,6 +117,7 @@ const checkGuess = (guess, game, lastClueIdSent) => {
 const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
   game.score += scoreChange;
   game.timer += secondsChange;
+  console.log(guess);
   game.wordsGuessed.push(guess);
   return game.save();
 };
