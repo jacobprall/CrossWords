@@ -35,7 +35,7 @@ const getDifficulty = (guessed) => {
 
 // gets where word start, ie, current index
 
-const getIndex = (oldWord, newWord, dir) => {
+const getOverlap = (oldWord, newWord, dir) => {
   if (!oldWord) {
     return 0;
   }
@@ -87,14 +87,12 @@ const genWordSubArray = (guessed, dir) => {
   const wordSub = getWordSub(prevWord, dir);
 
   if (dir) {
-      return wordSub
-        .split('')
-        .map((_ele, i) => wordSub.slice(0, i + 1))
-        .reverse();
+    return wordSub
+      .split('')
+      .map((_ele, i) => wordSub.slice(0, i + 1))
+      .reverse();
   }
-    return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
-
-
+  return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
 };
 
 // queries database for possible next words list of 10 words
@@ -116,9 +114,7 @@ const genWordSubArray = (guessed, dir) => {
  */
 
 const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
-  console.log(dir);
   const wordSubArray = genWordSubArray(guessed, dir);
-  console.log(wordSubArray);
   const difficulty = getDifficulty(guessed);
   let direction;
   if (dir) {
@@ -134,12 +130,12 @@ const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
     difficulty: { $lte: difficulty },
     [direction]: { $in: wordSubArray },
     answer: { $nin: guessed },
-    _id: { $nin: answersSent }
+    _id: { $nin: answersSent },
   };
 
   return Word.find(options)
     .sort({
-      len: -1,
+      length: -1,
       [direction]: -1,
     })
     .limit(40)
@@ -147,7 +143,7 @@ const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
     .catch((err) => console.log(err));
 };
 
-async function getNextWord(guessed, dir, maxLength = 12, answersSent) {
+async function getNextWord(guessed, answersSent, dir, maxLength = 12) {
   let guessedWord = guessed[guessed.length - 1];
 
   let word = await possibleNextWords(guessed, dir, maxLength, answersSent)
@@ -155,17 +151,17 @@ async function getNextWord(guessed, dir, maxLength = 12, answersSent) {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
-
+  // console.log(word, guessedWord);
   if (!word) {
     word = await possibleNextWords(guessed, !dir, maxLength, answersSent)
       .then((res) => {
         return shuffle(res)[0];
       })
       .catch((err) => console.error(err));
-    let overlap = getIndex(guessedWord, word, !dir);
+    let overlap = getOverlap(guessedWord, word.answer, !dir);
     return [word, overlap, !dir];
   }
-  const overlap = getIndex(guessedWord, word.answer, dir);
+  const overlap = getOverlap(guessedWord, word.answer, dir);
   // console.log(overlap);
   return [word, overlap, dir];
 }

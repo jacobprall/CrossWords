@@ -25,6 +25,7 @@ const registerCallback = (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      games: [],
     });
 
     bcrypt.genSalt(10, (_err, salt) => {

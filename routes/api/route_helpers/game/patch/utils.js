@@ -8,7 +8,9 @@ const Word = require('../../../../../models/Word');
 const maxTime = 60; // assuming the time comes in seconds as an int
 let lastTime;
 const handleTime = (isCorrect, timeRemaining, gameStartTime) => {
-  if (!isCorrect) {return 0;} // dont detract time for missed answer
+  if (!isCorrect) {
+    return 0;
+  } // dont detract time for missed answer
   gameStartTime = abs(Math.floor(gameStartTime / 1000));
   const currentTime = abs(Math.floor(new Date().getTime() / 1000)); // should be in seconds
   lastTime = currentTime;
@@ -17,40 +19,44 @@ const handleTime = (isCorrect, timeRemaining, gameStartTime) => {
   const timeConstant = 12; // in actual seconds
   const a = Math.pow(60, 3); // normalizer const => 60 meaning over one minute
 
-  if (t < 0) { t = 0; }
-  let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + (1/6)) * timeConstant );
-  timeAddition = Math.floor(timeAddition * (abs(1 - timeRemaining/maxTime) + 1));
+  if (t < 0) {
+    t = 0;
+  }
+  let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + 1 / 6) * timeConstant);
+  timeAddition = Math.floor(
+    timeAddition * (abs(1 - timeRemaining / maxTime) + 1),
+  );
 
   return timeAddition;
 
   // at^3 + d => t - time in deca seconds, a = -1/216 - time will decrease over 1 minute(s) until it hits a min, d = 1/6 -- min time if 1 minute(s) has passed
   // time = Math.ceil(double(-(t^3)/216 + 1/6) * 12) // 15 seconds added on top side
   // time modified by timeRemaining, time = Math.floor(time * (abs(double(1 - timeRemaining/maxTime)) + 1))
-
 };
 
 const handleScore = (isCorrect, difficulty, length) => {
-
-
   let pointsEarned = 0;
 
   const pointsConstant = 6; // baseline value for points per word char in length
-  pointsEarned += (length * pointsConstant);
+  pointsEarned += length * pointsConstant;
 
   // difficulty modifier
   // assuming difficulty levels of 1, 2, and 3 => easy change if those aren't the levels
   switch (difficulty) {
-    case (2):
-      pointsEarned = Math.floor(pointsEarned * (1.4)); // constant change
+    case 2:
+      pointsEarned = Math.floor(pointsEarned * 1.4); // constant change
       break;
-    case (3):
-      pointsEarned = Math.floor(pointsEarned * (1.8)); // constant change
+    case 3:
+      pointsEarned = Math.floor(pointsEarned * 1.8); // constant change
       break;
   }
-  
+
   // return score before time mods if wrong answer
   // lose 25% of potential points eared on mistake
-  if (!isCorrect) { pointsEarned = Math.floor(pointsEarned * (-(1 / 4))); return pointsEarned; }
+  if (!isCorrect) {
+    pointsEarned = Math.floor(pointsEarned * -(1 / 4));
+    return pointsEarned;
+  }
 
   // time modifier(s)
   const currentTime = abs(Math.floor(new Date().getTime() / 1000)); // should be in seconds
@@ -76,32 +82,31 @@ const handleScore = (isCorrect, difficulty, length) => {
  * @returns {Integer} secondsChange
  */
 const checkGuess = (guess, game) => {
+  guess = JSON.parse(guess);
   Word.findById(guess.word)
     .then(async (word) => {
       let isCorrect = word.answer === guess.guessWord;
       let difficulty = word.difficulty;
-      let length = word.len;
+
+      let length = word.length;
+
       //let timeRemaining =
-      let secondsChange = handleTime(
-        isCorrect,
-        timeRemaining,
-        gameStartTime,
-      );
-      let scoreChange = handleScore(
-        isCorrect,
-        difficulty,
-        length,
-        gameStartTime,
-      );
+      // let secondsChange = handleTime(isCorrect, timeRemaining, gameStartTime);
+      // let scoreChange = handleScore(
+      //   isCorrect,
+      //   difficulty,
+      //   length,
+      //   gameStartTime,
+      // );
 
       // return {
       //      scoreChange,
       //      secondsChange
       // }
-      //
     })
     .catch((err) => err);
 };
+
 
 const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
   const { score, timeRemaining } = game;
@@ -109,22 +114,18 @@ const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
   // game timeRemaining field is in seconds, so we can just secondsChange to the previous value
   // const newTimer = moment(timer).add(secondsChange, 'seconds');
   const newTime = timeRemaining + secondsChange;
-
-  return game.update({
-    $set: {
-      score: newScore,
-      timeRemaining: newTime,
-    },
-    $push: {
-      wordsGuessed: guess.guessedWord,
-    },
-  });
+  const { guessedWord, wordId } = JSON.parse(guess);
+  game.score = 0;
+  game.timer = 60;
+  game.wordsGuessed.push(guessedWord);
+  return game.save();
 };
 
 const getNewGameState = async (game, reqBody) => {
   const { guess } = reqBody;
 
   const result = await checkGuess(guess, game);
+
   return { game, guess, ...result };
 };
 
