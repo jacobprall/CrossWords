@@ -88,7 +88,6 @@ const getWordSub = (prevWord, dir) => {
  */
 const genWordSubArray = (word, dir) => {
   const wordSub = getWordSub(word, dir);
-
   if (dir) {
     return wordSub
       .split('')
@@ -157,7 +156,6 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
 
   const { minLength, maxLength } = getLength();
   const difficulty = getDifficulty(wordsGuessed);
-
   const options = {
     length: { $gte: minLength, $lt: maxLength },
     difficulty: { $lte: difficulty },
@@ -170,7 +168,7 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
     _id: 1,
   })
     .sort({
-      [direction]: -1,
+      [direction]: dir ? -1 : 1,
     })
     .limit(WORD_FIND_LIMIT)
     .exec()

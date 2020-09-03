@@ -2,6 +2,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 const Game = require('../../../../../models/Game');
+const Word = require('../../../../../models/Word');
+
 const { updateGameState, getNewGameState, cleanReqBody } = require('./utils');
 const getNextWord = require('../getNextWord');
 
@@ -24,6 +26,8 @@ const patchGameCallback = (req, res) => {
       const [nextWord, overlap] = await getNextWord(game);
 
       console.log([nextWord, overlap]);
+      const prevWordId = game.wordsSent[game.wordsSent.length - 1];
+      const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
       game = await game.save();
@@ -43,6 +47,7 @@ const patchGameCallback = (req, res) => {
         },
         overlap,
         nextDir: overlap > 0,
+        prevAnswer: prevWord.answer,
       };
 
       res.json(returnObject);

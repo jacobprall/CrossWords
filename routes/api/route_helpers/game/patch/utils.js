@@ -18,18 +18,17 @@ const handleTime = (isCorrect, game) => {
   let t = game.timeElapsed;
   let timeRemaining = game.timeRemaining;
   lastTime = t;
-
   const gameDuration = 60; // in seconds
   const timeConstant = 12; // in seconds
-  const a = Math.pow(gameDuration, 3); // normalizer const => 60
+  const a = gameDuration ** 3; // normalizer const => 60
   const b = 7 / 6; // baseline time addition => ((7/6) - 1) * timeConstant
 
-  if (t > a) {
+  if (Math.abs(t) > a) {
     t = a;
   }
-  let timeAddition = Math.ceil((-(Math.pow(t, 3) / a) + b) * timeConstant); // between (7/6 * 12) and (1/6 * 12)
+  let timeAddition = Math.ceil((-(t ** 3 / a) + b) * timeConstant); // between (7/6 * 12) and (1/6 * 12)
   timeAddition = Math.floor(
-    timeAddition * (abs(1 - timeRemaining / maxTime) + 1),
+    timeAddition * (Math.abs(1 - timeRemaining / maxTime) + 1),
   );
 
   return timeAddition;
@@ -87,8 +86,9 @@ const handleScore = (isCorrect, game, difficulty, length) => {
  * @returns {Integer} secondsChange
  */
 const checkGuess = (guess, game, lastClueIdSent) => {
+  // console.log(guess);
   return Word.findById(lastClueIdSent)
-    .then(async (word) => {
+    .then((word) => {
       const isCorrect = word.answer === guess;
       const difficulty = word.difficulty;
       // const length = word.length; // might have a problem -> reserved word
@@ -105,7 +105,6 @@ const checkGuess = (guess, game, lastClueIdSent) => {
 
       const scoreChange = handleScore(isCorrect, game, difficulty, length);
       const timeChange = handleTime(isCorrect, game);
-
       return {
         scoreChange,
         timeChange,
@@ -114,10 +113,10 @@ const checkGuess = (guess, game, lastClueIdSent) => {
     .catch((err) => err);
 };
 
-const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
-  game.score += scoreChange;
-  game.timer += secondsChange;
-  console.log(guess);
+const updateGameState = ({ game, guess, timeChange, scoreChange }) => {
+  // console.log(game, guess, timeChange, scoreChange);
+  game.timeRemaining += timeChange;
+  game.score = Math.max(0, game.score + scoreChange);
   game.wordsGuessed.push(guess);
   return game.save();
 };
