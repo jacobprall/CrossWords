@@ -17,6 +17,7 @@ const getNextWord = require('../getNextWord');
  * @returns {gameDetails}
  */
 const patchGameCallback = (req, res) => {
+  console.log(req);
   const cleanedReqBody = cleanReqBody(req.body);
 
   return Game.findById(req.params.gameId)
@@ -30,7 +31,7 @@ const patchGameCallback = (req, res) => {
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
-      game = await game.save();
+      game = await game.save().then(g => g);
 
       const { id, clue, difficulty, length } = nextWord;
 

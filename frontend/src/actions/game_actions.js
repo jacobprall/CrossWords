@@ -21,11 +21,9 @@ const receiveGameErrors = errors => ({
 })
 
 export const fetchNewGame = () => dispatch => getNewGame()
-  .then(({ data }) => dispatch(receiveActiveGame(data))
-  .catch(({response: { data } }) => dispatch(receiveGameErrors(data))));
+  .then(({ data }) => dispatch(receiveActiveGame(data)),(err => dispatch(receiveGameErrors(err.message))));
 
 
 // gameUpdates is a POJO of the form: {gameId: String, guess: String, timeRemaining: Number, timeElapsed: Number }
 export const updateGameDetails = gameUpdates => dispatch => patchGame(gameUpdates)
-  .then(gameDetails => dispatch(receiveGameDetails(gameDetails))
-  .then(({ response: { data } }) => dispatch(receiveGameErrors(data))));
+  .then(({ data }) => dispatch(receiveGameDetails(data)),(err => dispatch(receiveGameErrors(err.message))));

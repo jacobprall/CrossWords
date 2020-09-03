@@ -8,7 +8,7 @@ export default (state = [], { type, errors }) => {
 
   switch (type) {
     case RECEIVE_GAME_ERRORS:
-      return errors;
+      return [errors];
     default:
       return state;
   }
