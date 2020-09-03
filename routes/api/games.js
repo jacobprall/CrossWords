@@ -4,6 +4,7 @@ const { newGameCallback, patchGame } = require('./route_helpers/game');
 const Word = require('../../models/Word');
 const getNextWord = require('./route_helpers/game/getNextWord');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 const genWordSubArray = (wordSub, suffix = true) => {
   if (suffix) {
@@ -29,7 +30,7 @@ const getOneWord = (
     [direction]: { $in: wordSubArray },
     answer: { $nin: guessedWords },
   };
-  console.log(options);
+  
   return Word.find(options)
     .sort({
       len: -1,
@@ -52,8 +53,7 @@ router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   patchGame,
-);
-
+),
 router.get('/test', (req, res) => {
   const {
     difficulty,
@@ -69,7 +69,7 @@ router.get('/test', (req, res) => {
     wordSub,
     JSON.parse(guessedWords),
   ).then((words) => {
-    // console.log(word);
+
     res.json(words.map((word) => word.answer));
   });
 });
@@ -78,7 +78,7 @@ router.get('/test2', async (req, res) => {
   const { maxLength, direction, guessedWords, answersList } = req.body;
   const guessed = JSON.parse(guessedWords);
   const dir = JSON.parse(direction);
-  const answersSent = JSON.parse(answersList)
+  const answersSent = JSON.parse(answersList);
   const nextWord = await getNextWord(guessed, dir, maxLength, answersSent);
   res.json(nextWord);
 });
