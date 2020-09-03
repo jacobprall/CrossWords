@@ -152,7 +152,6 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
   const prevWord = wordsGuessed[wordsGuessed.length - 1];
 
   const wordSubArray = genWordSubArray(prevWord, dir);
-  // console.log(wordSubArray)
   const direction = dir ? 'suffixes' : 'prefixes';
 
   const { minLength, maxLength } = getLength();
