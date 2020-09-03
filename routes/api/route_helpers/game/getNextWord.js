@@ -7,6 +7,8 @@
 // if no word is returned from query, query again with 1 letter
 const Word = require('../../../../models/Word');
 
+const PREFERRED_OVERLAP = 3;
+
 // shuffle function
 function shuffle(a) {
   let j;
@@ -34,41 +36,27 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-// gets where word start, ie, current index
-
-const getOverlap = (oldWord, newWord, dir) => {
-  if (!oldWord) {
-    return 0;
-  }
-  if (!dir) {
-    switch (oldWord) {
-      case oldWord[oldWord.length - 3] === newWord[0] &&
-        oldWord[oldWord.length - 2] === newWord[1] &&
-        oldWord[oldWord.length - 1] === newWord[2]:
-        return 3;
-      case oldWord[oldWord.length - 2] === newWord[0] &&
-        oldWord[oldWord.length - 1] === newWord[1]:
-        return 2;
-      case oldWord[oldWord.length - 1] === newWord[0]:
-        return 1;
-      default:
-        return 0;
+/**
+ * 
+ * @param {String} a "Old word" against which 
+ * @param {String} b 
+ */
+const getOverlap = (a, b, oneTimeOnly=false) => {
+  if (a.length === 0 || b.length === 0) return 0;
+  
+  let i = 0;
+  const firstWordSuffix = a.slice(a.length - PREFERRED_OVERLAP);
+  while (i < PREFERRED_OVERLAP) {
+    const suffixSlice = firstWordSuffix.slice(i);
+    const secondWordSlice = b.slice(0, PREFERRED_OVERLAP - i);
+    if (suffixSlice === secondWordSlice) {
+      const modifier = oneTimeOnly ? 1 : -1
+      return modifier * (PREFERRED_OVERLAP - i);
     }
-  } else {
-    switch (oldWord) {
-      case oldWord[2] === newWord[newWord.length - 1] &&
-        oldWord[1] === newWord[newWord.length - 2] &&
-        oldWord[0] === newWord[newWord.length - 3]:
-        return 3;
-      case oldWord[1] === newWord[newWord.length - 1] &&
-        oldWord[0] === newWord[newWord.length - 2]:
-        return 2;
-      case oldWord[0] === newWord[newWord.length - 1]:
-        return 1;
-      default:
-        return 0;
-    }
+    i++;
   }
+  if (oneTimeOnly) return 0;
+  return getOverlap(b, a, true)
 };
 
 // get word sub. If dir = false, board moving from left to right,
@@ -104,8 +92,6 @@ const genWordSubArray = (guessed, dir) => {
       .reverse();
   }
 
-  
-
   // this was the broken one - fixed it
   return wordSub
     .split('')
@@ -129,16 +115,24 @@ const shouldSwapDir = (dir) => {
   const randomNum = Math.random();
   switch (dirWordCount % 5) {
     case 1:
-      if (randomNum < 0.15) { return !dir; }
+      if (randomNum < 0.15) {
+        return !dir;
+      }
       return dir;
     case 2:
-      if (randomNum < 0.3) { return !dir; }
+      if (randomNum < 0.3) {
+        return !dir;
+      }
       return dir;
     case 3:
-      if (randomNum < 0.6) { return !dir; }
+      if (randomNum < 0.6) {
+        return !dir;
+      }
       return dir;
     case 4:
-      if (randomNum < 0.85) { return !dir; }
+      if (randomNum < 0.85) {
+        return !dir;
+      }
       return dir;
     default:
       return !dir;
@@ -195,7 +189,6 @@ const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
     .exec()
     .catch((err) => console.log(err));
 };
-
 
 let dir = false;
 async function getNextWord(guessed, answersSent, maxLength = 12) {
