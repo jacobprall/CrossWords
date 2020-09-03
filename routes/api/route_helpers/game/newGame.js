@@ -1,4 +1,5 @@
 const Game = require('../../../../models/Game');
+const User = require('../../../../models/User');
 // const getNextWord = require('./getNextWord');
 const { getFirstWord } = require('./newGame/utils');
 const jwtDecode = require('../jwtDecode');
@@ -30,6 +31,8 @@ const newGameCallback = async (req, res) => {
         wordsGuessed,
         nextWord: { _id, clue, length },
       };
+
+      User.updateOne({ _id: userId }, { $push: { games: game.id } }).exec();
       res.json(returnObj);
     })
     .catch((err) => res.status(406).json(err));
