@@ -19,6 +19,17 @@ const activeGameReducer = (state={}, { type, game, gameDetails }) => {
   }
 }
 
+const answerHistoryReducer = (state=[], { type, gameDetails }) => {
+  Object.freeze(state);
+  let nextState = [...state];
+  switch(type) {
+    case RECEIVE_GAME_DETAILS:
+      return nextState.concat([gameDetails.prevAnswer]);
+    default:
+      return state;
+  }
+}
+
 const savedGameReducer = (state={}, { type, game }) => {
   Object.freeze(state);
   let nextState = { ...state };
@@ -30,5 +41,6 @@ const savedGameReducer = (state={}, { type, game }) => {
 
 export default combineReducers({
   active: activeGameReducer,
+  answerHistory: answerHistoryReducer,
   saved: savedGameReducer,
 })
