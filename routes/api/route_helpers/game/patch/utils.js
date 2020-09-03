@@ -82,7 +82,6 @@ const handleScore = (isCorrect, difficulty, length) => {
  * @returns {Integer} secondsChange
  */
 const checkGuess = (guess, game) => {
-  guess = JSON.parse(guess);
   Word.findById(guess.word)
     .then(async (word) => {
       let isCorrect = word.answer === guess.guessWord;
@@ -107,17 +106,13 @@ const checkGuess = (guess, game) => {
     .catch((err) => err);
 };
 
-
 const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
   const { score, timeRemaining } = game;
   const newScore = score + scoreChange;
-  // game timeRemaining field is in seconds, so we can just secondsChange to the previous value
-  // const newTimer = moment(timer).add(secondsChange, 'seconds');
   const newTime = timeRemaining + secondsChange;
-  const { guessedWord, wordId } = JSON.parse(guess);
   game.score = 0;
   game.timer = 60;
-  game.wordsGuessed.push(guessedWord);
+  game.wordsGuessed.push(guess);
   return game.save();
 };
 
@@ -129,8 +124,16 @@ const getNewGameState = async (game, reqBody) => {
   return { game, guess, ...result };
 };
 
+const cleanReqBody = (reqBody) => ({
+  gameId: reqBody.gameId,
+  guess: reqBody.guess,
+  timeRemaining: Number.parseInt(reqBody.timeRemaining, 10),
+  timeElapsed: Number.parseInt(reqBody.timeElapsed, 10),
+});
+
 module.exports = {
   checkGuess,
   updateGameState,
   getNewGameState,
+  cleanReqBody,
 };
