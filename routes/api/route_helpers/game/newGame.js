@@ -1,40 +1,39 @@
 const Game = require('../../../../models/Game');
-const getNextWord = require('./getNextWord');
+// const getNextWord = require('./getNextWord');
+const { getFirstWord } = require('./newGame/utils');
 const jwtDecode = require('../jwtDecode');
 
 const newGameCallback = async (req, res) => {
-  // Not sure how to use Passport to extract from the JWT...
-  // const jwt = req.headers.authorization.split(' ')[1];
+  const jwt = req.headers.authorization.split(' ')[1];
 
-  // const { id: userId } = jwtDecode(jwt, res);
-  const userId = '5f4d6d062bc236d9becf318e';
-  //added
-  const nextWordResult = await getNextWord([], [], true, 15);
-  const nextClue = nextWordResult[0];
-  const overlap = nextWordResult[1];
-  const nextDir = nextWordResult[2];
-  const { _id, clue, length } = nextClue;
+  const { id: userId } = jwtDecode(jwt, res);
+  const { _id, clue, length } = await getFirstWord().then((wrd) => wrd);
+  
   const newGame = new Game({
     user: userId,
-    wordsSent: [_id], // send result of getNextWord
+    wordsSent: [_id],
     wordsGuessed: [],
     score: 0,
     timeRemaining: 60.0,
     timeElapsed: 0.0,
-    overlap,
-    nextDir,
-
+    overlap: 0,
+    nextDir: true,
   });
-  const gameObj = await newGame.save().then((game) => ({
-    gameId: game._id,
-    timeRemaining: game.timeRemaining,
-    timeElapsed: game.timeElapsed,
-    score: game.score,
-    wordsSent: game.wordsSent,
-    wordsGuessed: game.wordsGuessed,
-    nextClue: { _id, clue, length },
-  }));
-  res.json(gameObj);
+
+  newGame
+    .save()
+    .then((game) => {
+      const { score, wordsSent, wordsGuessed } = game;
+      const returnObj = {
+        gameId: game.id,
+        score,
+        wordsSent,
+        wordsGuessed,
+        nextWord: { _id, clue, length },
+      };
+      res.json(returnObj);
+    })
+    .catch((err) => res.status(406).json(err));
 };
 
 module.exports = newGameCallback;
