@@ -9,7 +9,7 @@ const Input = styled.input`
   grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart};
   caret-color: transparent;
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 500;
   padding-bottom: 0rem;
   &:focus {
@@ -28,14 +28,17 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
     const update = () => {
         return e => {
             let input = e.target.value;
+            let lastChar = input[input.length - 1]; 
             let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
-            if (!chars.split("").concat("").includes(input[input.length - 1])) {
+
+            if (!chars.split("").concat("").includes(lastChar)) {
                 return;
             }
+
             setChar(input[input.length - 1]); 
 
             let gridItem = {};
-            gridItem[rowStart] = [colStart, input];
+            gridItem[rowStart] = [colStart, lastChar];
             addGridItem(
                 { ...gridItem}
             )
@@ -43,6 +46,7 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
     }
 
     useEffect(() => {
+
         setChar(value); 
     }, [value])
 

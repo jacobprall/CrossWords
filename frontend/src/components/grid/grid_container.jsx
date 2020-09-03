@@ -16,18 +16,18 @@ const Grid = styled.div`
   width: 50.4rem;
 `;
 
-export const GridContainer = (props) => {
+export const GridContainer = () => {
     let [gridItems, setGridItems] = useState([]);
     const [state, dispatch] = useStateValue(); 
 
     const addGridItem = (gridItem) => {
         setGridItems(
             gridItems.concat(gridItem)
-        )
+        );
     }
 
     useEffect(() => {
-
+        let isSubscribed = true; 
         const updateState = async () => {
             await dispatch(
                 {
@@ -37,7 +37,9 @@ export const GridContainer = (props) => {
             )
         }
 
-        updateState(); 
+        if (isSubscribed) updateState(); 
+
+        return () => updateState();
     }, [gridItems])
 
     let inputs = []; 
