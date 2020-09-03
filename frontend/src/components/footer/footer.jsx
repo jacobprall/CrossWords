@@ -10,6 +10,7 @@ const Container = styled.div`
 const FooterText = styled.p`
     font-size: 1rem;  
     margin-right: 1.5rem;
+    margin-bottom: 1rem;
   `
 export const Footer = ({ loggedIn }) => (
     <Container loggedIn={loggedIn}>

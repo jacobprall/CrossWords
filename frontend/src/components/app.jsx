@@ -10,7 +10,7 @@ import { Footer } from './footer/footer';
 import { useModal } from './custom_hooks/useModal';
 import useStick from './custom_hooks/useStick'; 
 import styled from 'styled-components'; 
-// import { GridContainer } from './grid/grid_container'; 
+
 
 const App = () => {
   const { stick, ele } = useStick();
@@ -18,10 +18,11 @@ const App = () => {
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
   const history = useHistory(); 
   const initialState = {};
-  for(let i = 0; i < 20; i++) initialState[i + 1] = {}; 
+  for (let i = 0; i < 20; i++) initialState[i + 1] = {}; 
+  
   const reducer = (state, action) => {
     let nextState = { ...state };
-
+    
     switch(action.type) {
       case 'addGridItems':
         action.gridItems.forEach(gridItem => {
@@ -31,15 +32,15 @@ const App = () => {
           nextState[row][col] = val;    
         });
         return nextState;
-      default: 
+        default: 
         return state; 
+      }
     }
-  }
-
-  useEffect(() => {
+  
+    useEffect(() => {
     if (loggedIn) {
       toggle(false);
-      history.push("/");
+      history.replace("/");
     } else {
       toggle(true); 
     }
