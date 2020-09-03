@@ -28,15 +28,20 @@ const Grid = styled.div`
 //     }, 
 //     seconds: 54
 // }
+
 export const GridContainer = () => {
     const [gridItems, setGridItems] = useState([]);
     const [state, dispatch] = useStateValue(); 
+    const [focus, setFocus] = useState(false); 
+    const [row, setRow] = useState(null); 
+
     const grid = state["grid"];
 
     const addGridItem = (gridItem) => {
         setGridItems(
             gridItems.concat(gridItem)
         );
+        setFocus(false); 
     }
 
     useEffect(() => {
@@ -60,27 +65,28 @@ export const GridContainer = () => {
         for(let j = 0; j < HEIGHT; j++) {
             let possibleVal = grid[i + 1][j + 1]; 
             let val = possibleVal ? possibleVal : ""; 
-            let focus; 
+        
+            let foc; 
             if (j + 1 === 1 && i > 1) {
-                focus = !possibleVal && grid[i][WIDTH] ? true : false;
+                foc = !possibleVal && grid[i][WIDTH] ? true : false;
             } else {
-                focus = !possibleVal && grid[i + 1][j] ? true : false; 
+                foc = !possibleVal && grid[i + 1][j] ? true : false; 
             }
        
-            if (!possibleVal && grid[i + 1][j]) {
-                console.log("==--==========")
-            }
-
             inputs.push(
                 <GridItem key={`${i} ${j}`} 
                     rowStart={i + 1} 
                     colStart={j + 1} 
                     value={val}
                     addGridItem={addGridItem}
-                    focus={focus}
+                    focus={foc && !focus && (row && i + 1 === row) ? foc : false}
+                    setFocus={setFocus}
+                    setRow={setRow}
+                    width={WIDTH}
                 />
             )
         }
+
     }
 
     return (

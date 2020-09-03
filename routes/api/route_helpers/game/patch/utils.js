@@ -128,7 +128,7 @@ const getNewGameState = async (game, reqBody) => {
   game.timeElapsed = timeElapsed;
   game.save();
 
-  const { guess } = reqBody;
+  // const { guess } = reqBody;
   const lastClueIdSent = game.wordsSent.slice(-1)[0];
 
 
