@@ -33,6 +33,18 @@ export default function MainPage(props) {
       <GridContainer/>
       <TimeScoreClue newGame={newGame}/>
     </MainContainer>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     </Container>
   );
 }

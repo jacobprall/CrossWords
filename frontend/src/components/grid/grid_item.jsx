@@ -1,12 +1,12 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import styled from 'styled-components'; 
+import { use } from 'passport';
 
 const Input = styled.input`
   width: 2.3rem; 
   height: 2.3rem; 
   border-radius: 0 0 0 0;
-  grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart} /
-    ${(props) => props.rowEnd} / ${(props) => props.colEnd};
+  grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart};
   caret-color: transparent;
   text-align: center;
   font-size: 2.5rem;
@@ -22,8 +22,8 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ rowStart, rowEnd, colStart, colEnd }) => {
-    let [char, setChar] = useState(""); 
+export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
+    const [char, setChar] = useState(""); 
 
     const update = () => {
         return e => {
@@ -33,10 +33,20 @@ export const GridItem = ({ rowStart, rowEnd, colStart, colEnd }) => {
                 return;
             }
             setChar(input[input.length - 1]); 
+
+            let gridItem = {};
+            gridItem[rowStart] = [colStart, input];
+            addGridItem(
+                { ...gridItem}
+            )
         }
     }
 
-    const handleKeyDown = (e) => {
+    useEffect(() => {
+        setChar(value); 
+    }, [value])
+
+    const handleKeyDown = () => {
         return e => {
             if (e && e.keyCode === 8) {
                 setChar("");
@@ -46,10 +56,8 @@ export const GridItem = ({ rowStart, rowEnd, colStart, colEnd }) => {
     
     return (
         <Input type="text"
-            rowStart={rowStart} 
-            rowEnd={rowEnd} 
+            rowStart={rowStart}  
             colStart={colStart} 
-            colEnd={colEnd}
             value={char.toUpperCase()}
             onKeyDown={handleKeyDown()}
             onChange={update()}

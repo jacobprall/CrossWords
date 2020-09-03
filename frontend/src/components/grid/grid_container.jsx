@@ -1,6 +1,8 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import styled from 'styled-components'; 
 import { GridItem } from './grid_item'; 
+import { useStateValue } from '../state/state'; 
+
 export const HEIGHT = 20; 
 export const WIDTH = 20; 
 
@@ -15,16 +17,42 @@ const Grid = styled.div`
 `;
 
 export const GridContainer = (props) => {
-    let inputs = []; 
+    let [gridItems, setGridItems] = useState([]);
+    const [state, dispatch] = useStateValue(); 
 
+    const addGridItem = (gridItem) => {
+        setGridItems(
+            gridItems.concat(gridItem)
+        )
+    }
+
+    useEffect(() => {
+
+        const updateState = async () => {
+            await dispatch(
+                {
+                    type: 'addGridItems', 
+                    gridItems: gridItems
+                }
+            )
+        }
+
+        updateState(); 
+    }, [gridItems])
+
+    let inputs = []; 
+    
     for(let i = 0; i < WIDTH; i++) {
         for(let j = 0; j < HEIGHT; j++) {
+            let possibleVal = state[i + 1][j + 1]; 
+            let val = possibleVal ? possibleVal : ""; 
+         
             inputs.push(
                 <GridItem key={`${i} ${j}`} 
                     rowStart={i + 1} 
-                    rowEnd={i + 2} 
                     colStart={j + 1} 
-                    colEnd={j + 2}/>
+                    value={val}
+                    addGridItem={addGridItem}/>
             )
         }
     }
