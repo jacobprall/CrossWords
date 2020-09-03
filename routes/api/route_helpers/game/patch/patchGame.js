@@ -21,10 +21,9 @@ const patchGameCallback = (req, res) => {
     .then((game) => getNewGameState(game, cleanedReqBody))
     .then(updateGameState)
     .then(async (game) => {
-      const [nextWord, overlap, nextDir] = await getNextWord(game);
+      const [nextWord, overlap] = await getNextWord(game);
 
-      console.log([nextWord, overlap, nextDir]);
-      res.json([nextWord, overlap, nextDir]);
+      console.log([nextWord, overlap]);
 
       game.wordsSent.push(nextWord._id);
       game = await game.save();
@@ -42,7 +41,7 @@ const patchGameCallback = (req, res) => {
           length,
         },
         overlap,
-        nextDir,
+        nextDir: overlap > 0,
       };
 
       res.json(returnObject);
