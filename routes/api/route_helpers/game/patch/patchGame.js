@@ -31,7 +31,9 @@ const patchGameCallback = (req, res) => {
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
-      game = await game.save().then(g => g);
+
+      game = await game.save().then(res => console.log(res));
+
 
       const { id, clue, difficulty, length } = nextWord;
 
