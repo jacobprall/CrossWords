@@ -17,8 +17,9 @@ const Grid = styled.div`
 `;
 
 export const GridContainer = () => {
-    let [gridItems, setGridItems] = useState([]);
+    const [gridItems, setGridItems] = useState([]);
     const [state, dispatch] = useStateValue(); 
+    const grid = state["grid"];
 
     const addGridItem = (gridItem) => {
         setGridItems(
@@ -45,7 +46,7 @@ export const GridContainer = () => {
     
     for(let i = 0; i < WIDTH; i++) {
         for(let j = 0; j < HEIGHT; j++) {
-            let possibleVal = state[i + 1][j + 1]; 
+            let possibleVal = grid[i + 1][j + 1]; 
             let val = possibleVal ? possibleVal : ""; 
          
             inputs.push(
