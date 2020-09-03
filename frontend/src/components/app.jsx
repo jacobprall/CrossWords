@@ -19,7 +19,12 @@ const App = () => {
   const history = useHistory(); 
   const initialState = {};
   for (let i = 0; i < 20; i++) initialState[i + 1] = {}; 
-  
+  //grid representation: 
+  // {
+  //    row : { col : value },
+  //    row : { col : value },
+  // }
+  //allows easy and efficient access to val: state[row][col] = val
   const reducer = (state, action) => {
     let nextState = { ...state };
     
@@ -33,7 +38,7 @@ const App = () => {
         });
         return nextState;
         default: 
-        return state; 
+          return state; 
       }
     }
   
@@ -51,7 +56,6 @@ const App = () => {
     height: 100%; 
     position: relative; 
   `
- //{row : [col, val]}
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
       <AppContainer>

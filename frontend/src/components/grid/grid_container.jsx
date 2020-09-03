@@ -53,7 +53,8 @@ export const GridContainer = () => {
                     rowStart={i + 1} 
                     colStart={j + 1} 
                     value={val}
-                    addGridItem={addGridItem}/>
+                    addGridItem={addGridItem}
+                />
             )
         }
     }
