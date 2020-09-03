@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'; 
 
-export const useFetch = () => {
+export const useFetchRedux = () => {
     const [action, setAction] = useState(null); 
     const [isLoading, setIsLoading] = useState(false); 
     const [error, setError] = useState(null); 
