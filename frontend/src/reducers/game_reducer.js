@@ -10,7 +10,7 @@ const activeGameReducer = (state={}, { type, game, gameDetails }) => {
 
   switch(type) {
     case RECEIVE_ACTIVE_GAME:
-      return Object.assign({}, state, { [game._id]: game });
+      return Object.assign({}, state, { [game.gameId]: game });
     case RECEIVE_GAME_DETAILS:
       nextState[gameDetails.gameId] = Object.assign({}, nextState[gameDetails.gameId], gameDetails);
       return nextState;

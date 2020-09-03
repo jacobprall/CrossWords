@@ -118,7 +118,7 @@ const updateGameState = ({ game, guess, timeChange, scoreChange }) => {
   game.timeRemaining += timeChange;
   game.score = Math.max(0, game.score + scoreChange);
   game.wordsGuessed.push(guess);
-  return game.save();
+  return game.save().then(g => g);
 };
 
 const getNewGameState = async (game, reqBody) => {
@@ -126,7 +126,7 @@ const getNewGameState = async (game, reqBody) => {
 
   game.timeRemaining = timeRemaining;
   game.timeElapsed = timeElapsed;
-  game.save();
+  // game.save();
 
   // const { guess } = reqBody;
   const lastClueIdSent = game.wordsSent.slice(-1)[0];
