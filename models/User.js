@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
+const { ObjectId } = Schema.Types;
 
 const UserSchema = new Schema(
   {
@@ -17,10 +18,12 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    games: {
-      type: Array,
-      required: true,
-    },
+    games: [
+      {
+        type: ObjectId,
+        ref: 'Game',
+      },
+    ],
   },
   {
     timestamps: true,

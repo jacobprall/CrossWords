@@ -9,10 +9,12 @@ const GameSchema = new Schema(
       type: ObjectId,
       required: true,
     },
-    wordsGuessed: {
-      type: Array,
-      required: true,
-    },
+    wordsGuessed: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     wordsSent: [
       {
         type: ObjectId,
@@ -26,7 +28,7 @@ const GameSchema = new Schema(
     timeRemaining: {
       type: Number,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,

@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 const moment = require('moment');
 
 const Word = require('../../../../../models/Word');
+const Game = require('../../../../../models/Game');
 
 // Check to see if the submitted word was correct
 //   Determine how many points that was worth
@@ -59,7 +61,7 @@ const handleScore = (isCorrect, difficulty, length) => {
   }
 
   // time modifier(s)
-  const currentTime = abs(Math.floor(new Date().getTime() / 1000)); // should be in seconds
+  const currentTime = Math.floor(new Date().getTime() / 1000); // should be in seconds
   const timeDifferential = lastTime - currentTime;
 
   if (timeDifferential < 0) {
@@ -81,56 +83,53 @@ const handleScore = (isCorrect, difficulty, length) => {
  * @returns {Integer} scoreChange
  * @returns {Integer} secondsChange
  */
-const checkGuess = (guess, game) => {
-  guess = JSON.parse(guess);
-  Word.findById(guess.word)
+const checkGuess = (guess, game, lastClueIdSent) => {
+  return Word.findById(lastClueIdSent)
     .then(async (word) => {
-      let isCorrect = word.answer === guess.guessWord;
-      let difficulty = word.difficulty;
+      const isCorrect = word.answer === guess;
+      // let difficulty = word.difficulty;
 
-      let length = word.length;
+      const scoreChange = isCorrect ? 60 : 0;
+      const secondsChange = isCorrect ? 60 : 0;
 
-      //let timeRemaining =
-      // let secondsChange = handleTime(isCorrect, timeRemaining, gameStartTime);
-      // let scoreChange = handleScore(
-      //   isCorrect,
-      //   difficulty,
-      //   length,
-      //   gameStartTime,
-      // );
-
-      // return {
-      //      scoreChange,
-      //      secondsChange
-      // }
+      return {
+        scoreChange,
+        secondsChange,
+      };
     })
     .catch((err) => err);
 };
 
-
 const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
-  const { score, timeRemaining } = game;
-  const newScore = score + scoreChange;
-  // game timeRemaining field is in seconds, so we can just secondsChange to the previous value
-  // const newTimer = moment(timer).add(secondsChange, 'seconds');
-  const newTime = timeRemaining + secondsChange;
-  const { guessedWord, wordId } = JSON.parse(guess);
-  game.score = 0;
-  game.timer = 60;
-  game.wordsGuessed.push(guessedWord);
+  game.score += scoreChange;
+  game.timer += secondsChange;
+  game.wordsGuessed.push(guess);
   return game.save();
 };
 
 const getNewGameState = async (game, reqBody) => {
   const { guess } = reqBody;
+  const lastClueIdSent = game.wordsSent.slice(-1)[0];
 
-  const result = await checkGuess(guess, game);
-
+  const result = await checkGuess(guess, game, lastClueIdSent);
   return { game, guess, ...result };
 };
+
+/**
+ * Push forward only approved body params; convert strings to Number when needed
+ * @param {Object} reqBody - Express req body
+ * @returns {Object} {gameId, guess, timeRemaining, timeElapsed}
+ */
+const cleanReqBody = (reqBody) => ({
+  gameId: reqBody.gameId,
+  guess: reqBody.guess,
+  timeRemaining: Number.parseInt(reqBody.timeRemaining, 10),
+  timeElapsed: Number.parseInt(reqBody.timeElapsed, 10),
+});
 
 module.exports = {
   checkGuess,
   updateGameState,
   getNewGameState,
+  cleanReqBody,
 };

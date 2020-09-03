@@ -2,23 +2,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 const Game = require('../../../../../models/Game');
-const { updateGameState, getNewGameState } = require('./utils');
+const { updateGameState, getNewGameState, cleanReqBody } = require('./utils');
 const getNextWord = require('../getNextWord');
 
-module.exports = (req, res) => {
+/**
+ * Receive a guessed word and retrieve the next clue and updated game state
+ * @param {Object} req.body Express req object
+ * @param {String} req.body.gameId - ID of the current game
+ * @param {String} req.body.guess  - Guess of the current clue
+ * @param {Integer} req.body.timeRemaining  - Seconds left on the clock
+ * @param {Integer} req.body.timeElapsed  - Seconds elapsed in this game
+ * @returns {gameDetails}
+ */
+const patchGameCallback = (req, res) => {
+  const cleanedReqBody = cleanReqBody(req.body);
+
   return Game.findById(req.params.id)
-    .then((game) => getNewGameState(game, req.body))
+    .then((game) => getNewGameState(game, cleanedReqBody))
     .then(updateGameState)
     .then(async (game) => {
-      // Generate a new clue based on current conditions
-      // REMOVE JSON FOR PRODUCTION
+      const [nextWord, overlap] = await getNextWord(game);
 
-      const [nextWord, overlap, nextDir] = await getNextWord(
-        game.wordsGuessed,
-        game.wordsSent,
-        game.nextDir || false,
-        game.maxLength || 12,
-      );
+      console.log([nextWord, overlap]);
+
       game.wordsSent.push(nextWord._id);
       game = await game.save();
 
@@ -35,7 +41,7 @@ module.exports = (req, res) => {
           length,
         },
         overlap,
-        nextDir,
+        nextDir: overlap > 0,
       };
 
       res.json(returnObject);
@@ -56,3 +62,5 @@ module.exports = (req, res) => {
 //   const nextWord = await getNextWord(guessed, dir, maxLength, answersSent);
 //   res.json(nextWord);
 // });
+
+module.exports = patchGameCallback;

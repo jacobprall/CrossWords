@@ -21,14 +21,18 @@ const WordSchema = new Schema(
       type: Number,
       required: true,
     },
-    prefixes: [{
-      type: String,
-      required: true,
-    }],
-    suffixes: [{
-      type: String,
-      required: true,
-    }],
+    prefixes: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    suffixes: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,
