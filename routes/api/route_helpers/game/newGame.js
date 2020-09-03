@@ -10,26 +10,29 @@ const newGameCallback = async (req, res) => {
   const userId = '5f4d6d062bc236d9becf318e';
   //added
   const nextWordResult = await getNextWord([], [], true, 15);
-  const nextWord = nextWordResult[0];
+  const nextClue = nextWordResult[0];
   const overlap = nextWordResult[1];
-  const nextDirection = nextWordResult[2];
-  const { _id, clue, length } = nextWord;
+  const nextDir = nextWordResult[2];
+  const { _id, clue, length } = nextClue;
   const newGame = new Game({
     user: userId,
     wordsSent: [_id], // send result of getNextWord
     wordsGuessed: [],
     score: 0,
-    timer: 60,
+    timeRemaining: 60.0,
+    timeElapsed: 0.0,
     overlap,
-    nextDirection,
+    nextDir,
 
   });
   const gameObj = await newGame.save().then((game) => ({
     gameId: game._id,
+    timeRemaining: game.timeRemaining,
+    timeElapsed: game.timeElapsed,
     score: game.score,
     wordsSent: game.wordsSent,
     wordsGuessed: game.wordsGuessed,
-    nextWord: { _id, clue, length },
+    nextClue: { _id, clue, length },
   }));
   res.json(gameObj);
 };
