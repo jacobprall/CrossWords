@@ -2,7 +2,7 @@ import {
   RECEIVE_GAME_ERRORS,
 } from '../actions/game_actions';
 
-export default (state = [], { errors }) => {
+export default (state = [], { type, errors }) => {
   Object.freeze(state);
   let nextState = { ...state }
 
