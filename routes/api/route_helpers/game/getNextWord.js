@@ -40,6 +40,12 @@ const getOverlap = (oldWord, newWord, dir) => {
     return 0;
   }
   if (dir) {
+    switch (oldWord) {
+      case (oldWord[oldWord.length - 4] === newWord[0]):
+        
+      }
+      
+      
     let counter = 0;
     let i = 0;
     while (i < oldWord.length) {
@@ -75,8 +81,8 @@ const getWordSub = (prevWord, dir) => {
 
 // Get array of subs of word sub.
 // word is JAMES
-// If dir is false, NIP becomes [MES, ES, S]; left to right
-// if dir is true, PAR becomes [JAM, JA, J]; right to left
+// If dir is false, MES becomes [MES, ES, S]; left to right
+// if dir is true, JAM becomes [JAM, JA, J]; right to left
 
 const genWordSubArray = (guessed, dir) => {
   if (guessed.length === 0) {
@@ -89,10 +95,11 @@ const genWordSubArray = (guessed, dir) => {
   if (dir) {
     return wordSub
       .split('')
-      .map((_ele, i) => wordSub.slice(0, i + 1))
+      .map((_ele, i) => wordSub.slice(0, i + 1)) // slices beginning of word. 0,1 - 0,2 - 0,3
       .reverse();
   }
-  return wordSub.split('').map((_ele, i) => wordSub.slice(i, wordSub.length));
+  // this was the broken one - fixed it
+  return wordSub.split('').map((_ele, i) => wordSub.slice(2 - i)); // slices end of word. 2,3 - 1,3 - 0,3
 };
 
 // queries database for possible next words list of 10 words
