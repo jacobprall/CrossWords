@@ -23,6 +23,10 @@ const GameSchema = new Schema(
       type: Number,
       required: true,
     },
+    timeRemaining: {
+      type: Number,
+      required: true,
+    }
   },
   {
     timestamps: true,

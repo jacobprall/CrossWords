@@ -25,8 +25,8 @@ module.exports = (req, res) => {
       const { id, clue, difficulty, length } = nextWord;
 
       const returnObject = {
+        timeRemaining: game.timeRemaining,
         gameId: game._id,
-        timer: game.timer,
         score: game.score,
         nextClue: {
           id,

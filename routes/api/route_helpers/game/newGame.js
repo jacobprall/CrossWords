@@ -22,6 +22,7 @@ const newGameCallback = async (req, res) => {
     timer: 60,
     overlap,
     nextDirection,
+
   });
   const gameObj = await newGame.save().then((game) => ({
     gameId: game._id,
