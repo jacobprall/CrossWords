@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'; 
 // import { use } from 'passport';
 
+
 const Input = styled.input`
   width: 2.3rem; 
   height: 2.3rem; 
@@ -22,7 +23,7 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ rowStart, colStart, addGridItem, value, focus}) => {
+export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width}) => {
     const [char, setChar] = useState(""); 
 
     const update = () => {
@@ -57,6 +58,15 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus}) => {
         }
     }
     
+    const handleClick = () => {
+        setFocus(true); 
+        if (colStart === width) {
+            setRow(rowStart + 1); 
+        } else {
+            setRow(rowStart); 
+        }
+    }
+
     return (
         <Input type="text"
             rowStart={rowStart}  
@@ -64,6 +74,7 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus}) => {
             value={char.toUpperCase()}
             onKeyDown={handleKeyDown()}
             onChange={update()}
+            onClick={() => handleClick()}
             ref={focus ? input => input && input.focus() : null}
         />
     )
