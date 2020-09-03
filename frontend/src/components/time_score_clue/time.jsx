@@ -12,6 +12,7 @@ const Start = styled.div`
 `
 
 //whatever button starts the game sends in starGame=true as a prop
+
 export const Time = ({ newGame }) => {
     const [seconds, setSeconds] = useState() ;
     const [isTicking, setIsTicking] = useState(false);

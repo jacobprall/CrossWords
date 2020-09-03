@@ -35,7 +35,7 @@ const LinksContainer = styled.div`
 `
 
 const LoggedInNavigationSection = styled.div`
-  width: 30rem; 
+  width: 46rem; 
   display: flex; 
   justify-content: space-around; 
   align-items: center; 
@@ -124,7 +124,9 @@ export default function Navbar({sticky, ele}) {
         <LoggedInNavigationSection>
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
           <LoggedInNavLink to={"/newGame"}>New Game</LoggedInNavLink>
-          <LoggedInNavLink to={"/"}>Stats</LoggedInNavLink>
+          <LoggedInNavLink to={"/stats"}>Stats</LoggedInNavLink>
+          <LoggedInNavLink to={"/stats"}>Pause</LoggedInNavLink>
+          <LoggedInNavLink to={"/stats"}>save</LoggedInNavLink>
           <LogoutButton className="nav-right" onClick={() => setOut(true)}>Logout</LogoutButton>
         </LoggedInNavigationSection>
       )

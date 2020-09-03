@@ -22,7 +22,7 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
+export const GridItem = ({ rowStart, colStart, addGridItem, value, focus}) => {
     const [char, setChar] = useState(""); 
 
     const update = () => {
@@ -64,6 +64,7 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value}) => {
             value={char.toUpperCase()}
             onKeyDown={handleKeyDown()}
             onChange={update()}
+            ref={focus ? input => input && input.focus() : null}
         />
     )
 }
