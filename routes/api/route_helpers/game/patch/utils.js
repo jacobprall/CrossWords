@@ -120,8 +120,15 @@ const updateGameState = ({ game, guess, secondsChange, scoreChange }) => {
 };
 
 const getNewGameState = async (game, reqBody) => {
+  const { guess, timeRemaining, timeElapsed } = reqBody;
+
+  game.timeRemaining = timeRemaining;
+  game.timeElapsed = timeElapsed;
+  game.save();
+
   const { guess } = reqBody;
   const lastClueIdSent = game.wordsSent.slice(-1)[0];
+
 
   const result = await checkGuess(guess, game, lastClueIdSent);
   return { game, guess, ...result };

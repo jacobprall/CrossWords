@@ -8,16 +8,17 @@ const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
   const { id: userId } = jwtDecode(jwt, res);
-
   const { _id, clue, length } = await getFirstWord().then((wrd) => wrd);
+  
   const newGame = new Game({
     user: userId,
     wordsSent: [_id],
     wordsGuessed: [],
     score: 0,
-    timeRemaining: 60,
+    timeRemaining: 60.0,
+    timeElapsed: 0.0,
     overlap: 0,
-    nextDirection: true,
+    nextDir: true,
   });
 
   newGame
