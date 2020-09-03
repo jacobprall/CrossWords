@@ -16,5 +16,7 @@ const receiveGameDetails = gameDetails => ({
 export const fetchNewGame = () => dispatch => getNewGame()
   .then(game => dispatch(receiveGame(game)));
 
+
+// gameUpdates is a POJO of the form: { gameId: String, timeRemaining: Number, timeElapsed: Number }
 export const updateGameDetails = gameUpdates => dispatch => patchGame(gameUpdates)
   .then(gameDetails => dispatch(receiveGameDetails(gameDetails)));
