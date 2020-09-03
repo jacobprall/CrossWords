@@ -40,9 +40,13 @@ const getOverlap = (oldWord, newWord, dir) => {
     return 0;
   }
   if (dir) {
+    let overlap = 0;
     switch (oldWord) {
       case (oldWord[oldWord.length - 4] === newWord[0]):
-        
+        overlap = 3;
+        break;
+      case (oldWord[oldWord.length - 3] === newWord[0]):
+
       }
       
       
