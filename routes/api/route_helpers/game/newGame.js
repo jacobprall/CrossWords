@@ -30,7 +30,7 @@ const newGameCallback = async (req, res) => {
         score,
         wordsSent,
         wordsGuessed,
-        nextWord: { _id, clue, length },
+        nextClue: { _id, clue, length },
       };
 
       User.updateOne({ _id: userId }, { $push: { games: game.id } }).exec();
