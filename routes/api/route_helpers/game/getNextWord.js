@@ -1,11 +1,8 @@
 /* eslint-disable consistent-return */
-// getNextWord method
-// takes in words guessed, boolean for right or left,
-// uses length of words guessed to determine difficulty
-// boolean determines if query prefix or suffix
-// if no word is returned from query, query again with 2 letters
-// if no word is returned from query, query again with 1 letter
+
 const Word = require('../../../../models/Word');
+
+const PREFERRED_OVERLAP = 3;
 
 // shuffle function
 function shuffle(a) {
@@ -34,41 +31,36 @@ const getDifficulty = (guessed) => {
   return difficulty;
 };
 
-// gets where word start, ie, current index
+/**
+ * Get the overlap between two words and a vector from the beginning or end of A.
+ * @param {String} a "Old word" against which we test the
+ * @param {String} b "New word"
+ * @param {[Boolean]} oneTimeOnly Allows one recursive call to check the reverse situation.
+ * @returns {Integer} - Positive values indicate that word A lines up with the
+ *                      first X characters of word B.
+ *                      Negative values indicate that word B lines up
+ *                      with the last X characters of A
+ * @example getOverlap("PIZZA", "ZAP") === -2
+ * @example getOverlap("ZAP", "PIZZA") === -1
+ * @example getOverlap("BLAH", "AHA") === -2
+ * @example getOverlap("BLAH", "CABLA") === 3
+ */
+const getOverlap = (a, b, oneTimeOnly = false) => {
+  if (a.length === 0 || b.length === 0) return 0;
 
-const getOverlap = (oldWord, newWord, dir) => {
-  if (!oldWord) {
-    return 0;
-  }
-  if (!dir) {
-    switch (oldWord) {
-      case oldWord[oldWord.length - 3] === newWord[0] &&
-        oldWord[oldWord.length - 2] === newWord[1] &&
-        oldWord[oldWord.length - 1] === newWord[2]:
-        return 3;
-      case oldWord[oldWord.length - 2] === newWord[0] &&
-        oldWord[oldWord.length - 1] === newWord[1]:
-        return 2;
-      case oldWord[oldWord.length - 1] === newWord[0]:
-        return 1;
-      default:
-        return 0;
+  let i = 0;
+  const firstWordSuffix = a.slice(a.length - PREFERRED_OVERLAP);
+  while (i < PREFERRED_OVERLAP) {
+    const suffixSlice = firstWordSuffix.slice(i);
+    const secondWordSlice = b.slice(0, PREFERRED_OVERLAP - i);
+    if (suffixSlice === secondWordSlice) {
+      const modifier = oneTimeOnly ? 1 : -1;
+      return modifier * (PREFERRED_OVERLAP - i);
     }
-  } else {
-    switch (oldWord) {
-      case oldWord[2] === newWord[newWord.length - 1] &&
-        oldWord[1] === newWord[newWord.length - 2] &&
-        oldWord[0] === newWord[newWord.length - 3]:
-        return 3;
-      case oldWord[1] === newWord[newWord.length - 1] &&
-        oldWord[0] === newWord[newWord.length - 2]:
-        return 2;
-      case oldWord[0] === newWord[newWord.length - 1]:
-        return 1;
-      default:
-        return 0;
-    }
+    i++;
   }
+  if (oneTimeOnly) return 0;
+  return getOverlap(b, a, true);
 };
 
 // get word sub. If dir = false, board moving from left to right,
@@ -104,8 +96,6 @@ const genWordSubArray = (guessed, dir) => {
       .reverse();
   }
 
-  
-
   // this was the broken one - fixed it
   return wordSub
     .split('')
@@ -123,22 +113,30 @@ const genWordSubArray = (guessed, dir) => {
  * @returns {Model{Word}}
  */
 
-let dirWordCount = 0;
 const shouldSwapDir = (dir) => {
+  let dirWordCount = 0;
   dirWordCount += 1;
   const randomNum = Math.random();
   switch (dirWordCount % 5) {
     case 1:
-      if (randomNum < 0.15) { return !dir; }
+      if (randomNum < 0.15) {
+        return !dir;
+      }
       return dir;
     case 2:
-      if (randomNum < 0.3) { return !dir; }
+      if (randomNum < 0.3) {
+        return !dir;
+      }
       return dir;
     case 3:
-      if (randomNum < 0.6) { return !dir; }
+      if (randomNum < 0.6) {
+        return !dir;
+      }
       return dir;
     case 4:
-      if (randomNum < 0.85) { return !dir; }
+      if (randomNum < 0.85) {
+        return !dir;
+      }
       return dir;
     default:
       return !dir;
@@ -164,16 +162,11 @@ const getMaxLength = (guessed) => {
  * @param {Integer} maxLength
  * @param {Boolean} dir
  */
-
 const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
   const wordSubArray = genWordSubArray(guessed, dir);
   const difficulty = getDifficulty(guessed);
-  let direction;
-  if (dir) {
-    direction = 'suffixes';
-  } else {
-    direction = 'prefixes';
-  }
+  let direction = 'prefixes';
+  if (dir) direction = 'suffixes';
 
   maxLength = Number(maxLength);
   maxLength = getMaxLength(guessed);
@@ -196,28 +189,24 @@ const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
     .catch((err) => console.log(err));
 };
 
-
-let dir = false;
-async function getNextWord(guessed, answersSent, maxLength = 12) {
-  const guessedWord = guessed[guessed.length - 1];
-  dir = shouldSwapDir(dir);
-  let word = await possibleNextWords(guessed, dir, maxLength, answersSent)
+const getOneWord = (params) => {
+  return possibleNextWords(...params)
     .then((res) => {
       return shuffle(res)[0];
     })
     .catch((err) => console.error(err));
-  // console.log(word, guessedWord);
+};
+
+async function getNextWord(guessed, answersSent, maxLength = 12) {
+  let dir = false;
+  const guessedWord = guessed[guessed.length - 1];
+  dir = shouldSwapDir(dir);
+  let word = await getOneWord(guessed, dir, maxLength, answersSent);
+
   if (!word) {
-    word = await possibleNextWords(guessed, !dir, maxLength, answersSent)
-      .then((res) => {
-        return shuffle(res)[0];
-      })
-      .catch((err) => console.error(err));
-    const overlap = getOverlap(guessedWord, word.answer, !dir); // is guessed word undefined?
-    return [word, overlap, !dir];
+    word = await getOneWord(guessed, !dir, maxLength, answersSent);
   }
   const overlap = getOverlap(guessedWord, word.answer, dir);
-  // console.log(overlap);
   return [word, overlap, dir];
 }
 
