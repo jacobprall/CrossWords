@@ -37,9 +37,18 @@ const getDifficulty = (guessed) => {
 };
 
 /**
- * 
- * @param {String} a "Old word" against which 
- * @param {String} b 
+ * Get the overlap between two words and a vector from the beginning or end of A.
+ * @param {String} a "Old word" against which we test the 
+ * @param {String} b "New word"
+ * @param {[Boolean]} oneTimeOnly Allows one recursive call to check the reverse situation.
+ * @returns {Integer} - Positive values indicate that word A lines up with the 
+ *                      first X characters of word B. 
+ *                      Negative values indicate that word B lines up 
+ *                      with the last X characters of A
+ * @example getOverlap("PIZZA", "ZAP") === -2
+ * @example getOverlap("ZAP", "PIZZA") === -1
+ * @example getOverlap("BLAH", "AHA") === -2
+ * @example getOverlap("BLAH", "CABLA") === 3
  */
 const getOverlap = (a, b, oneTimeOnly=false) => {
   if (a.length === 0 || b.length === 0) return 0;
@@ -190,24 +199,23 @@ const possibleNextWords = (guessed, dir, maxLength, answersSent) => {
     .catch((err) => console.log(err));
 };
 
+const getOneWord = (params) => {
+  return possibleNextWords(...params)
+  .then((res) => {
+    return shuffle(res)[0];
+  })
+  .catch((err) => console.error(err));
+}
+
 let dir = false;
 async function getNextWord(guessed, answersSent, maxLength = 12) {
   const guessedWord = guessed[guessed.length - 1];
   dir = shouldSwapDir(dir);
-  let word = await possibleNextWords(guessed, dir, maxLength, answersSent)
-    .then((res) => {
-      return shuffle(res)[0];
-    })
-    .catch((err) => console.error(err));
-  // console.log(word, guessedWord);
+  let word = await getOneWord(guessed, dir, maxLength, answersSent)
+
+  let overlap = 0;
   if (!word) {
-    word = await possibleNextWords(guessed, !dir, maxLength, answersSent)
-      .then((res) => {
-        return shuffle(res)[0];
-      })
-      .catch((err) => console.error(err));
-    const overlap = getOverlap(guessedWord, word.answer, !dir); // is guessed word undefined?
-    return [word, overlap, !dir];
+    word = await getOneWord(guessed, !dir, maxLength, answersSent)
   }
   const overlap = getOverlap(guessedWord, word.answer, dir);
   // console.log(overlap);
