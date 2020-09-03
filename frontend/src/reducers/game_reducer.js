@@ -2,6 +2,7 @@ import { RECEIVE_ACTIVE_GAME,
   RECEIVE_GAME_DETAILS,
   RECEIVE_SAVED_GAME,
  } from '../actions/game_actions';
+import { combineReducers } from 'redux';
 
 const activeGameReducer = (state={}, { type, game, gameDetails }) => {
   Object.freeze(state);
