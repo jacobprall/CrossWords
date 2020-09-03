@@ -16,6 +16,18 @@ const Grid = styled.div`
   width: 50.4rem;
 `;
 
+// grid[row][col]
+// {
+//     grid : {
+//         row : { col: val }
+//         row : { col: val }
+//         row : { col: val }
+//         row : { col: val }
+//         row : { col: val }
+//         row : { col: val }
+//     }, 
+//     seconds: 54
+// }
 export const GridContainer = () => {
     const [gridItems, setGridItems] = useState([]);
     const [state, dispatch] = useStateValue(); 
@@ -48,13 +60,24 @@ export const GridContainer = () => {
         for(let j = 0; j < HEIGHT; j++) {
             let possibleVal = grid[i + 1][j + 1]; 
             let val = possibleVal ? possibleVal : ""; 
-         
+            let focus; 
+            if (j + 1 === 1 && i > 1) {
+                focus = !possibleVal && grid[i][WIDTH] ? true : false;
+            } else {
+                focus = !possibleVal && grid[i + 1][j] ? true : false; 
+            }
+       
+            if (!possibleVal && grid[i + 1][j]) {
+                console.log("==--==========")
+            }
+
             inputs.push(
                 <GridItem key={`${i} ${j}`} 
                     rowStart={i + 1} 
                     colStart={j + 1} 
                     value={val}
                     addGridItem={addGridItem}
+                    focus={focus}
                 />
             )
         }

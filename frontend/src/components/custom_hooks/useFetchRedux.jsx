@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'; 
 
 export const useFetchRedux = () => {
@@ -20,7 +20,7 @@ export const useFetchRedux = () => {
             setIsLoading(false); 
         }
         
-        fetchData(); 
+        if (isSubscribed) fetchData(); 
         
         return () => isSubscribed = false; 
     }, [action])

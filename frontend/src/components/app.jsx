@@ -6,6 +6,7 @@ import { StateProvider } from './state/state';
 import Navbar from "./nav/navbar";
 import MainPage from "./main/main_page";
 import SessionContainer from './session/session_container';
+import { StatsPage } from './stats/stats';
 import { mainReducer, initialState } from './react_reducers/main_reducer';
 import { Footer } from './footer/footer'; 
 import { useModal } from './custom_hooks/useModal';
@@ -37,8 +38,8 @@ const App = () => {
       <AppContainer>
         <Navbar sticky={stick} ele={ele}/>
         <Switch>
-          <ProtectedRoute exact path="/" component={MainPage}/>
           <ProtectedRoute exact path="/newGame" component={MainPage}/>
+          <ProtectedRoute exact path="/stats" component={StatsPage}/>
           <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
           <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>
         </Switch>

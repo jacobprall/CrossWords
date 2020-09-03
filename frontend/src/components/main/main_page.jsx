@@ -17,34 +17,15 @@ const MainContainer = styled.div`
   align-self: center; 
 `
 
-const Footer = styled.h1`
-  align-self: flex-end;
-  font-size: 1rem;  
-  margin-right: 1.5rem;
-  margin-bottom: 0.5rem; 
-`
-
 export default function MainPage(props) {
   let newGame = props.history.location.pathname === "/newGame";
-  
+  //fetch clue 
   return (
     <Container>
     <MainContainer>
       <GridContainer/>
       <TimeScoreClue newGame={newGame}/>
     </MainContainer>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
     </Container>
   );
 }
