@@ -16,17 +16,16 @@ const getNextWord = require('../getNextWord');
  */
 const patchGameCallback = (req, res) => {
   const cleanedReqBody = cleanReqBody(req.body);
-  res.json(cleanedReqBody);
+
   return Game.findById(req.params.id)
     .then((game) => getNewGameState(game, cleanedReqBody))
     .then(updateGameState)
     .then(async (game) => {
-      const [nextWord, overlap, nextDir] = await getNextWord(
-        game.wordsGuessed,
-        game.wordsSent,
-        game.nextDir || false,
-        game.maxLength || 12,
-      );
+      const [nextWord, overlap, nextDir] = await getNextWord(game);
+
+      console.log([nextWord, overlap, nextDir]);
+      res.json([nextWord, overlap, nextDir]);
+
       game.wordsSent.push(nextWord._id);
       game = await game.save();
 
