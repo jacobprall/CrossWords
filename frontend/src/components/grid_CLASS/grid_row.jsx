@@ -18,10 +18,10 @@ export default ({ clue, selected, row }) => {
     let gridItems = [];
     for (let i = 0; i < clue.length; i++) {
       gridItems.push(<GridItem
+        focus={Boolean(selected && i === 0)}
         key={`grid-item-${i}`}
         selected={selected}
         id={`grid-item-${i}`}
-        nextId={`grid-item-${i+1}`}
         rowPos={row}
         colPos={clue.colStart + i + 1}
         />);

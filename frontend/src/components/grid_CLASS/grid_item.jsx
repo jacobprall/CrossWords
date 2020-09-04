@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRef } from 'react';
 // import { use } from 'passport';
 
 const Input = styled.input`
@@ -22,8 +23,14 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
   const [char, setChar] = useState("");
+
+  // const inputFocus = useRef(focus);
+
+  // useEffect(() => {
+  //   inputFocus.current.focus();
+  // }, []);
 
   const update = () => {
     return e => {
@@ -64,10 +71,12 @@ export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
     <Input type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
+      autoFocus={focus}
       onKeyDown={handleKeyDown()}
       onChange={update()}
       onClick={clickHandler()}
       id={id}
+      disabled={!selected}
       rowPos={rowPos}
       colPos={colPos}
     />
