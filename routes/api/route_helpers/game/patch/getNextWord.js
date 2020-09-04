@@ -103,8 +103,29 @@ const genWordSubArray = (word, dir) => {
 
 // queries database for possible next words list of 10 words
 
+let wordsBeforeSwap = 0;
 const getRandDir = () => {
+  wordsBeforeSwap += 1;
+  if (wordsBeforeSwap === 1) { return dir; }
   const randomNum = Math.random();
+<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
+  switch (wordsBeforeSwap) {
+    case (2):
+     if (randomNum < 0.15) {wordsBeforeSwap = 1; return !dir; }
+     return dir;
+    case 3:
+      if (randomNum < 0.35) { wordsBeforeSwap = 1; return !dir; }
+      return dir;
+    case 4:
+      if (randomNum < 0.65) { wordsBeforeSwap = 1; return !dir; }
+      return dir;
+    case 5:
+      if (randomNum < 0.85) { wordsBeforeSwap = 1; return !dir; }
+      return dir;
+    default:
+      return !dir;
+  }
+=======
   // switch (true) {
   //   case randomNum < 0.15:
   //     return false;
@@ -118,6 +139,7 @@ const getRandDir = () => {
   // //     return false;
   // }
   return randomNum > 0.5;
+>>>>>>> master:routes/api/route_helpers/game/patch/getNextWord.js
 };
 
 /**
@@ -185,11 +207,12 @@ const getOneWord = (params) => {
     .catch((err) => console.error(err));
 };
 
+let dir = false;
 async function getNextWord(game) {
   const { wordsGuessed, wordsSent } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
 
-  const dir = getRandDir(wordsGuessed.length);
+  dir = getRandDir();
   let word = await getOneWord({ wordsGuessed, dir, wordsSent });
 
   if (!word) {

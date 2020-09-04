@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Time } from './time';
+import { Time } from './time_elapsed';
 import { Score } from './score';
 import { Clue } from './clue';
 
@@ -32,18 +32,19 @@ const HeaderEle = styled.h2`
     font-weight: 500; 
 `
 
-export const TimeScoreClue = ({newGame}) => {
+export const TimeScoreClue = ({ newGame, clue, score}) => {
+    console.log(clue); 
     return (
         <Container>
             <Header>
                 <HeaderEle>
-                    <Score/>
+                    <Score score={score} />
                 </HeaderEle>
                 <HeaderEle>
                     <Time newGame={newGame}/>
                 </HeaderEle>
                 <HeaderEle>
-                    <Clue/>
+                    <Clue clue={clue} />
                 </HeaderEle>
             </Header>
         </Container>

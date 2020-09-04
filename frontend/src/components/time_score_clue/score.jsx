@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Score = () => {
+const formatScore = score => score ? score : '0';
+
+export const Score = ({ score }) => {
     return (
         <div>
-            Score:
+            {`Score: ${formatScore(score)}`}
         </div>
     )
 }

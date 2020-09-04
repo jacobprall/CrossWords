@@ -42,7 +42,7 @@ const patchGameCallback = (req, res) => {
         timeRemaining: game.timeRemaining,
         timeElapsed: game.timeElapsed,
         score: game.score,
-        nextClue: {
+        nextWord: {
           id,
           clue,
           difficulty,

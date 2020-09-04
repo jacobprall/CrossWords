@@ -21,9 +21,11 @@ const Input = styled.input`
     cursor: pointer;
     background-color: #c8c8c8;
   }
+  background-color: ${props => props.highlight ? "blue;" : ";"}
+  display: ${props => !props.disp ? "none;" : ";" } 
 `;
 
-export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width, setCol}) => {
+export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width, setCol, populatedRow, highlight, setEnter}) => {
     const [char, setChar] = useState(""); 
 
     const update = () => {
@@ -43,6 +45,7 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFoc
             addGridItem(
                 { ...gridItem}
             )
+            // setFocus(false); 
         }
     }
 
@@ -52,24 +55,28 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFoc
 
     const handleKeyDown = () => {
         return e => {
-            if (e && e.keyCode === 8) {
+            if (e && e.key === 'Backspace') {
                 setChar("");
+            } else if (e && e.key === 'Enter') {
+                setEnter(true); 
             }
         }
     }
     
     const handleClick = () => {
-        setFocus(true); 
-        if (colStart === width) {
-            setRow(rowStart + 1); 
-            setCol(1)
-        } else {
-            setRow(rowStart); 
-            setCol(colStart + 1);
-        }
+        // setFocus(true); 
+        // if (colStart === width) {
+        //     setRow(rowStart + 1); 
+        //     setCol(1)
+        // } else {
+        //     setRow(rowStart); 
+        //     setCol(colStart + 1);
+        // }
 
     }
 
+    let disp = (highlight || char.length); 
+    // (rowStart === populatedRow) && 
     return (
         <Input type="text"
             rowStart={rowStart}  
@@ -78,7 +85,10 @@ export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFoc
             onKeyDown={handleKeyDown()}
             onChange={update()}
             onClick={() => handleClick()}
-            ref={focus ? input => input && input.focus() : null}
+            highlight={highlight}
+            // ref={focus ? input => input && input.focus() : null}
+            disabled={!highlight}
+            disp={disp}
         />
     )
 }

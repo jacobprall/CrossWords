@@ -1,5 +1,5 @@
 import { getNewGame, patchGame } from '../util/game_util';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 export const RECEIVE_ACTIVE_GAME = 'RECEIVE_ACTIVE_GAME';
 export const RECEIVE_GAME_DETAILS = 'RECEIVE_GAME_DETAILS';
@@ -21,9 +21,9 @@ const receiveGameErrors = errors => ({
 })
 
 export const fetchNewGame = () => dispatch => getNewGame()
-  .then(({ data }) => dispatch(receiveActiveGame(data)),(err => dispatch(receiveGameErrors(err.message))));
+  .then(({ data }) => dispatch(receiveActiveGame(data)), (err => dispatch(receiveGameErrors(err.message))));
 
 
 // gameUpdates is a POJO of the form: {gameId: String, guess: String, timeRemaining: Number, timeElapsed: Number }
 export const updateGameDetails = gameUpdates => dispatch => patchGame(gameUpdates)
-  .then(({ data }) => dispatch(receiveGameDetails(data)),(err => dispatch(receiveGameErrors(err.message))));
+  .then(({ data }) => dispatch(receiveGameDetails(data)), (err => dispatch(receiveGameErrors(err.message))));
