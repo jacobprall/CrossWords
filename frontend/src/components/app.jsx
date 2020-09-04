@@ -40,7 +40,7 @@ const App = () => {
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <AppContainer>
-        <Navbar sticky={stick} ele={ele}/>
+        <Navbar sticky={stick} ele={ele} toggle={toggle}/>
         <Switch>
           <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing}/>
           <ProtectedRoute exact path="/stats" component={StatsPage}/>

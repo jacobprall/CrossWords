@@ -93,7 +93,7 @@ const Logo = styled.img`
   height: 2rem; 
 `
 
-export default function Navbar({sticky, ele}) {
+export default function Navbar({sticky, ele, toggle}) {
   const [out, setOut] = useState(false); 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
@@ -116,7 +116,10 @@ export default function Navbar({sticky, ele}) {
     dispatch(clearSessionErrors());
   };
 
-  
+  const handleNewGame = () => {
+    toggle(false); 
+    dispatch(clearGameState())
+  }
 
   const getLinks = () => {
     let links;
@@ -124,7 +127,7 @@ export default function Navbar({sticky, ele}) {
       links = (
         <LoggedInNavigationSection>
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
-          <LoggedInNavLink to={"/newGame"} onClick={() => dispatch(clearGameState())}>New Game</LoggedInNavLink>
+          <LoggedInNavLink to={"/newGame"} onClick={() => handleNewGame()}>New Game</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>Stats</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>Pause</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>save</LoggedInNavLink>
