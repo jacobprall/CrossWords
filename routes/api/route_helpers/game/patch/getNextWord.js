@@ -215,7 +215,7 @@ const getOneWord = (params) => {
 async function getNextWord(game) {
   const { wordsGuessed, wordsSent, wordsStartCol } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
-  const lastGuessedWordStartCol = wordsStartCol?.slice(-1)[0] || 8;
+  const lastGuessedWordStartCol = wordsStartCol.slice(-1)[0] || 8;
 
   const dir = getRandDir(wordsGuessed);
   let word = await getOneWord({ wordsGuessed, dir, wordsSent });

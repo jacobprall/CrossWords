@@ -67,7 +67,7 @@ export default function MainPage(props) {
     <MainContainer>
       {/* <GridContainer game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} /> */}
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
-        <TimeScoreClue newGame={newGame} clue={gameObj ? gameObj.nextClue : null} score={gameObj ? gameObj.score : null} handleSeconds={handleSeconds}/>
+        <TimeScoreClue newGame={newGame} clue={gameObj ? gameObj.nextWord : null} score={gameObj ? gameObj.score : null} handleSeconds={handleSeconds}/>
     </MainContainer>
     </Container>
   );

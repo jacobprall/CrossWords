@@ -2,13 +2,13 @@ import React from 'react';
 import GridRow from './grid_row';
 
 class Grid extends React.Component {
-  componentDidMount() {
-    // if (!this.props.game) this.props.fetchNewGame();
-    document.addEventListener('keydown', this.handleGuess.bind(this));
-  }
+  // componentDidMount() {
+  //   // if (!this.props.game) this.props.fetchNewGame();
+  //   document.addEventListener('keydown', this.handleGuess.bind(this));
+  // }
 
-  componentWillMount() {
-    document.removeEventListener('keydown', this.handleGuess.bind(this));
+  componentWillUnmount() {
+    // document.removeEventListener('keydown', this.handleGuess.bind(this));
     this.props.clearGameState();
   }
 
@@ -46,7 +46,8 @@ class Grid extends React.Component {
         <GridRow
           key={`grid-row-${idx}`}
           clue={clue}
-          topHeight={idx}
+          // topHeight={idx}
+          row={this.props.clueHistory.length}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
         />)
       }

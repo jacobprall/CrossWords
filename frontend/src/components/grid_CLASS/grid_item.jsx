@@ -22,7 +22,7 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ selected }) => {
+export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
   const [char, setChar] = useState("");
 
   const update = () => {
@@ -36,6 +36,10 @@ export const GridItem = ({ selected }) => {
       }
 
       setChar(lastChar);
+      console.log(e.currentTarget);
+      let nextId = document.getElementById(e.currentTarget).attribute('nextId');
+      let nextInput = document.getElementById(nextId);
+      nextInput.focus();
 
     }
   }
@@ -45,6 +49,10 @@ export const GridItem = ({ selected }) => {
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
       onChange={update()}
+      id={id}
+      nextId={ref}
+      rowPos={rowPos}
+      colPos={colPos}
     />
   )
 }

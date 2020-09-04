@@ -12,7 +12,7 @@ const GridRowStyle = styled.div(props => {
   })
   });
 
-export default ({ clue, selected }) => {
+export default ({ clue, selected, row }) => {
     // clue = { _id: '', length: '', clue: '', colStart: '' }
     // vvv this is all bad
     let gridItems = [];
@@ -20,6 +20,10 @@ export default ({ clue, selected }) => {
       gridItems.push(<GridItem
         key={`grid-item-${i}`}
         selected={selected}
+        id={`grid-item-${i}`}
+        nextId={`grid-item-${i+1}`}
+        rowPos={row}
+        colPos={clue.colStart + i + 1}
         />);
     }
     return (
