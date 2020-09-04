@@ -22,14 +22,15 @@ const YourClue = styled.h1`
   font-weight: 500; 
 `
 
-export const Clue = () => {
+export const Clue = ({ clue }) => {
+    if (!clue) return null;
     return (
         <Container>
             <Header>
-                {/* <YourClue> */}
-                    Your Clue: 
-                {/* </YourClue> */}
                 <MagnifyingGlass src={magnifying_glass}/>
+                {/* <YourClue> */}
+                    {`${clue.clue} (${clue.length} letters)`}
+                {/* </YourClue> */}
             </Header>
         </Container>
     )

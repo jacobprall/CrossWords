@@ -1,19 +1,31 @@
-import { RECEIVE_ACTIVE_GAME,
+import {
+  RECEIVE_ACTIVE_GAME,
   RECEIVE_GAME_DETAILS,
   RECEIVE_SAVED_GAME,
- } from '../actions/game_actions';
+} from '../actions/game_actions';
 import { combineReducers } from 'redux';
 
-const activeGameReducer = (state={}, { type, game, gameDetails }) => {
+const activeGameReducer = (state = {}, { type, game, gameDetails }) => {
   Object.freeze(state);
   let nextState = { ...state }
 
-  switch(type) {
+  switch (type) {
     case RECEIVE_ACTIVE_GAME:
       return Object.assign({}, state, { [game.gameId]: game });
     case RECEIVE_GAME_DETAILS:
       nextState[gameDetails.gameId] = Object.assign({}, nextState[gameDetails.gameId], gameDetails);
       return nextState;
+    default:
+      return state;
+  }
+}
+
+const answerHistoryReducer = (state=[], { type, gameDetails }) => {
+  Object.freeze(state);
+  let nextState = [...state];
+  switch (type) {
+    case RECEIVE_GAME_DETAILS:
+      return nextState.concat([gameDetails.prevAnswer]);
     default:
       return state;
   }
@@ -30,5 +42,6 @@ const savedGameReducer = (state={}, { type, game }) => {
 
 export default combineReducers({
   active: activeGameReducer,
+  answerHistory: answerHistoryReducer,
   saved: savedGameReducer,
 })
