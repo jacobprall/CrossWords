@@ -61,7 +61,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
         } else if (e.key === 'ArrowLeft') {
           let prevInput = e.currentTarget.previousSibling;
           if (prevInput) prevInput.focus();
-        } else if (e.key === 'ArrowRight' || e.key === 'Tab') {
+        } else if (e.key === 'ArrowRight') {
           let nextInput = e.currentTarget.nextSibling;
           if (nextInput) nextInput.focus();
         }
