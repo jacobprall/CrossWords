@@ -50,7 +50,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
-    if (!chars.split("").concat("").includes(lastChar)) return;
+ 
     setChar(lastChar);
 
       setChar(lastChar);

@@ -29,9 +29,8 @@ const App = () => {
     }
   }, [loggedIn])
 
-  const endGame = (secondsElapsed) => {
+  const endGame = () => {
     toggle(true); 
-    setSecondsElapsed(secondsElapsed); 
   }
 
   const AppContainer = styled.div`
@@ -43,7 +42,7 @@ const App = () => {
       <AppContainer>
         <Navbar sticky={stick} ele={ele}/>
         <Switch>
-          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing} secondsElapsed={secondsElapsed}/>
+          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing}/>
           <ProtectedRoute exact path="/stats" component={StatsPage}/>
           <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
           <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>

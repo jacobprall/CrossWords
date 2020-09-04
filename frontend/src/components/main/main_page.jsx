@@ -71,7 +71,6 @@ export default function MainPage(props) {
         isShowing={props.isShowing} 
         Comp={GameEnd} 
         score={gameObj ? gameObj.score : null} 
-        secondsElapsed={props.secondsElapsed > 0 ? props.secondsElapsed : null }
         />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
 
