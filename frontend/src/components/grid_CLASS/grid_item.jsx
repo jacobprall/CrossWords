@@ -26,12 +26,6 @@ const Input = styled.input`
 export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
   const [char, setChar] = useState("");
 
-  // const inputFocus = useRef(focus);
-
-  // useEffect(() => {
-  //   inputFocus.current.focus();
-  // }, []);
-
   const update = () => {
     return e => {
       let input = e.target.value;
@@ -50,18 +44,26 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
 
   const clickHandler = () => {
     return e => {
-      e.currentTarget.value = '';
+      // e.currentTarget.value = '';
       e.currentTarget.focus();
     }
   }
 
   const handleKeyDown = () => {
     return e => {
-      if (e && e.key === 'Backspace') {
-        let prevInput = e.currentTarget.previousSibling;
-        if (prevInput) {
-          prevInput.focus();
-          setChar('');
+      if (e) {
+        if (e.key === 'Backspace') {
+          let prevInput = e.currentTarget.previousSibling;
+          if (prevInput) {
+            prevInput.focus();
+            setChar('');
+          }
+        } else if (e.key === 'ArrowLeft') {
+          let prevInput = e.currentTarget.previousSibling;
+          if (prevInput) prevInput.focus();
+        } else if (e.key === 'ArrowRight' || e.key === 'Tab') {
+          let nextInput = e.currentTarget.nextSibling;
+          if (nextInput) nextInput.focus();
         }
       }
     }
