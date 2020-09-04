@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'; 
 import { GridContainer } from '../grid/grid_container'; 
 import { TimeScoreClue } from '../time_score_clue/time_score_clue';
+import GameErrors from '../errors/game_errors';
 
 const Container = styled.div`
   display: flex; 
@@ -22,6 +23,7 @@ export default function MainPage(props) {
   //fetch clue 
   return (
     <Container>
+      <GameErrors />
     <MainContainer>
       <GridContainer/>
       <TimeScoreClue newGame={newGame}/>
