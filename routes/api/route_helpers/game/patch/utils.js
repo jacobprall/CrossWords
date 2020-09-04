@@ -15,18 +15,19 @@ const handleTime = (isCorrect, game) => {
 
   const { timeRemaining } = game;
   let { timeElapsed } = game;
-
+  timeElapsed = Math.abs(timeElapsed);
+  
+  
+    if (timeElapsed > GAME_DURATION) {
+      timeElapsed = GAME_DURATION;
+    }
   const normalizer = GAME_DURATION ** 3; // normalizer const => 60
-
-  if (Math.abs(timeElapsed) > normalizer) {
-    timeElapsed = normalizer;
-  }
+  
   let timeAddition = Math.ceil(
-    (-(timeElapsed ** 3 / normalizer) + BASELINE_TIME_ADDITION) * TIME_CONSTANT,
-  ); // between (7/6 * 12) and (1/6 * 12)
+    ((-1 * ((timeElapsed ** 3) / normalizer)) + BASELINE_TIME_ADDITION) * TIME_CONSTANT);
+    // between (7/6 * 12) and (1/6 * 12)
   timeAddition = Math.floor(
-    timeAddition * (Math.abs(1 - timeRemaining / MAX_TIME) + 1),
-  );
+    timeAddition * (Math.abs(1 - (timeRemaining / MAX_TIME)) + 1));
 
   return timeAddition;
 

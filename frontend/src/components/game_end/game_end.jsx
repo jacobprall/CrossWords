@@ -11,7 +11,7 @@ export const GameEnd = ({ secondsElapsed, score }) => {
 
     useEffect(() => {
         if (state.secondsElapsed) setS(state.secondsElapsed); 
-    }, [state]);
+    }, []);
 
     const guesses = useSelector(state => state.game.clueHistory)
     let numTotal = 1;

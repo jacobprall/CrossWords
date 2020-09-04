@@ -38,8 +38,9 @@ export default function MainPage(props) {
   const [seconds, setSeconds] = useState(); 
   const [secondsElapsed, setSecondsElapsed] = useState(); 
   const dispatch = useDispatch(); 
-  const gameId = useSelector(state => state.session.activeGame); 
+  const gameId = useSelector(state => state.session.activeGame);
   const gameObj = useSelector(state => state.game.active[gameId]);
+  if (gameObj) { console.log('main page time remaining: ', gameObj.timeRemaining);}
 
   useEffect(() => {
     let isSubscribed = true;
@@ -78,11 +79,11 @@ export default function MainPage(props) {
       <TimeScoreClue 
         newGame={newGame} 
         game={gameObj}
-        clue={gameObj ? gameObj.nextWord : null} 
-        score={gameObj ? gameObj.score : null} 
-        handleSeconds={handleSeconds} 
+        clue={gameObj ? gameObj.nextWord : null}
+        score={gameObj ? gameObj.score : null}
+        handleSeconds={handleSeconds}
         endGame={props.endGame}
-        timeRemaining={gameObj ? gameObj.timeRemaining : 60}
+        timeRemaining={gameObj ? gameObj.timeRemaining : 60.0}
       />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
     </MainContainer>

@@ -32,7 +32,7 @@ export const HeaderEle = styled.div`
     font-weight: 500; 
 `
 
-export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game }) => {
+export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game, timeRemaining }) => {
     // console.log(clue); 
     return (
         <Container>
@@ -41,7 +41,13 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, ga
                     <Score score={score} />
                 </HeaderEle>
                 <HeaderEle>
-                    <TimeElapsed game={game} newGame={newGame} handleSeconds={handleSeconds} endGame={endGame}/>
+                    <TimeElapsed
+                    game={game} // game object
+                    newGame={newGame} // 
+                    handleSeconds={handleSeconds} // function to tick
+                    endGame={endGame} // game over callback
+                    timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
+                  />
                 </HeaderEle>
                 <HeaderEle>
                     <Clue clue={clue} />

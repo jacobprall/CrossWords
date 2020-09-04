@@ -13,49 +13,40 @@ const Start = styled.div`
 
 //whatever button starts the game sends in starGame=true as a prop
 
-export const TimeElapsed = ({ newGame, handleSeconds, endGame, game }) => {
+export const TimeElapsed = ({ newGame, handleSeconds, endGame, game, timeRemaining }) => {
+  console.log("game state: ", game);
+  console.log('time remaining:', timeRemaining);
     const [seconds, setSeconds] = useState();
     const [isTicking, setIsTicking] = useState(false);
-    const [state, dispatch] = useStateValue(); 
-    const [secondsElapsed, setSecondsElapsed] = useState(0); 
-   
-    const toggle = () => {
-        setIsTicking(!isTicking); 
-    }
-    
-    const reset = () => {
-        setIsTicking(false);
-    }
+    const [state, dispatch] = useStateValue();
+    const [secondsElapsed, setSecondsElapsed] = useState();
     
     useEffect(() => {
-        if (!isNaN(state["seconds"])) {
-            setSeconds(state["seconds"]);
-        } else {
-            setSeconds(60.0); // Don't commit this
-        }
+      setSecondsElapsed(0);
+      if (!secondsElapsed) setIsTicking(true);
     }, [])
 
     useEffect(() => {
-        if (newGame) toggle(); 
-    }, [newGame])
+      setSeconds(timeRemaining);
+    }, [timeRemaining]);
 
     useEffect(() => {
         let isSubscribed = true; 
         const addSeconds = async () => await dispatch({
-            type: 'addSeconds', 
+            type: 'addSeconds',
             seconds
         }); 
 
         const addSecondsElapsed = async () => await dispatch({
-            type: 'addSecondsElapsed', 
+            type: 'addSecondsElapsed',
             secondsElapsed
         }); 
 
         if (isSubscribed && !isNaN(seconds)) { addSeconds(); addSecondsElapsed(); }
 
-        if (seconds === 0) { 
-            endGame(); 
-            reset(); 
+        if (seconds <= 0) {
+            endGame();
+            setIsTicking(false);
         }
         return () => isSubscribed = false
     }, [seconds]); 
@@ -66,19 +57,18 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame, game }) => {
             interval = setInterval(() => {
                 if (!isNaN(seconds)) {
                     setSeconds(seconds => seconds - 1);
-                    setSecondsElapsed(setSecondsElapsed => setSecondsElapsed + 1);
-                    handleSeconds(seconds, secondsElapsed); 
+                    setSecondsElapsed(secondsElapsed => secondsElapsed + 1);
+                    handleSeconds(seconds, secondsElapsed);
                 }
             }, 1000); 
         } else if (!isTicking && seconds > 0) {
             clearInterval(interval); 
         }
-
         return ()  => clearInterval(interval); 
     }, [isTicking, seconds]); 
 
 
-    let minutes = seconds ? `${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? `${seconds % 60}0` : seconds % 60}` : null;
+    let minutes = seconds ? `${Math.floor(seconds / 60)}:${seconds % 60 < 10 ? `0${(seconds % 60)}` : seconds % 60}` : null;
     
     return (
         <Container>
