@@ -51,10 +51,11 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
- 
-    setChar(lastChar);
-    let nextInput = e.currentTarget.nextSibling;
-    if (nextInput) nextInput.focus();
+    if (chars.includes(lastChar)) {
+      setChar(lastChar);
+      let nextInput = e.currentTarget.nextSibling;
+      if (nextInput) nextInput.focus();
+    }
   }
 
   const clickHandler = () => {
@@ -70,8 +71,9 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
         if (e.key === 'Backspace') {
           let prevInput = e.currentTarget.previousSibling;
           if (prevInput) {
-            prevInput.focus();
             setChar('');
+            prevInput.focus();
+            // prevInput.focus();
           }
         } else if (e.key === 'ArrowLeft') {
           let prevInput = e.currentTarget.previousSibling;
@@ -90,7 +92,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
     <GridInput 
       type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
-      value={char.toUpperCase()}
+      value={char ? char.toUpperCase() : ''}
       onChange={handleChange}
       colPos={colPos}
       rowPos={rowPos}

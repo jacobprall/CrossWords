@@ -5,7 +5,7 @@ import { Score } from '../time_score_clue/score';
 import { useStateValue } from '../state/state'; 
 import { useEffect } from 'react';
 
-export const GameEnd = ({ secondsElapsed }) => {
+export const GameEnd = ({ secondsElapsed, score }) => {
     const [state, dispatch] = useStateValue();
     const [s, setS] = useState(); 
 
@@ -35,7 +35,7 @@ export const GameEnd = ({ secondsElapsed }) => {
         <Container>
             <Header>
                 <HeaderEle>
-                    <Score/>
+                    <Score score={score}/>
                 </HeaderEle>
                 <HeaderEle>
                    { "Time Elapsed: " + ( s < 60 ? s + 1 : minutes) }
