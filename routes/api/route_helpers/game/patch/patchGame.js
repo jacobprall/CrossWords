@@ -27,7 +27,8 @@ const patchGameCallback = (req, res) => {
     .then(updateGameState)
     .then(async (game) => {
       const [nextWord, overlap, colStart] = await getNextWord(game);
-
+      const { wordsGuessed } = game
+      const prevGuess = wordsGuessed[wordsGuessed.length - 1]
       const prevWordId = game.wordsSent[game.wordsSent.length - 1];
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
@@ -53,6 +54,7 @@ const patchGameCallback = (req, res) => {
         overlap,
         nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
+        prevGuess
       };
 
       res.json(returnObject);

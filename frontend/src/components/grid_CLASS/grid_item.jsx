@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRef } from 'react';
 // import { use } from 'passport';
@@ -7,7 +7,6 @@ const Input = styled.input`
   width: 2.3rem; 
   height: 2.3rem; 
   border-radius: 0 0 0 0;
-  // grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart};
   caret-color: transparent;
   text-align: center;
   font-size: 2.2rem;
@@ -22,6 +21,12 @@ const Input = styled.input`
     background-color: #c8c8c8;
   }
 `;
+
+
+const GridInput = styled(Input)(({colPos, rowPos}) => ({
+    gridColumn: `${colPos} / span 1`,
+    gridRow: `${rowPos} / span 1`
+}));
 
 export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
   const [char, setChar] = useState("");
@@ -38,9 +43,15 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
       let lastChar = input[input.length - 1];
       let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-      if (!chars.split("").concat("").includes(lastChar)) {
-        return;
-      }
+
+  const handleChange = (e) => {
+    let input = e.target.value;
+    let lastChar = input[input.length - 1];
+    let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+    if (!chars.split("").concat("").includes(lastChar)) return;
+    setChar(lastChar);
 
       setChar(lastChar);
       let nextInput = e.currentTarget.nextSibling;
@@ -65,20 +76,24 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
         }
       }
     }
+
   }
+  
 
   return (
-    <Input type="text"
+    <GridInput 
+      type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
+      onChange={handleChange}
+      colPos={colPos}
+      rowPos={rowPos}
       autoFocus={focus}
       onKeyDown={handleKeyDown()}
-      onChange={update()}
       onClick={clickHandler()}
       id={id}
       disabled={!selected}
-      rowPos={rowPos}
-      colPos={colPos}
+
     />
   )
 }

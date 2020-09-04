@@ -62,12 +62,17 @@ export default function MainPage(props) {
     setSecondsElapsed(secsElapsed)
   }
 
-console.log(props); 
+console.log(props.secondsElapsed); 
   return (
     <Container>
       <GameErrors />
     <MainContainer>
-      <Modal isShowing={props.isShowing} comp={GameEnd}/>
+      <Modal 
+        isShowing={props.isShowing} 
+        Comp={GameEnd} 
+        score={gameObj ? gameObj.score : null} 
+        secondsElapsed={props.secondsElapsed}
+        />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
 
         <TimeScoreClue 

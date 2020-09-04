@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import { Switch, useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux'; 
@@ -16,6 +16,7 @@ import styled from 'styled-components';
 const App = () => {
   const { stick, ele } = useStick();
   const { isShowing, toggle } = useModal();
+  const [secondsElapsed, setSecondsElapsed] = useState(); 
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
   const history = useHistory(); 
   
@@ -28,8 +29,9 @@ const App = () => {
     }
   }, [loggedIn])
 
-  const endGame = () => {
+  const endGame = (secondsElapsed) => {
     toggle(true); 
+    setSecondsElapsed(secondsElapsed); 
   }
 
   const AppContainer = styled.div`
@@ -41,7 +43,7 @@ const App = () => {
       <AppContainer>
         <Navbar sticky={stick} ele={ele}/>
         <Switch>
-          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing}/>
+          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing} secondsElapsed={secondsElapsed}/>
           <ProtectedRoute exact path="/stats" component={StatsPage}/>
           <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
           <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>
