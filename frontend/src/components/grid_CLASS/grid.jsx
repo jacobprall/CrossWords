@@ -42,12 +42,13 @@ class Grid extends React.Component {
     if (!this.props.game || !this.props.clueHistory.length) return null;
     let gridRows = this.props.clueHistory.map((clue, idx) => {
       if (clue) {
+        let prevAnswer = this.props.answerHistory[idx - 1] || null;
         return (
         <GridRow
           key={`grid-row-${idx}`}
           clue={clue}
-          // topHeight={idx}
           row={this.props.clueHistory.length}
+          prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
         />)
       }

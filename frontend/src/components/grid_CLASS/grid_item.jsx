@@ -23,7 +23,7 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus, placeholder }) => {
   const [char, setChar] = useState("");
 
   const update = () => {
@@ -73,6 +73,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
     <Input type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
+      placeholder={placeholder}
       autoFocus={focus}
       onKeyDown={handleKeyDown()}
       onChange={update()}
