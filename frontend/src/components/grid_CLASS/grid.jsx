@@ -41,12 +41,13 @@ class Grid extends React.Component {
 
     const gridRows = clueHistory.map((clue, idx) => {
       if (clue) {
+        let prevAnswer = this.props.answerHistory[idx - 1] || null;
         return (
         <GridRow
           key={clue.clue}
           clue={clue}
-          // topHeight={idx}
           row={this.props.clueHistory.length}
+          prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
           correct={false}
         />)

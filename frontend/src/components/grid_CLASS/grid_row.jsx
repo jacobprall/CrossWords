@@ -2,6 +2,7 @@ import React from 'react';
 import { GridItem } from './grid_item';
 
 
+
 export default ({ clue, selected, rowPos }) => {
     let gridItems = [];
     const wasCorrect = clue.wasCorrect || false
@@ -19,8 +20,10 @@ export default ({ clue, selected, rowPos }) => {
         rowPos={rowPos}
         colPos={colPos}
         id={`grid-item-${i}`}
+
       />
     );
   }
   return gridItems;
 };
+
