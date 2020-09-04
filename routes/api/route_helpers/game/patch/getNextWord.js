@@ -103,43 +103,32 @@ const genWordSubArray = (word, dir) => {
 
 // queries database for possible next words list of 10 words
 
-let wordsBeforeSwap = 0;
-const getRandDir = () => {
-  wordsBeforeSwap += 1;
-  if (wordsBeforeSwap === 1) { return dir; }
+const getRandDir = (wordsGuessed) => {
   const randomNum = Math.random();
-<<<<<<< HEAD:routes/api/route_helpers/game/getNextWord.js
-  switch (wordsBeforeSwap) {
-    case (2):
-     if (randomNum < 0.15) {wordsBeforeSwap = 1; return !dir; }
-     return dir;
+  switch (wordsGuessed % 5) {
+    case 1:
+      if (randomNum < 0.15) {
+        return true;
+      }
+      return false;
+    case 2:
+      if (randomNum < 0.35) {
+        return true;
+      }
+      return false;
     case 3:
-      if (randomNum < 0.35) { wordsBeforeSwap = 1; return !dir; }
-      return dir;
+      if (randomNum < 0.65) {
+        return true;
+      }
+      return false;
     case 4:
-      if (randomNum < 0.65) { wordsBeforeSwap = 1; return !dir; }
-      return dir;
-    case 5:
-      if (randomNum < 0.85) { wordsBeforeSwap = 1; return !dir; }
-      return dir;
+      if (randomNum < 0.85) {
+        return true;
+      }
+      return false;
     default:
-      return !dir;
+      return false;
   }
-=======
-  // switch (true) {
-  //   case randomNum < 0.15:
-  //     return false;
-  //   case randomNum < 0.3:
-  //     return true;
-  //   case randomNum < 0.6:
-  //     return false;
-  //   case randomNum < 0.85:
-  //     return true;
-  //   default:
-  // //     return false;
-  // }
-  return randomNum > 0.5;
->>>>>>> master:routes/api/route_helpers/game/patch/getNextWord.js
 };
 
 /**
@@ -207,12 +196,11 @@ const getOneWord = (params) => {
     .catch((err) => console.error(err));
 };
 
-let dir = false;
 async function getNextWord(game) {
   const { wordsGuessed, wordsSent } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
 
-  dir = getRandDir();
+  const dir = getRandDir(wordsGuessed);
   let word = await getOneWord({ wordsGuessed, dir, wordsSent });
 
   if (!word) {
