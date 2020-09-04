@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'; 
 import { GridContainer } from '../grid/grid_container'; 
+import GridContainerCLASS from '../grid_CLASS/grid_container'; 
 import { TimeScoreClue } from '../time_score_clue/time_score_clue';
 import { useFetchRedux } from '../custom_hooks/useFetchRedux'; 
 import { fetchNewGame, updateGameDetails } from '../../actions/game_actions';
@@ -28,6 +29,8 @@ export default function MainPage(props) {
   // const [ setAction, isLoading, error ] = useFetchRedux(); 
   // setAction(fetchNewGame());
   const [loading, setLoading] = useState(null); 
+  const [seconds, setSeconds] = useState(); 
+  const [secondsElapsed, setSecondsElapsed] = useState(); 
   const dispatch = useDispatch(); 
   const gameId = useSelector(state => state.session.activeGame); 
   const gameObj = useSelector(state => state.game.active[gameId]);
@@ -50,11 +53,19 @@ export default function MainPage(props) {
     return () => isSubscribed = false; 
   }, [])
 
+
+  const handleSeconds = (secs, secsElapsed) => {
+    setSeconds(secs);
+    setSecondsElapsed(secsElapsed)
+  }
+
+
   return (
     <Container>
     <MainContainer>
-      <GridContainer game={gameObj} />
-        <TimeScoreClue newGame={newGame} clue={gameObj ? gameObj.nextClue : null} score={gameObj ? gameObj.score : null}/>
+      {/* <GridContainer game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} /> */}
+      <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
+        <TimeScoreClue newGame={newGame} clue={gameObj ? gameObj.nextClue : null} score={gameObj ? gameObj.score : null} handleSeconds={handleSeconds}/>
     </MainContainer>
     </Container>
   );

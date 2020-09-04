@@ -4,15 +4,15 @@ import { GridItem } from './grid_item';
 import { WIDTH } from './grid_container';
 
 export const GridRow = () => {
-    const [gridItems, setGridItems] = useState([]);
-    const [state, dispatch] = useStateValue(); 
+    // const [gridItems, setGridItems] = useState([]);
+    // const [state, dispatch] = useStateValue(); 
 
-    const addGridItem = (gridItem) => {
-        setGridItems(
-            gridItems.concat(gridItem)
-        );
-        // setFocus(false); 
-    }
+    // const addGridItem = (gridItem) => {
+    //     setGridItems(
+    //         gridItems.concat(gridItem)
+    //     );
+    //     // setFocus(false); 
+    // }
 
     return (
         <div>

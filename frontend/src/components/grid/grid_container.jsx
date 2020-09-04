@@ -30,29 +30,31 @@ const Grid = styled.div`
 //     }, 
 //     seconds: 54
 // }
+// const currentWordData = useSelector(state => state.game.nextClue); 
 
-export const GridContainer = ({ overlap, game}) => {
+// overlap: state.game.nextClue.overla);
+// const [row, setRow] = useState(null);
+// const [col, setCol] = useState(null);
+
+// newWordLength; 
+// newWordOverlap;
+// prevEnd; 
+// prevStart 
+// newEnd
+// newStart
+export const GridContainer = ({ overlap, game, seconds, secondsElapsed}) => {
     const [gridItems, setGridItems] = useState([]);
     const [state, dispatch] = useStateValue();
     const dispatchRedux = useDispatch()
-    // const currentWordData = useSelector(state => state.game.nextClue); 
-    
-    // overlap: state.game.nextClue.overla);
-    // const [row, setRow] = useState(null);
-    // const [col, setCol] = useState(null);
-    const [prevStart, setPrevStart] = useState(0);
-    const [prevEnd, setPrevEnd] = useState();
+    // const [prevStart, setPrevStart] = useState(0);
+    // const [prevEnd, setPrevEnd] = useState();
     const [newLength, setNewLength] = useState(null);
-    const [newStart, setNewStart] = useState(null)
-    const [newEnd, setNewEnd] = useState(null);
+    const [lastStartCol, setLastStartCol] = useState(null);
+    const [lastEndCol, setLastEndCol] = useState(null);
     const [enter, setEnter] = useState(false); 
-    const [word, setWord] = useState(); 
-    // newWordLength; 
-    // newWordOverlap;
-    // prevEnd; 
-    // prevStart 
-    // newEnd
-    // newStart
+    const grid = state["grid"];
+    let inputs = []; 
+    let wordArray = []; 
     
     useEffect(() => {
         if (game) console.log("the game length: ", game.nextClue["length"]); 
@@ -62,31 +64,49 @@ export const GridContainer = ({ overlap, game}) => {
     
     useEffect(() => {
         let g = game;
-        let w = word
+        let w = wordArray.join(""); 
         let isSubscribed = true; 
-        const updateGame = async (g, w) => {
+        const updateGame = async (g, w) => (
             await dispatchRedux(updateGameDetails({
                 gameId: g.gameId,
                 guess: w,
-                timeRemaining: 23,
-                timeElapsed: 42})
-            );
-        }
+                timeRemaining: seconds,
+                timeElapsed: secondsElapsed})
+            )
+        )
+        
+        
+        // if (enter && w.length && isSubscribed) {    
+        //     let positions = updateGame(g, w.toUpperCase()).then((game) => {
+        //         console.log("newly received game details: ", game.gameDetails)
+        //         if (game.overlap) {
+        //             // if (!game.nextDir) {
+        //                 return ( [lastEndCol + game.overlap,
+        //                     lastEndCol + game.overlap + game.nextWord.length] )
+        //             // } else {
+        //                 // return lastStartCol + game.overlap - game.nextWord.length;
+        //             // }
+        //         }
+        // //     });
+        //     // set globals here with positions as local?
+        //     setEnter(false);
+        // }
 
-        if (enter && word && isSubscribed) {    
-            updateGame(g, w); 
-        }
+        // startPos;
+        
 
+        // $set {lastEndCol, lastStartCol = endPos, startPos};
+ 
+        // setLastEndCol(endPos)
         return () => isSubscribed = false; 
     }, [enter]); 
-    
-    const grid = state["grid"];
+
+
 
     const addGridItem = (gridItem) => {
         setGridItems(
             gridItems.concat(gridItem)
         );
-        // setFocus(false);
     }
 
     useEffect(() => {
@@ -104,37 +124,33 @@ export const GridContainer = ({ overlap, game}) => {
         return () => isSubscribed = false;
     }, [gridItems]); 
 
-    let inputs = [];
 
     for (let i = 0; i < WIDTH; i++) {
         let filledWord = true;
-        let word = []; 
 
         for (let j = 0; j < HEIGHT; j++) {
             let possibleVal = grid[i + 1][j + 1];
             let val = possibleVal ? possibleVal : "";
             let highlight = false; 
 
-            if (!newStart) {
+            if (!lastStartCol) {
                 if (i === 0 && j < newLength) {
                     highlight = true;  
                     if (!val) filledWord = false; 
-                    if (val) word.push(val);
+                    if (val) wordArray.push(val);
                 }
             } else {
 
             }
-
-            if (enter) setWord(word.join("")); 
-            
+                
             inputs.push(
                 <GridItem key={`${i} ${j}`}
-                rowStart={i + 1}
-                colStart={j + 1}
-                value={val}
-                addGridItem={addGridItem}
-                highlight={highlight}
-                setEnter={setEnter}
+                    rowStart={i + 1}
+                    colStart={j + 1}
+                    value={val}
+                    addGridItem={addGridItem}
+                    highlight={highlight}
+                    setEnter={setEnter}
                 />
                 )
             }
