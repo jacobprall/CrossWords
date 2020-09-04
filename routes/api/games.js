@@ -13,7 +13,7 @@ const {
 const router = express.Router();
 
 // Frontend sends userId in post request
-router.get(
+router.post(
   '/new',
   passport.authenticate('jwt', { session: false }),
   newGameCallback,
