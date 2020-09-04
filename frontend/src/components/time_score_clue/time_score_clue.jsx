@@ -32,7 +32,7 @@ const HeaderEle = styled.h2`
     font-weight: 500; 
 `
 
-export const TimeScoreClue = ({ newGame, clue, score, handleSeconds}) => {
+export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame}) => {
     // console.log(clue); 
     return (
         <Container>
@@ -41,7 +41,7 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds}) => {
                     <Score score={score} />
                 </HeaderEle>
                 <HeaderEle>
-                    <TimeElapsed newGame={newGame} handleSeconds={handleSeconds}/>
+                    <TimeElapsed newGame={newGame} handleSeconds={handleSeconds} endGame={endGame}/>
                 </HeaderEle>
                 <HeaderEle>
                     <Clue clue={clue} />

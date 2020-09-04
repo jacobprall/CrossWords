@@ -30,5 +30,4 @@ export const useFetchRedux = () => {
     }, [action])
 
     return [ setAction, isLoading, error ]; 
-}
-
+} 
