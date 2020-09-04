@@ -14,7 +14,7 @@ const Start = styled.div`
 //whatever button starts the game sends in starGame=true as a prop
 
 export const TimeElapsed = ({ newGame, handleSeconds, endGame, game }) => {
-    const [seconds, setSeconds] = useState() ;
+    const [seconds, setSeconds] = useState();
     const [isTicking, setIsTicking] = useState(false);
     const [state, dispatch] = useStateValue(); 
     const [secondsElapsed, setSecondsElapsed] = useState(0); 
@@ -29,7 +29,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame, game }) => {
     
     useEffect(() => {
         if (!isNaN(state["seconds"])) {
-            setSeconds(state["seconds"]); 
+            setSeconds(state["seconds"]);
         } else {
             setSeconds(60.0); // Don't commit this
         }

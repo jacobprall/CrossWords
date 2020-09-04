@@ -77,11 +77,12 @@ export default function MainPage(props) {
     <MainContainer>
       <TimeScoreClue 
         newGame={newGame} 
-        game
+        game={gameObj}
         clue={gameObj ? gameObj.nextWord : null} 
         score={gameObj ? gameObj.score : null} 
         handleSeconds={handleSeconds} 
         endGame={props.endGame}
+        timeRemaining={gameObj ? gameObj.timeRemaining : 60}
       />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
     </MainContainer>

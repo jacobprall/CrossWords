@@ -7,6 +7,7 @@ const mapStateToProps = ({ game: { active, answerHistory, clueHistory }, session
   gameId: activeGame,
   answerHistory,
   clueHistory,
+  
 });
 
 const mapDispatchToProps = dispatch => ({
