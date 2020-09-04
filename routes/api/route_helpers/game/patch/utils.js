@@ -143,7 +143,7 @@ const getNewGameState = async (game, reqBody) => {
  */
 const cleanReqBody = (reqBody) => ({
   gameId: reqBody.gameId,
-  guess: reqBody.guess,
+  guess: reqBody.guess.toUpperCase(),
   timeRemaining: Number.parseInt(reqBody.timeRemaining, 10),
   timeElapsed: Number.parseInt(reqBody.timeElapsed, 10),
 });
