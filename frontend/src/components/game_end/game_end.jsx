@@ -30,6 +30,7 @@ export const GameEnd = ({ secondsElapsed }) => {
         };
 
     let minutes = s ? `${Math.floor( (s + 1) / 60)}:${ (s + 1) % 60 < 10 ? `${ (s + 1) % 60}0` : (s + 1) % 60}` : null;
+    
     return (
         <Container>
             <Header>
