@@ -41,7 +41,7 @@ const App = () => {
       <AppContainer>
         <Navbar sticky={stick} ele={ele}/>
         <Switch>
-          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isSHowing}/>
+          <ProtectedRoute exact path="/newGame" component={MainPage} endGame={endGame} isShowing={isShowing}/>
           <ProtectedRoute exact path="/stats" component={StatsPage}/>
           <AuthRoute exact path="/login" component={SessionContainer} isShowing={isShowing}/>
           <AuthRoute exact path="/signup" component={SessionContainer} isShowing={isShowing}/>

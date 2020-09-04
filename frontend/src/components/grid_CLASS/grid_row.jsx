@@ -2,29 +2,18 @@ import React from 'react';
 import { GridItem } from './grid_item';
 import styled from 'styled-components'; 
 
-const GridRowStyle = styled.div(props => {
-  let leftWidth = `${props.colStart * 10}em`;
-  let topHeight = `${props.topHeight * 10}em`;
-  return ({
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: leftWidth,
-  })
-  });
+
 
 export default ({ clue, selected }) => {
-    // clue = { _id: '', length: '', clue: '', colStart: '' }
-    // vvv this is all bad
     let gridItems = [];
+
     for (let i = 0; i < clue.length; i++) {
-      gridItems.push(<GridItem
+      gridItems.push(
+      <GridItem
         key={`grid-item-${i}`}
         selected={selected}
-        />);
+      />
+        );
     }
-    return (
-      <GridRowStyle>
-        {gridItems}
-      </GridRowStyle>
-    )
-}
+    return gridItems
+  }
