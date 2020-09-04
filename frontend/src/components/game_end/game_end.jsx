@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'; 
+import React, {useState} from 'react'; 
 import {useSelector} from 'react-redux';
 import { Container, Header, HeaderEle } from '../time_score_clue/time_score_clue'; 
-import { Score } from '../time_score_clue/score'
+import { Score } from '../time_score_clue/score'; 
+import { useStateValue } from '../state/state'; 
+import { useEffect } from 'react';
 
 export const GameEnd = ({ secondsElapsed }) => {
-    const [seconds, setSeconds] = useState(); 
+    const [state, dispatch] = useStateValue();
+    const [s, setS] = useState(); 
+
     useEffect(() => {
-        if (secondsElapsed) setSeconds(secondsElapsed); 
-        console.log(secondsElapsed); 
-    }, [secondsElapsed]) 
+        if (state.secondsElapsed) setS(state.secondsElapsed); 
+    }, [state]);
+
     const guesses = useSelector(state => state.game.clueHistory)
     let numTotal = 1;
     let numCorrect = 0;
@@ -24,10 +28,9 @@ export const GameEnd = ({ secondsElapsed }) => {
             return acc += ele
             });
         };
-    
-    
-    // end logic
 
+    let minutes = s ? `${Math.floor( (s + 1) / 60)}:${ (s + 1) % 60 < 10 ? `${ (s + 1) % 60}0` : (s + 1) % 60}` : null;
+    
     return (
         <Container>
             <Header>
@@ -35,7 +38,7 @@ export const GameEnd = ({ secondsElapsed }) => {
                     <Score/>
                 </HeaderEle>
                 <HeaderEle>
-                    {seconds }
+                   { "Time Elapsed: " + ( s < 60 ? s + 1 : minutes) }
                 </HeaderEle>
                 <HeaderEle>
                     {`${numCorrect} out of ${numTotal} Correct`}

@@ -55,7 +55,9 @@ class Grid extends React.Component {
         <GridRow
           key={`grid-row-${idx}`}
           clue={clue}
+
           rowPos={idx+1}
+
           prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
           wasCorrect={clue.wasCorrect}

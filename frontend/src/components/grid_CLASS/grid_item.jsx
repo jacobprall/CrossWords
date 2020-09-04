@@ -25,11 +25,14 @@ const Input = styled.input`
   }
 `;
 
+
 const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
+
     gridColumn: `${colPos} / span 1`,
     gridRow: `${rowPos} / span 1`,
     color: `${color}`,
 }));
+
 
 export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
   const [char, setChar] = useState("");
@@ -41,13 +44,14 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
   //     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
+
   const handleChange = (e) => {
     let input = e.target.value;
     let lastChar = input[input.length - 1];
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
-    if (!chars.split("").concat("").includes(lastChar)) return;
+ 
     setChar(lastChar);
     let nextInput = e.currentTarget.nextSibling;
     if (nextInput) nextInput.focus();
