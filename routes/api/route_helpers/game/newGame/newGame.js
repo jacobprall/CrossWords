@@ -1,15 +1,15 @@
-const Game = require('../../../../models/Game');
-const User = require('../../../../models/User');
+const Game = require('../../../../../models/Game');
+const User = require('../../../../../models/User');
 // const getNextWord = require('./getNextWord');
-const { getFirstWord } = require('./newGame/utils');
-const jwtDecode = require('../jwtDecode');
+const { getFirstWord } = require('./utils');
+const jwtDecode = require('../../jwtDecode');
 
 const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
   const { id: userId } = jwtDecode(jwt, res);
   const { _id, clue, length } = await getFirstWord().then((wrd) => wrd);
-  
+
   const newGame = new Game({
     user: userId,
     wordsSent: [_id],
@@ -18,7 +18,7 @@ const newGameCallback = async (req, res) => {
     timeRemaining: 60.0,
     timeElapsed: 0.0,
     overlap: 0,
-    nextDir: true,
+    nextDir: false,
   });
 
   newGame

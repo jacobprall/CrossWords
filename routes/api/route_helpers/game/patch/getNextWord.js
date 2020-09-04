@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 
-const Word = require('../../../../models/Word');
+const Word = require('../../../../../models/Word');
 
 const PREFERRED_OVERLAP = 3;
-const WORD_FIND_LIMIT = 40;
+const WORD_FIND_LIMIT = 10;
 const FIRST_BREAK_MAX_LENGTH = 6;
 const SECOND_BREAK_MAX_LENGTH = 10;
 const THIRD_BREAK_MAX_LENGTH = 20;
@@ -105,18 +105,19 @@ const genWordSubArray = (word, dir) => {
 
 const getRandDir = () => {
   const randomNum = Math.random();
-  switch (true) {
-    case randomNum < 0.15:
-      return false;
-    case randomNum < 0.3:
-      return true;
-    case randomNum < 0.6:
-      return false;
-    case randomNum < 0.85:
-      return true;
-    default:
-      return false;
-  }
+  // switch (true) {
+  //   case randomNum < 0.15:
+  //     return false;
+  //   case randomNum < 0.3:
+  //     return true;
+  //   case randomNum < 0.6:
+  //     return false;
+  //   case randomNum < 0.85:
+  //     return true;
+  //   default:
+  // //     return false;
+  // }
+  return randomNum > 0.5;
 };
 
 /**
@@ -168,11 +169,10 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
     _id: 1,
   })
     .sort({
-      [direction]: dir ? -1 : 1,
+      [direction]: -1,
     })
     .limit(WORD_FIND_LIMIT)
-    .exec()
-    .catch((err) => console.error(err));
+    .exec();
 };
 
 const getOneWord = (params) => {
@@ -186,7 +186,6 @@ const getOneWord = (params) => {
 };
 
 async function getNextWord(game) {
-  // { guessed, answersSent, maxLength = 12 }
   const { wordsGuessed, wordsSent } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
 
