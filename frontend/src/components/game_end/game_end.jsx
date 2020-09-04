@@ -1,9 +1,14 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import {useSelector} from 'react-redux';
 import { Container, Header, HeaderEle } from '../time_score_clue/time_score_clue'; 
 import { Score } from '../time_score_clue/score'
 
 export const GameEnd = ({ secondsElapsed }) => {
+    const [seconds, setSeconds] = useState(); 
+    useEffect(() => {
+        if (secondsElapsed) setSeconds(secondsElapsed); 
+        console.log(secondsElapsed); 
+    }, [secondsElapsed]) 
     const guesses = useSelector(state => state.game.clueHistory)
     let numTotal = 1;
     let numCorrect = 0;
@@ -30,7 +35,7 @@ export const GameEnd = ({ secondsElapsed }) => {
                     <Score/>
                 </HeaderEle>
                 <HeaderEle>
-                   { secondsElapsed }
+                    {seconds }
                 </HeaderEle>
                 <HeaderEle>
                     {`${numCorrect} out of ${numTotal} Correct`}

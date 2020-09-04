@@ -58,11 +58,11 @@ export default function MainPage(props) {
 
 
   const handleSeconds = (secs, secsElapsed) => {
-    setSeconds(secs);
-    setSecondsElapsed(secsElapsed)
+    if (secs) setSeconds(secs);
+    if (secsElapsed) setSecondsElapsed(secsElapsed)
   }
 
-console.log(props.secondsElapsed); 
+ 
   return (
     <Container>
       <GameErrors />
@@ -71,7 +71,7 @@ console.log(props.secondsElapsed);
         isShowing={props.isShowing} 
         Comp={GameEnd} 
         score={gameObj ? gameObj.score : null} 
-        secondsElapsed={props.secondsElapsed}
+        secondsElapsed={props.secondsElapsed > 0 ? props.secondsElapsed : null }
         />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
 
