@@ -18,7 +18,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
     const [isTicking, setIsTicking] = useState(false);
     const [state, dispatch] = useStateValue(); 
     const [secondsElapsed, setSecondsElapsed] = useState(0); 
-
+   
     const toggle = () => {
         setIsTicking(!isTicking); 
     }
@@ -46,10 +46,15 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
             seconds
         }); 
 
-        if (isSubscribed && !isNaN(seconds)) addSeconds();
+        const addSecondsElapsed = async () => await dispatch({
+            type: 'addSecondsElapsed', 
+            secondsElapsed
+        }); 
+
+        if (isSubscribed && !isNaN(seconds)) { addSeconds(); addSecondsElapsed(); }
 
         if (seconds === 0) { 
-            endGame(secondsElapsed); 
+            endGame(); 
             reset(); 
         }
         return () => isSubscribed = false
