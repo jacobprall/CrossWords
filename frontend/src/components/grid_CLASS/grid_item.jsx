@@ -53,8 +53,8 @@ export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
       if (e && e.key === 'Backspace') {
         let prevInput = e.currentTarget.previousSibling;
         if (prevInput) {
-          prevInput.value = '';
           prevInput.focus();
+          setChar('');
         }
       }
     }
