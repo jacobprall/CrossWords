@@ -13,13 +13,16 @@ const Input = styled.input`
   font-size: 2.2rem;
   font-weight: 500;
   padding-bottom: 0rem;
+  &.selected-row {
+    background-color: #B1D8FB;
+  }
   &:focus {
     outline-style: none;
-    background-color: #c8c8c8;
+    background-color: #FADA4A;
   }
   &:hover {
     cursor: pointer;
-    background-color: #c8c8c8;
+    background-color: #FADA4A;
   }
 `;
 
