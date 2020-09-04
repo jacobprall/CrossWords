@@ -21,6 +21,6 @@ router.get(
   currentUserCallback,
 );
 
-router.get('/:id/stats', (req, res) => currentUserStats(req, res));
+router.get('/:userId/stats', (req, res) => currentUserStats(req, res));
 
 module.exports = router;

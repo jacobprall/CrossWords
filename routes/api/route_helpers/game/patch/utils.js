@@ -13,7 +13,8 @@ const handleTime = (isCorrect, game) => {
   // const currentTime = abs(Math.floor(new Date().getTime() / 1000));
   // lastTime = currentTime;
 
-  const { timeElapsed, timeRemaining } = game;
+  const { timeRemaining } = game;
+  let { timeElapsed } = game;
 
   const normalizer = GAME_DURATION ** 3; // normalizer const => 60
 
@@ -45,7 +46,8 @@ const handleScore = (isCorrect, difficulty, length, timeChange) => {
   pointsEarned += length * pointsConstant;
 
   // difficulty modifier
-  // assuming difficulty levels of 1, 2, and 3 => easy change if those aren't the levels
+  // assuming difficulty levels of 1, 2, and 3 => easy change if
+  //   those aren't the levels
   if (difficulty === 2) pointsEarned = Math.floor(pointsEarned * 1.4);
   if (difficulty === 3) pointsEarned = Math.floor(pointsEarned * 1.8);
 
