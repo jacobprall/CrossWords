@@ -3,7 +3,7 @@
 const Word = require('../../../../../models/Word');
 
 const PREFERRED_OVERLAP = 3;
-const WORD_FIND_LIMIT = 10;
+const WORD_FIND_LIMIT = 20;
 const FIRST_BREAK_MAX_LENGTH = 6;
 const SECOND_BREAK_MAX_LENGTH = 10;
 const THIRD_BREAK_MAX_LENGTH = 20;
@@ -196,7 +196,8 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
     _id: 1,
   })
     .sort({
-      [direction]: -1,
+      [direction]: 1,
+      length: 1,
     })
     .limit(WORD_FIND_LIMIT)
     .exec();
@@ -215,7 +216,8 @@ const getOneWord = (params) => {
 async function getNextWord(game) {
   const { wordsGuessed, wordsSent, wordsStartCol } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
-  const lastGuessedWordStartCol = wordsStartCol && wordsStartCol.slice(-1)[0] || 8;
+  const lastGuessedWordStartCol =
+    (wordsStartCol && wordsStartCol.slice(-1)[0]) || 8;
 
   const dir = getRandDir(wordsGuessed);
   let word = await getOneWord({ wordsGuessed, dir, wordsSent });
