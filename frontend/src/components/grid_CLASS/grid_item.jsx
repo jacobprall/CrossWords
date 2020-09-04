@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRef } from 'react';
 // import { use } from 'passport';
 
 const Input = styled.input`
@@ -21,22 +22,61 @@ const Input = styled.input`
   }
 `;
 
+
 const GridInput = styled(Input)(({colPos, rowPos}) => ({
     gridColumn: `${colPos} / span 1`,
     gridRow: `${rowPos} / span 1`
 }));
 
-export const GridItem = ({ selected, colPos, rowPos }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
   const [char, setChar] = useState("");
+
+  // const inputFocus = useRef(focus);
+
+  // useEffect(() => {
+  //   inputFocus.current.focus();
+  // }, []);
+
+  const update = () => {
+    return e => {
+      let input = e.target.value;
+      let lastChar = input[input.length - 1];
+      let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
   const handleChange = (e) => {
     let input = e.target.value;
     let lastChar = input[input.length - 1];
     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    if (!chars.split("").concat("").includes(lastChar)) return;
 
+    if (!chars.split("").concat("").includes(lastChar)) return;
     setChar(lastChar);
+
+      setChar(lastChar);
+      let nextInput = e.currentTarget.nextSibling;
+      if (nextInput) nextInput.focus();
+    }
+  }
+
+  const clickHandler = () => {
+    return e => {
+      e.currentTarget.value = '';
+      e.currentTarget.focus();
+    }
+  }
+
+  const handleKeyDown = () => {
+    return e => {
+      if (e && e.key === 'Backspace') {
+        let prevInput = e.currentTarget.previousSibling;
+        if (prevInput) {
+          prevInput.focus();
+          setChar('');
+        }
+      }
+    }
+
   }
   
 
@@ -48,6 +88,12 @@ export const GridItem = ({ selected, colPos, rowPos }) => {
       onChange={handleChange}
       colPos={colPos}
       rowPos={rowPos}
+      autoFocus={focus}
+      onKeyDown={handleKeyDown()}
+      onClick={clickHandler()}
+      id={id}
+      disabled={!selected}
+
     />
   )
 }

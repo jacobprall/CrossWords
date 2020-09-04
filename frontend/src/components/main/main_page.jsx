@@ -74,6 +74,7 @@ console.log(props.secondsElapsed);
         secondsElapsed={props.secondsElapsed}
         />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
+
         <TimeScoreClue 
           newGame={newGame} 
           clue={gameObj ? gameObj.nextClue : null} 
