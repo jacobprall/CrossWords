@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRef } from 'react';
 // import { use } from 'passport';
 
 const Input = styled.input`
@@ -22,8 +23,14 @@ const Input = styled.input`
   }
 `;
 
-export const GridItem = ({ selected }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
   const [char, setChar] = useState("");
+
+  // const inputFocus = useRef(focus);
+
+  // useEffect(() => {
+  //   inputFocus.current.focus();
+  // }, []);
 
   const update = () => {
     return e => {
@@ -36,7 +43,27 @@ export const GridItem = ({ selected }) => {
       }
 
       setChar(lastChar);
+      let nextInput = e.currentTarget.nextSibling;
+      if (nextInput) nextInput.focus();
+    }
+  }
 
+  const clickHandler = () => {
+    return e => {
+      e.currentTarget.value = '';
+      e.currentTarget.focus();
+    }
+  }
+
+  const handleKeyDown = () => {
+    return e => {
+      if (e && e.key === 'Backspace') {
+        let prevInput = e.currentTarget.previousSibling;
+        if (prevInput) {
+          prevInput.focus();
+          setChar('');
+        }
+      }
     }
   }
 
@@ -44,7 +71,14 @@ export const GridItem = ({ selected }) => {
     <Input type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
+      autoFocus={focus}
+      onKeyDown={handleKeyDown()}
       onChange={update()}
+      onClick={clickHandler()}
+      id={id}
+      disabled={!selected}
+      rowPos={rowPos}
+      colPos={colPos}
     />
   )
 }

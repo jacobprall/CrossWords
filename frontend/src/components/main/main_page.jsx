@@ -69,6 +69,7 @@ console.log(props);
     <MainContainer>
       <Modal isShowing={props.isShowing} comp={GameEnd}/>
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
+
         <TimeScoreClue 
           newGame={newGame} 
           clue={gameObj ? gameObj.nextClue : null} 

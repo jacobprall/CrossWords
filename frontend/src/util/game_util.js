@@ -3,8 +3,8 @@ import axios from 'axios'
 export const getNewGame = (boardWidth, colStart) => {
   const token = localStorage.getItem('jwtToken');
   axios.defaults.headers.common['Authorization'] = token;
-  return axios.get('/api/games/new',
-  // { boardWidth, colStart }
+  return axios.post('/api/games/new',
+  { boardWidth, colStart }
   );
 }
 
