@@ -26,12 +26,13 @@ const patchGameCallback = (req, res) => {
     .then((game) => getNewGameState(game, cleanedReqBody))
     .then(updateGameState)
     .then(async (game) => {
-      const [nextWord, overlap] = await getNextWord(game);
+      const [nextWord, overlap, colStart] = await getNextWord(game);
 
       const prevWordId = game.wordsSent[game.wordsSent.length - 1];
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
+      game.wordsStartCol.push(colStart);
 
       game = await game.save().then((g) => g);
 
@@ -47,6 +48,7 @@ const patchGameCallback = (req, res) => {
           clue,
           difficulty,
           length,
+          colStart,
         },
         overlap,
         nextDir: overlap < 0,

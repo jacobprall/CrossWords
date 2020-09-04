@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const Game = require('../../../../../models/Game');
 const User = require('../../../../../models/User');
 // const getNextWord = require('./getNextWord');
@@ -8,18 +9,21 @@ const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
   const { id: userId } = jwtDecode(jwt, res);
-  const { _id, clue, length } = await getFirstWord().then((wrd) => wrd);
-
+  const nextWord = await getFirstWord().then((wrd) => wrd);
+  const { boardWidth, colStart } = req.body;
   const newGame = new Game({
+    boardWidth,
+    colStart,
     user: userId,
-    wordsSent: [_id],
     wordsGuessed: [],
+    wordsSent: [nextWord._id],
+    wordsStartCol: [colStart],
     score: 0,
     timeRemaining: 60.0,
     timeElapsed: 0.0,
-    overlap: 0,
-    nextDir: false,
   });
+
+  const { _id, clue, length } = nextWord;
 
   newGame
     .save()
@@ -30,7 +34,7 @@ const newGameCallback = async (req, res) => {
         score,
         wordsSent,
         wordsGuessed,
-        nextWord: { _id, clue, length },
+        nextWord: { _id, clue, length, colStart },
       };
 
       User.updateOne({ _id: userId }, { $push: { games: game.id } }).exec();

@@ -25,6 +25,26 @@ const getDifficulty = (guessed) => {
 };
 
 /**
+ * Returns the start column of the generated word
+ * @param {Number} nextWordLength Length of the generated word
+ * @param {Number} overlapWithPrev Positive/negative overlap with prevWord
+ * @param {Number} prevWordLength Length of the previous word
+ * @param {Number} prevWordStartCol Start column (zero-based) of the prevWord
+ * @returns {Number}
+ */
+const getColStart = (
+  nextWordLength,
+  overlapWithPrev,
+  prevWordLength,
+  prevWordStartCol,
+) => {
+  if (overlapWithPrev < 0) {
+    return prevWordStartCol + prevWordLength + overlapWithPrev;
+  }
+  return prevWordStartCol - nextWordLength + overlapWithPrev;
+};
+
+/**
  * Get the overlap between two words and a vector from the beginning
  * or end of A.
  * @param {String} a "Old word" against which we test the
@@ -57,11 +77,6 @@ const getOverlap = (a, b, oneTimeOnly = false) => {
   if (oneTimeOnly) return 0;
   return getOverlap(b, a, true);
 };
-
-// get word sub. If dir = false, board moving from left to right,
-// suffix of last word == prefix of next word
-// If true, moving from right to left, prefix of
-// last word == suffix of next word
 
 /**
  *
@@ -104,8 +119,9 @@ const genWordSubArray = (word, dir) => {
 // queries database for possible next words list of 10 words
 
 const getRandDir = (wordsGuessed) => {
+  if (wordsGuessed.length === 1) return false;
   const randomNum = Math.random();
-  switch (wordsGuessed % 5) {
+  switch (wordsGuessed.length % 5) {
     case 1:
       if (randomNum < 0.15) {
         return true;
@@ -197,8 +213,9 @@ const getOneWord = (params) => {
 };
 
 async function getNextWord(game) {
-  const { wordsGuessed, wordsSent } = game;
+  const { wordsGuessed, wordsSent, wordsStartCol } = game;
   const lastGuessedWord = wordsGuessed.slice(-1)[0];
+  const lastGuessedWordStartCol = wordsStartCol?.slice(-1)[0] || 8;
 
   const dir = getRandDir(wordsGuessed);
   let word = await getOneWord({ wordsGuessed, dir, wordsSent });
@@ -207,7 +224,13 @@ async function getNextWord(game) {
     word = await getOneWord({ wordsGuessed, dir: !dir, wordsSent });
   }
   const overlap = getOverlap(lastGuessedWord, word.answer);
-  return [word, overlap];
+  const colStart = getColStart(
+    word.answer.length,
+    overlap,
+    lastGuessedWord.length,
+    lastGuessedWordStartCol,
+  );
+  return [word, overlap, colStart];
 }
 
 module.exports = getNextWord;

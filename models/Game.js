@@ -33,6 +33,15 @@ const GameSchema = new Schema(
       type: Number,
       required: true,
     },
+    colStart: {
+      type: Number,
+      required: true,
+    },
+    wordsStartCol: [
+      {
+        type: Number,
+      },
+    ],
   },
   {
     timestamps: true,
