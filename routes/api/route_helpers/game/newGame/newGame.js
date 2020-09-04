@@ -28,13 +28,14 @@ const newGameCallback = async (req, res) => {
   newGame
     .save()
     .then((game) => {
-      const { score, wordsSent, wordsGuessed } = game;
+      const { score, wordsSent, wordsGuessed, timeRemaining } = game;
       const returnObj = {
         gameId: game.id,
         score,
         wordsSent,
         wordsGuessed,
         nextWord: { _id, clue, length, colStart },
+        timeRemaining,
       };
 
       User.updateOne({ _id: userId }, { $push: { games: game.id } }).exec();

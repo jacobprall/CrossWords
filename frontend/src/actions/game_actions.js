@@ -23,7 +23,11 @@ const receiveGameErrors = (errors) => ({
 
 const wipeGameState = () => ({
   type: CLEAR_GAME_STATE,
-});
+})
+
+export const fetchNewGame = (boardWidth = 20, colStart = 1) => dispatch => getNewGame(boardWidth, colStart)
+  .then(({ data }) => dispatch(receiveActiveGame(data)), (err => dispatch(receiveGameErrors(err.message))));
+
 
 export const fetchNewGame = (boardWidth = 20, colStart = 100) => (dispatch) =>
   getNewGame(boardWidth, colStart).then(

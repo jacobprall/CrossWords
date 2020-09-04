@@ -7,6 +7,8 @@ const GridCSS = styled.div`
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(20, 1fr);
   margin-top: 3rem;
+  margin-left: 0;
+  margin-right: 0;
 `
 
 class Grid extends React.Component {
@@ -25,15 +27,15 @@ class Grid extends React.Component {
     if (e && e.key === 'Enter') {
       let enteredInputs = Array.from(document.getElementsByClassName('grid-item'))
         .filter(ele => [...ele.classList].includes('selected-row'));
-      let guess = enteredInputs.map(input => input.value).join('').toUpperCase();
-      console.log(this.props.gameId, this.props.seconds, this.props.secondsElapsed, guess);
-      console.log("----------------------------------------------------")
-      this.props.updateGameDetails({
-        gameId: this.props.gameId,
-        timeRemaining: this.props.seconds,
-        timeElapsed: this.props.secondsElapsed,
-        guess,
-      })
+      if (enteredInputs.length > 0) {
+        let guess = enteredInputs.map(input => input.value).join('').toUpperCase();
+        this.props.updateGameDetails({
+          gameId: this.props.gameId,
+          timeRemaining: this.props.seconds,
+          timeElapsed: this.props.secondsElapsed,
+          guess,
+        }).then(res => console.log(res))
+      }
     }
   }
 
@@ -55,9 +57,7 @@ class Grid extends React.Component {
         <GridRow
           key={`grid-row-${idx}`}
           clue={clue}
-
           rowPos={idx+1}
-
           prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
           wasCorrect={clue.wasCorrect}
