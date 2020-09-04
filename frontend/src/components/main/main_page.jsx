@@ -6,7 +6,8 @@ import { TimeScoreClue } from '../time_score_clue/time_score_clue';
 import { useFetchRedux } from '../custom_hooks/useFetchRedux'; 
 import { fetchNewGame, updateGameDetails } from '../../actions/game_actions';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { Modal } from '../modal/modal'
+import { Modal } from '../modal/modal'; 
+import { GameEnd } from '../game_end/game_end'; 
 // fetchNewGame()
 // updateGameDetails({ gameId: '', timeRemaining: 60, timeElapsed: 0, guess: '' })
 // mDTP=> fetchNewGame: () => dispatch(fetchNewGame())
@@ -60,18 +61,19 @@ export default function MainPage(props) {
     setSecondsElapsed(secsElapsed)
   }
 
-
+console.log(props); 
   return (
     <Container>
     <MainContainer>
-      {/* <GridContainer game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} /> */}
+      <Modal isShowing={props.isShowing} comp={GameEnd}/>
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
         <TimeScoreClue 
           newGame={newGame} 
           clue={gameObj ? gameObj.nextClue : null} 
           score={gameObj ? gameObj.score : null} 
           handleSeconds={handleSeconds} 
-          endGame={endGame}/>
+          endGame={props.endGame}
+        />
     </MainContainer>
     </Container>
   );

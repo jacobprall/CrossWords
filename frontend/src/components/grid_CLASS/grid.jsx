@@ -9,7 +9,7 @@ class Grid extends React.Component {
 
   componentWillMount() {
     document.removeEventListener('keydown', this.handleGuess.bind(this));
-    this.props.clearGameState();
+    // this.props.clearGameState();
   }
 
   handleGuess(e) {
@@ -48,11 +48,12 @@ class Grid extends React.Component {
           clue={clue}
           topHeight={idx}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
+          correct={false}
         />)
       }
     });
     return (
-      <div style={{ display: 'flex', flexDirection: 'column'}} className="game-grid" tabIndex="0" onKeyDown={this.handleGuess.bind(this)}>
+      <div className="game-grid" tabIndex="0" onKeyDown={this.handleGuess.bind(this)}>
         {gridRows}
       </div>
     )
