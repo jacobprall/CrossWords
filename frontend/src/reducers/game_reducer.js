@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
 
 const activeGameReducer = (state = {}, { type, game, gameDetails }) => {
   Object.freeze(state);
-  let nextState = { ...state }
+  let nextState = { ...state };
 
   switch (type) {
     case RECEIVE_ACTIVE_GAME:

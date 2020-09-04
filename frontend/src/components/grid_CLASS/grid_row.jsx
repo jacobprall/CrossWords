@@ -12,7 +12,7 @@ import styled from 'styled-components';
 //   })
 //   });
 
-export default ({ clue, selected, rowPos, prevAnswer }) => {
+export default ({ clue, selected, rowPos, prevAnswer, wasCorrect }) => {
     // clue = { _id: '', length: '', clue: '', colStart: '' }
     // vvv this is all bad
     let gridItems = [];
@@ -25,6 +25,7 @@ export default ({ clue, selected, rowPos, prevAnswer }) => {
         id={`grid-item-${i}`}
         rowPos={rowPos}
         colPos={clue.colStart + i + 1}
+        color={wasCorrect ? 'green' : 'red'}
         />);
     }
     return gridItems;

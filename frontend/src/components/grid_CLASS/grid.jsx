@@ -6,6 +6,7 @@ const GridCSS = styled.div`
   display: grid;
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(20, 1fr);
+  margin-top: 3rem;
 `
 
 class Grid extends React.Component {
@@ -16,7 +17,7 @@ class Grid extends React.Component {
 
   componentWillUnmount() {
     // document.removeEventListener('keydown', this.handleGuess.bind(this));
-    this.props.clearGameState();
+    // this.props.clearGameState();
   }
 
   handleGuess(e) {
@@ -57,6 +58,7 @@ class Grid extends React.Component {
           rowPos={idx+1}
           prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
+          wasCorrect={clue.wasCorrect}
         />)
       }
     });

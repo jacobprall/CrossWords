@@ -25,12 +25,13 @@ const Input = styled.input`
   }
 `;
 
-const GridInput = styled(Input)(({colPos, rowPos}) => ({
+const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
     gridColumn: `${colPos} / span 1`,
     gridRow: `${rowPos} / span 1`,
+    color: `${color}`,
 }));
 
-export const GridItem = ({ selected, id, rowPos, colPos, focus, placeholder }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
   const [char, setChar] = useState("");
 
   // const update = () => {
@@ -93,6 +94,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, placeholder }) =
       onKeyDown={handleKeyDown()}
       onClick={clickHandler()}
       id={id}
+      color={selected ? 'black' : color}
       disabled={!selected}
 
     />
