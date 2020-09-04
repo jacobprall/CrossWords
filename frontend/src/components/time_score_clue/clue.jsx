@@ -15,11 +15,13 @@ const MagnifyingGlass = styled.img`
     width: 3rem; 
 `
 
-const YourClue = styled.h1`
-  height: 3rem;
+const YourClue = styled.h4`
   margin-top: 0.5rem; 
   color: 	#101010;
   font-weight: 500; 
+  overflow-wrap: normal;
+  word-wrap: break-word;
+  width: 
 `
 
 export const Clue = ({ clue }) => {
@@ -28,9 +30,9 @@ export const Clue = ({ clue }) => {
         <Container>
             <Header>
                 <MagnifyingGlass src={magnifying_glass}/>
-                {/* <YourClue> */}
+                <YourClue>
                     {`${clue.clue} (${clue.length} letters)`}
-                {/* </YourClue> */}
+                </YourClue>
             </Header>
         </Container>
     )

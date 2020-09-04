@@ -26,21 +26,23 @@ const Input = styled.input`
 `;
 
 
+const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
 
-const GridInput = styled(Input)(({colPos, rowPos}) => ({
     gridColumn: `${colPos} / span 1`,
-    gridRow: `${rowPos} / span 1`
+    gridRow: `${rowPos} / span 1`,
+    color: `${color}`,
 }));
 
-export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
 
+export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
   const [char, setChar] = useState("");
 
-  const update = () => {
-    return e => {
-      let input = e.target.value;
-      let lastChar = input[input.length - 1];
-      let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  // const update = () => {
+  //   return e => {
+  //     let input = e.target.value;
+  //     let lastChar = input[input.length - 1];
+  //     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
 
   const handleChange = (e) => {
@@ -51,11 +53,8 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
 
  
     setChar(lastChar);
-
-      setChar(lastChar);
-      let nextInput = e.currentTarget.nextSibling;
-      if (nextInput) nextInput.focus();
-    }
+    let nextInput = e.currentTarget.nextSibling;
+    if (nextInput) nextInput.focus();
   }
 
   const clickHandler = () => {
@@ -99,6 +98,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus }) => {
       onKeyDown={handleKeyDown()}
       onClick={clickHandler()}
       id={id}
+      color={selected ? 'black' : color}
       disabled={!selected}
 
     />

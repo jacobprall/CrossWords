@@ -16,15 +16,18 @@ import GameErrors from '../errors/game_errors';
 const Container = styled.div`
   display: flex; 
   flex-direction: column; 
+  justify-content: center;
+  align-items: center;
   overflow-x: hidden; 
 `
 
 const MainContainer = styled.div`
   margin-top: 3rem;
-  width: 90rem;
+  // width: 90rem;
   display: flex;  
-  justify-content: space-around; 
-  align-self: center; 
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center; 
 `
 
 export default function MainPage(props) {
@@ -41,17 +44,17 @@ export default function MainPage(props) {
   useEffect(() => {
     let isSubscribed = true;
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        await dispatch(fetchNewGame());
-      } catch (err) {
-        // setError(error)
-      }
-      setLoading(false);
-    }
+    // const fetchData = async () => {
+    //   setLoading(true);
+    //   try {
+    //     await dispatch(fetchNewGame());
+    //   } catch (err) {
+    //     // setError(error)
+    //   }
+    //   setLoading(false);
+    // }
 
-    if (isSubscribed && !gameId) fetchData();
+    // if (isSubscribed && !gameId) fetchData();
 
     return () => isSubscribed = false; 
   }, [])
@@ -66,21 +69,21 @@ export default function MainPage(props) {
   return (
     <Container>
       <GameErrors />
-    <MainContainer>
       <Modal 
         isShowing={props.isShowing} 
         Comp={GameEnd} 
         score={gameObj ? gameObj.score : null} 
         />
+    <MainContainer>
+      <TimeScoreClue 
+        newGame={newGame} 
+        game
+        clue={gameObj ? gameObj.nextWord : null} 
+        score={gameObj ? gameObj.score : null} 
+        handleSeconds={handleSeconds} 
+        endGame={props.endGame}
+      />
       <GridContainerCLASS game={gameObj} seconds={seconds} secondsElapsed={secondsElapsed} />
-
-        <TimeScoreClue 
-          newGame={newGame} 
-          clue={gameObj ? gameObj.nextClue : null} 
-          score={gameObj ? gameObj.score : null} 
-          handleSeconds={handleSeconds} 
-          endGame={props.endGame}
-        />
     </MainContainer>
     </Container>
   );

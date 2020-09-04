@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import logo from '../../images/logo.png'
 import styled from 'styled-components';
 import regeneratorRuntime from "regenerator-runtime";
+import { clearGameState } from '../../actions/game_actions';
 
 const NavContainer = styled.div`
   box-sizing:border-box; 
@@ -123,7 +124,7 @@ export default function Navbar({sticky, ele}) {
       links = (
         <LoggedInNavigationSection>
           <LoggedInNavLink to={"/"}>Home</LoggedInNavLink>
-          <LoggedInNavLink to={"/newGame"}>New Game</LoggedInNavLink>
+          <LoggedInNavLink to={"/newGame"} onClick={() => dispatch(clearGameState())}>New Game</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>Stats</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>Pause</LoggedInNavLink>
           <LoggedInNavLink to={"/stats"}>save</LoggedInNavLink>

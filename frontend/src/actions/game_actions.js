@@ -34,4 +34,7 @@ export const updateGameDetails = gameUpdates => dispatch => patchGame(gameUpdate
   .then(({ data }) => dispatch(receiveGameDetails(data)), (err => dispatch(receiveGameErrors(err.message))));
 
 
-export const clearGameState = () => dispatch => dispatch(wipeGameState());
+export const clearGameState = () => dispatch => {
+  dispatch(wipeGameState())
+  return dispatch(fetchNewGame());
+};

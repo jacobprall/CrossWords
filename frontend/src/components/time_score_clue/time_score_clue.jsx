@@ -25,14 +25,14 @@ export const Header = styled.div`
     margin-right: 2rem;
 `
 
-export const HeaderEle = styled.h2`
+export const HeaderEle = styled.div`
     height: 3rem;
     margin-top: 0.5rem; 
     color: 	#101010;
     font-weight: 500; 
 `
 
-export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame}) => {
+export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game }) => {
     // console.log(clue); 
     return (
         <Container>
@@ -41,7 +41,7 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame}) =
                     <Score score={score} />
                 </HeaderEle>
                 <HeaderEle>
-                    <TimeElapsed newGame={newGame} handleSeconds={handleSeconds} endGame={endGame}/>
+                    <TimeElapsed game={game} newGame={newGame} handleSeconds={handleSeconds} endGame={endGame}/>
                 </HeaderEle>
                 <HeaderEle>
                     <Clue clue={clue} />
