@@ -17,7 +17,7 @@ const Protected = ({ component: Component, loggedIn, ...rest }) => {
     {...rest}
     render={props =>
       loggedIn ? (
-        <Component {...props} />
+        <Component {...props} {...rest} />
       ) : (
         <Redirect to="/signup" />
       )

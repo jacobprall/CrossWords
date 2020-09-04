@@ -4,7 +4,7 @@ import { TimeElapsed } from './time_elapsed';
 import { Score } from './score';
 import { Clue } from './clue';
 
-const Container = styled.div`
+export const Container = styled.div`
     height: 10rem;
     width: auto;
     padding-bottom: 1rem; 
@@ -16,7 +16,7 @@ const Container = styled.div`
     box-shadow: 0px 0px 1rem #D3D3D3;
 `
 
-const Header = styled.div`
+export const Header = styled.div`
     width: 100%
     display: flex;
     flex-direction: column;
@@ -25,14 +25,14 @@ const Header = styled.div`
     margin-right: 2rem;
 `
 
-const HeaderEle = styled.h2`
+export const HeaderEle = styled.h2`
     height: 3rem;
     margin-top: 0.5rem; 
     color: 	#101010;
     font-weight: 500; 
 `
 
-export const TimeScoreClue = ({ newGame, clue, score, handleSeconds}) => {
+export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame}) => {
     // console.log(clue); 
     return (
         <Container>
@@ -41,7 +41,7 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds}) => {
                     <Score score={score} />
                 </HeaderEle>
                 <HeaderEle>
-                    <TimeElapsed newGame={newGame} handleSeconds={handleSeconds}/>
+                    <TimeElapsed newGame={newGame} handleSeconds={handleSeconds} endGame={endGame}/>
                 </HeaderEle>
                 <HeaderEle>
                     <Clue clue={clue} />

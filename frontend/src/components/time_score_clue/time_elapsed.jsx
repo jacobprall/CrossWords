@@ -13,18 +13,17 @@ const Start = styled.div`
 
 //whatever button starts the game sends in starGame=true as a prop
 
-export const TimeElapsed = ({ newGame, handleSeconds }) => {
+export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
     const [seconds, setSeconds] = useState() ;
     const [isTicking, setIsTicking] = useState(false);
     const [state, dispatch] = useStateValue(); 
     const [secondsElapsed, setSecondsElapsed] = useState(0); 
-
+   
     const toggle = () => {
         setIsTicking(!isTicking); 
     }
     
     const reset = () => {
-        setSeconds(0);
         setIsTicking(false);
     }
     
@@ -32,7 +31,7 @@ export const TimeElapsed = ({ newGame, handleSeconds }) => {
         if (!isNaN(state["seconds"])) {
             setSeconds(state["seconds"]); 
         } else {
-            setSeconds(60); 
+            setSeconds(5); 
         }
     }, [])
 
@@ -42,13 +41,22 @@ export const TimeElapsed = ({ newGame, handleSeconds }) => {
 
     useEffect(() => {
         let isSubscribed = true; 
-
         const addSeconds = async () => await dispatch({
             type: 'addSeconds', 
             seconds
         }); 
 
-        if (isSubscribed && !isNaN(seconds)) addSeconds();
+        const addSecondsElapsed = async () => await dispatch({
+            type: 'addSecondsElapsed', 
+            secondsElapsed
+        }); 
+
+        if (isSubscribed && !isNaN(seconds)) { addSeconds(); addSecondsElapsed(); }
+
+        if (seconds === 0) { 
+            endGame(); 
+            reset(); 
+        }
         return () => isSubscribed = false
     }, [seconds]); 
 
