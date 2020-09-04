@@ -1,9 +1,11 @@
 import axios from 'axios'
 
-export const getNewGame = () => {
+export const getNewGame = (boardWidth, colStart) => {
   const token = localStorage.getItem('jwtToken');
   axios.defaults.headers.common['Authorization'] = token;
-  return axios.get('/api/games/new');
+  return axios.get('/api/games/new',
+  // { boardWidth, colStart }
+  );
 }
 
 export const patchGame = ({ gameId, guess, timeRemaining, timeElapsed }) => {

@@ -13,10 +13,11 @@ const Start = styled.div`
 
 //whatever button starts the game sends in starGame=true as a prop
 
-export const Time = ({ newGame }) => {
+export const TimeElapsed = ({ newGame, handleSeconds }) => {
     const [seconds, setSeconds] = useState() ;
     const [isTicking, setIsTicking] = useState(false);
     const [state, dispatch] = useStateValue(); 
+    const [secondsElapsed, setSecondsElapsed] = useState(0); 
 
     const toggle = () => {
         setIsTicking(!isTicking); 
@@ -55,7 +56,11 @@ export const Time = ({ newGame }) => {
         let interval = null; 
         if (isTicking) {
             interval = setInterval(() => {
-                if (!isNaN(seconds)) setSeconds(seconds => seconds - 1);
+                if (!isNaN(seconds)) {
+                    setSeconds(seconds => seconds - 1);
+                    setSecondsElapsed(setSecondsElapsed => setSecondsElapsed + 1);
+                    handleSeconds(seconds, secondsElapsed); 
+                }
             }, 1000); 
         } else if (!isTicking && seconds > 0) {
             clearInterval(interval); 
