@@ -41,11 +41,32 @@ export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
     }
   }
 
+  const clickHandler = () => {
+    return e => {
+      e.currentTarget.value = '';
+      e.currentTarget.focus();
+    }
+  }
+
+  const handleKeyDown = () => {
+    return e => {
+      if (e && e.key === 'Backspace') {
+        let prevInput = e.currentTarget.previousSibling;
+        if (prevInput) {
+          prevInput.value = '';
+          prevInput.focus();
+        }
+      }
+    }
+  }
+
   return (
     <Input type="text"
       className={`grid-item${selected ? ' selected-row' : ''}`}
       value={char.toUpperCase()}
+      onKeyDown={handleKeyDown()}
       onChange={update()}
+      onClick={clickHandler()}
       id={id}
       rowPos={rowPos}
       colPos={colPos}
