@@ -25,7 +25,7 @@ export const Header = styled.div`
     margin-right: 2rem;
 `
 
-export const HeaderEle = styled.h2`
+export const HeaderEle = styled.div`
     height: 3rem;
     margin-top: 0.5rem; 
     color: 	#101010;

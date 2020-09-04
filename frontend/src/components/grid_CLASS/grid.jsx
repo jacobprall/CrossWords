@@ -1,30 +1,32 @@
 import React from 'react';
 import GridRow from './grid_row';
+import styled from 'styled-components';
+
+const GridCSS = styled.div`
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+`
 
 class Grid extends React.Component {
+  // componentDidMount() {
+  //   // if (!this.props.game) this.props.fetchNewGame();
+  //   document.addEventListener('keydown', this.handleGuess.bind(this));
+  // }
 
-  constructor(props) {
-    super(props);
-
-    this.handleGuess = this.handleGuess.bind(this);
-  }
-  componentDidMount() {
-    // if (!this.props.game) this.props.fetchNewGame();
-    document.addEventListener('keydown', this.handleGuess);
-  }
-
-
-  componentWillMount() {
-    document.removeEventListener('keydown', this.handleGuess);
-    // this.props.clearGameState();
+  componentWillUnmount() {
+    // document.removeEventListener('keydown', this.handleGuess.bind(this));
+    this.props.clearGameState();
   }
 
   handleGuess(e) {
+    // e.preventDefault();
     if (e && e.key === 'Enter') {
       let enteredInputs = Array.from(document.getElementsByClassName('grid-item'))
         .filter(ele => [...ele.classList].includes('selected-row'));
       let guess = enteredInputs.map(input => input.value).join('').toUpperCase();
-
+      console.log(this.props.gameId, this.props.seconds, this.props.secondsElapsed, guess);
+      console.log("----------------------------------------------------")
       this.props.updateGameDetails({
         gameId: this.props.gameId,
         timeRemaining: this.props.seconds,
@@ -34,28 +36,34 @@ class Grid extends React.Component {
     }
   }
 
+        //   const updateGame = async (g, w) => (
+        //     await dispatchRedux(updateGameDetails({
+        //         gameId: g.gameId,
+        //         guess: w,
+        //         timeRemaining: seconds,
+        //         timeElapsed: secondsElapsed})
+        //     )
+        // )
+
   render() {
-    const {game, clueHistory} = this.props;
-
-    if (!game || !clueHistory.length) return <div className="game-grid"/>;
-
-    const gridRows = clueHistory.map((clue, idx) => {
+    if (!this.props.game || !this.props.clueHistory.length) return null;
+    let gridRows = this.props.clueHistory.map((clue, idx) => {
       if (clue) {
+        let prevAnswer = this.props.answerHistory[idx - 1] || null;
         return (
         <GridRow
-          key={clue.clue}
+          key={`grid-row-${idx}`}
           clue={clue}
-          // topHeight={idx}
-          row={this.props.clueHistory.length}
+          rowPos={idx+1}
+          prevAnswer={prevAnswer}
           selected={Boolean(idx === this.props.clueHistory.length - 1)}
-          correct={false}
         />)
       }
     });
     return (
-      <div className="game-grid" tabIndex="0" onKeyDown={this.handleGuess}>
+      <GridCSS tabIndex="0" onKeyDown={this.handleGuess.bind(this)}>
         {gridRows}
-      </div>
+      </GridCSS>
     )
   }
 }

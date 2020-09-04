@@ -31,7 +31,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
         if (!isNaN(state["seconds"])) {
             setSeconds(state["seconds"]); 
         } else {
-            setSeconds(5); 
+            setSeconds(5000); // Don't commit this
         }
     }, [])
 

@@ -77,7 +77,7 @@ export default function MainPage(props) {
 
         <TimeScoreClue 
           newGame={newGame} 
-          clue={gameObj ? gameObj.nextClue : null} 
+          clue={gameObj ? gameObj.nextWord : null} 
           score={gameObj ? gameObj.score : null} 
           handleSeconds={handleSeconds} 
           endGame={props.endGame}

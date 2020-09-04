@@ -1,26 +1,31 @@
 import React from 'react';
 import { GridItem } from './grid_item';
+import styled from 'styled-components'; 
 
+// const GridRowStyle = styled.div(props => {
+//   let leftWidth = `${props.colStart * 10}em`;
+//   let topHeight = `${props.topHeight * 10}em`;
+//   return ({
+//     display: 'flex',
+//     flexDirection: 'row',
+//     // marginLeft: leftWidth,
+//   })
+//   });
 
-export default ({ clue, selected, rowPos }) => {
+export default ({ clue, selected, rowPos, prevAnswer }) => {
+    // clue = { _id: '', length: '', clue: '', colStart: '' }
+    // vvv this is all bad
     let gridItems = [];
-    const wasCorrect = clue.wasCorrect || false
-
     for (let i = 0; i < clue.length; i++) {
-      const colPos = clue.colStart + i
       gridItems.push(
-
-
       <GridItem
         focus={Boolean(selected && i === 0)}
-        key={`grid-item-${i}`}
+        key={`grid-item-${clue.id}-${i}`}
         selected={selected}
-        wasCorrect={wasCorrect}
-        rowPos={rowPos}
-        colPos={colPos}
         id={`grid-item-${i}`}
-      />
-    );
-  }
-  return gridItems;
-};
+        rowPos={rowPos}
+        colPos={clue.colStart + i + 1}
+        />);
+    }
+    return gridItems;
+}
