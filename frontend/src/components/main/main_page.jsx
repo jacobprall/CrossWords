@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // fetchNewGame()
 // updateGameDetails({ gameId: '', timeRemaining: 60, timeElapsed: 0, guess: '' })
 // mDTP=> fetchNewGame: () => dispatch(fetchNewGame())
+import GameErrors from '../errors/game_errors';
 
 const Container = styled.div`
   display: flex; 
@@ -52,6 +53,7 @@ export default function MainPage(props) {
 
   return (
     <Container>
+      <GameErrors />
     <MainContainer>
       <GridContainer game={gameObj} />
         <TimeScoreClue newGame={newGame} clue={gameObj ? gameObj.nextClue : null} score={gameObj ? gameObj.score : null}/>

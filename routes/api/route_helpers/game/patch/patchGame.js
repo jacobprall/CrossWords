@@ -3,9 +3,9 @@
 /* eslint-disable no-console */
 const Game = require('../../../../../models/Game');
 const Word = require('../../../../../models/Word');
-
-const { updateGameState, getNewGameState, cleanReqBody } = require('./utils');
-const getNextWord = require('../getNextWord');
+const { guessSchema } = require('../validations');
+const { updateGameState, getNewGameState } = require('./utils');
+const getNextWord = require('./getNextWord');
 
 /**
  * Receive a guessed word and retrieve the next clue and updated game state
@@ -17,8 +17,10 @@ const getNextWord = require('../getNextWord');
  * @returns {gameDetails}
  */
 const patchGameCallback = (req, res) => {
-  console.log(req);
-  const cleanedReqBody = cleanReqBody(req.body);
+  const { error, value: cleanedReqBody } = guessSchema.validate(req.body, {
+    stripUnknown: true,
+  });
+  if (error) res.status(400).json(error.details);
 
   return Game.findById(req.params.gameId)
     .then((game) => getNewGameState(game, cleanedReqBody))
@@ -26,12 +28,12 @@ const patchGameCallback = (req, res) => {
     .then(async (game) => {
       const [nextWord, overlap] = await getNextWord(game);
 
-      console.log([nextWord, overlap]);
       const prevWordId = game.wordsSent[game.wordsSent.length - 1];
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
       game.wordsSent.push(nextWord._id);
-      game = await game.save().then(g => g);
+
+      game = await game.save().then((g) => g);
 
       const { id, clue, difficulty, length } = nextWord;
 
@@ -47,7 +49,7 @@ const patchGameCallback = (req, res) => {
           length,
         },
         overlap,
-        nextDir: overlap > 0,
+        nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
       };
 

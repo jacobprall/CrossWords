@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+// eslint-disable-next-line no-unused-vars
 const jwt = require('jsonwebtoken');
 const {
   newGameCallback,
