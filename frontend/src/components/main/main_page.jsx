@@ -23,8 +23,8 @@ export default function MainPage(props) {
   //fetch clue 
   return (
     <Container>
-    <MainContainer>
       <GameErrors />
+    <MainContainer>
       <GridContainer/>
       <TimeScoreClue newGame={newGame}/>
     </MainContainer>

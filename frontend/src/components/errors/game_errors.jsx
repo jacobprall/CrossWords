@@ -9,17 +9,19 @@ const mapStateToProps = ({ errors: { game } }) => ({
 const Errors = styled.ul`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: baseline;
   list-style: none;
-  width: 100%;
-  height: 36px;
-  padding-left: 10%;
+  width: 90rem;
+  height: 18px;
+  padding-left: 0px;
+  margin-left: 6%;
+  margin-top: 1%;
 `;
 
-const SingleError = style.li`
+const SingleError = styled.li`
   color: red;
-  line-height: 36px;
+  line-height: 18px;
 `;
 
 const GameErrors = ({ errors }) => (
