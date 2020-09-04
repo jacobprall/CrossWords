@@ -126,30 +126,15 @@ const getNewGameState = async (game, reqBody) => {
 
   game.timeRemaining = timeRemaining;
   game.timeElapsed = timeElapsed;
-  // game.save();
 
-  // const { guess } = reqBody;
   const lastClueIdSent = game.wordsSent.slice(-1)[0];
 
   const result = await checkGuess(guess, game, lastClueIdSent);
   return { game, guess, ...result };
 };
 
-/**
- * Push forward only approved body params; convert strings to Number when needed
- * @param {Object} reqBody - Express req body
- * @returns {Object} {gameId, guess, timeRemaining, timeElapsed}
- */
-const cleanReqBody = (reqBody) => ({
-  gameId: reqBody.gameId,
-  guess: reqBody.guess.toUpperCase(),
-  timeRemaining: Number.parseInt(reqBody.timeRemaining, 10),
-  timeElapsed: Number.parseInt(reqBody.timeElapsed, 10),
-});
-
 module.exports = {
   checkGuess,
   updateGameState,
   getNewGameState,
-  cleanReqBody,
 };
