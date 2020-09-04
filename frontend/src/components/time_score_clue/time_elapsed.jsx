@@ -51,7 +51,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
         if (isSubscribed && !isNaN(seconds)) addSeconds();
 
         if (seconds === 0) { 
-            endGame(); 
+            endGame(secondsElapsed); 
             reset(); 
         }
         return () => isSubscribed = false
