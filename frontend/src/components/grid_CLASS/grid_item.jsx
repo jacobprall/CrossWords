@@ -36,11 +36,8 @@ export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
       }
 
       setChar(lastChar);
-      console.log(e.currentTarget);
-      let nextId = document.getElementById(e.currentTarget).attribute('nextId');
-      let nextInput = document.getElementById(nextId);
-      nextInput.focus();
-
+      let nextInput = e.currentTarget.nextSibling;
+      if (nextInput) nextInput.focus();
     }
   }
 
@@ -50,7 +47,6 @@ export const GridItem = ({ selected, id, ref, rowPos, colPos }) => {
       value={char.toUpperCase()}
       onChange={update()}
       id={id}
-      nextId={ref}
       rowPos={rowPos}
       colPos={colPos}
     />
