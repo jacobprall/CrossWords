@@ -3,8 +3,8 @@
 /* eslint-disable no-console */
 const Game = require('../../../../../models/Game');
 const Word = require('../../../../../models/Word');
-
-const { updateGameState, getNewGameState, cleanReqBody } = require('./utils');
+const { guessSchema } = require('../validations');
+const { updateGameState, getNewGameState } = require('./utils');
 const getNextWord = require('./getNextWord');
 
 /**
@@ -17,7 +17,10 @@ const getNextWord = require('./getNextWord');
  * @returns {gameDetails}
  */
 const patchGameCallback = (req, res) => {
-  const cleanedReqBody = cleanReqBody(req.body);
+  const { error, value: cleanedReqBody } = guessSchema.validate(req.body, {
+    stripUnknown: true,
+  });
+  if (error) res.status(400).json(error.details);
 
   return Game.findById(req.params.gameId)
     .then((game) => getNewGameState(game, cleanedReqBody))
@@ -46,7 +49,7 @@ const patchGameCallback = (req, res) => {
           length,
         },
         overlap,
-        nextDir: overlap > 0,
+        nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
       };
 
