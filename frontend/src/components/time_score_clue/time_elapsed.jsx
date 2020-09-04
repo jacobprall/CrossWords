@@ -24,7 +24,6 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
     }
     
     const reset = () => {
-        setSeconds(0);
         setIsTicking(false);
     }
     
@@ -42,7 +41,6 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame }) => {
 
     useEffect(() => {
         let isSubscribed = true; 
-
         const addSeconds = async () => await dispatch({
             type: 'addSeconds', 
             seconds

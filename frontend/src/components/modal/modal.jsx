@@ -23,11 +23,11 @@ const ModalWrapper = styled.div`
     margin-top: 10rem; 
 `
 
-export const Modal = ({ isShowing, hide, Comp, sessionProps}) => isShowing ? ReactDOM.createPortal(
+export const Modal = ({ isShowing, hide, Comp, sessionProps, secondsElapsed}) => isShowing ? ReactDOM.createPortal(
     <React.Fragment>
         <ModalOverlay/>
         <ModalWrapper>
-            <Comp props={sessionProps}/>
+            <Comp props={sessionProps} secondsElapsed={secondsElapsed}/>
         </ModalWrapper>
     </React.Fragment>, document.body
 
