@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import magnifying_glass from '../../images/magnifying_glass.png';
+import { cheat } from '../../actions/game_actions';
+import { useDispatch } from 'react-redux'; 
 
 const Container = styled.div``;
 
@@ -23,6 +25,10 @@ const YourClue = styled.h4`
 `;
 
 export const Clue = ({ clue }) => {
+  const dispatch = useDispatch();
+  const handleReveal = async () => {
+    dispatch(cheat(clue._id))
+  }
   if (!clue) return null;
   return (
     <Container>
@@ -30,6 +36,10 @@ export const Clue = ({ clue }) => {
         <MagnifyingGlass src={magnifying_glass} />
         <YourClue>{`${clue.clue} (${clue.length} letters)`}</YourClue>
       </Header>
+      {/* <button
+        onClick={() => dispatch(cheat(clue._id))}>
+          Reveal
+      </button> */}
     </Container>
   );
 };

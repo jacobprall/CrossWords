@@ -3,6 +3,7 @@ import {
   RECEIVE_GAME_DETAILS,
   RECEIVE_SAVED_GAME,
   CLEAR_GAME_STATE,
+  CHEAT,
 } from '../actions/game_actions';
 import { combineReducers } from 'redux';
 
@@ -59,6 +60,15 @@ const answerHistoryReducer = (state=[], { type, gameDetails }) => {
   }
 }
 
+const revealedReducer = (state='', { type, answer }) => {
+  switch(type) {
+    case CHEAT:
+      return answer;
+    default:
+      return state;
+  }
+}
+
 const savedGameReducer = (state={}, { type, game }) => {
   Object.freeze(state);
   let nextState = { ...state };
@@ -73,4 +83,5 @@ export default combineReducers({
   clueHistory: clueHistoryReducer,
   answerHistory: answerHistoryReducer,
   saved: savedGameReducer,
+  revealed: revealedReducer,
 })

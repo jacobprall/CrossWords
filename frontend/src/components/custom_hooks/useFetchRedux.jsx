@@ -13,7 +13,7 @@ export const useFetchRedux = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                await dispatch(action()); 
+                await dispatch(action());
             } catch (err) {
                 setError(error)
             }

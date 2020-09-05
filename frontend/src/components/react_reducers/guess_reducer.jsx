@@ -9,3 +9,12 @@ export const guessReducer = (state, action) => {
     }
 }
 
+export const revealedReducer = (state, { type, answer }) => {
+  switch(type) {
+    case 'revealAnswer':
+      return answer;
+    default:
+      return state;
+  }
+}
+

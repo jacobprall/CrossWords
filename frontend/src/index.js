@@ -4,7 +4,7 @@ import configureStore from './store/store';
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from './util/session_api_util';
 import { logout } from './actions/session_actions';
-import { fetchNewGame, updateGameDetails } from './actions/game_actions';
+import { fetchNewGame, updateGameDetails, cheat } from './actions/game_actions';
 import Root from './components/root';
 
 document.addEventListener('DOMContentLoaded', () => {
