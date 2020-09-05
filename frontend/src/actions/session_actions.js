@@ -24,14 +24,18 @@ export const clearSessionErrors = () => ({
   type: CLEAR_SESSION_ERRORS,
 });
 
+export const setUpToken = (token, dispatch) => {
+  localStorage.setItem('jwtToken', token);
+  APIUtil.setAuthToken(token);
+  const decoded = jwt_decode(token);
+  dispatch(receiveCurrentUser(decoded));
+};
+
 export const signup = (user) => (dispatch) =>
   APIUtil.signup(user)
     .then((res) => {
       const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
-      APIUtil.setAuthToken(token);
-      const decoded = jwt_decode(token);
-      dispatch(receiveCurrentUser(decoded));
+      setUpToken(token, dispatch);
     })
     .catch((err) => {
       dispatch(receiveErrors(err.response.data));
@@ -41,10 +45,7 @@ export const login = (user) => (dispatch) =>
   APIUtil.login(user)
     .then((res) => {
       const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
-      APIUtil.setAuthToken(token);
-      const decoded = jwt_decode(token);
-      dispatch(receiveCurrentUser(decoded));
+      setUpToken(token, dispatch);
     })
     .catch((err) => {
       console.error(err);

@@ -3,12 +3,12 @@ const Game = require('../../../../../models/Game');
 const User = require('../../../../../models/User');
 // const getNextWord = require('./getNextWord');
 const { getFirstWord } = require('./utils');
-const jwtDecode = require('../../jwtDecode');
+const jwtVerify = require('../../jwtVerify');
 
 const newGameCallback = async (req, res) => {
   const jwt = req.headers.authorization.split(' ')[1];
 
-  const { id: userId } = jwtDecode(jwt, res);
+  const { id: userId } = jwtVerify(jwt, res);
   const nextWord = await getFirstWord().then((wrd) => wrd);
   const { boardWidth, colStart } = req.body;
   const newGame = new Game({

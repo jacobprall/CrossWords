@@ -5,6 +5,8 @@ const keys = require('../../../../config/keys');
 const User = require('../../../../models/User');
 const validateRegisterInput = require('../../../../validation/register');
 
+const EXPIRES_IN_SECONDS = 3600;
+
 const registerCallback = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -43,7 +45,7 @@ const registerCallback = (req, res) => {
               payload,
               keys.secretOrKey,
               {
-                expiresIn: 3600,
+                expiresIn: EXPIRES_IN_SECONDS,
               },
               (_e, token) => {
                 res.json({
