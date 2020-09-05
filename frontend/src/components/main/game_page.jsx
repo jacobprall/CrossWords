@@ -17,19 +17,21 @@ import GameContainer from './game_container';
 const Container = styled.div`
   display: flex; 
   flex-direction: column; 
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
   align-items: center;
-  overflow-x: scroll; 
+  overflow-x: scroll;
 `
 
-const MainContainer = styled.div`
-  margin-top: 3rem;
-  // width: 90rem;
-  display: flex;  
-  flex-direction: column;
-  justify-content: flex-start; 
-  align-items: center; 
-`
+// const MainContainer = styled.div`
+//   margin-top: 3rem;
+//   // width: 90rem;
+//   display: flex;  
+//   flex-direction: column;
+//   justify-content: flex-start; 
+//   align-items: center; 
+//   z-index: 1,
+// `
 
 export default function MainPage(props) {
   const newGame = props.history.location.pathname === "/newGame";

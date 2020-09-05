@@ -7,6 +7,7 @@ import { Clue } from './clue';
 export const Container = styled.div`
     height: 10rem;
     width: auto;
+    // position: sticky; 
     padding-bottom: 1rem; 
     display: flex; 
     flex-direction: column; 
@@ -33,7 +34,6 @@ export const HeaderEle = styled.div`
 `
 
 export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game, timeRemaining }) => {
-    // console.log(clue); 
     return (
         <Container>
             <Header>

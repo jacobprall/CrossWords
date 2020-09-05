@@ -97,7 +97,9 @@ export default function Navbar({sticky, ele, toggle}) {
   const [out, setOut] = useState(false); 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
+
   let history = useHistory(); 
+
   const logoutUser = async () => {
     await dispatch(logout());
     history.push('/');
@@ -105,10 +107,12 @@ export default function Navbar({sticky, ele, toggle}) {
 
   useEffect(() => {
     let isSubscribed = true; 
+
     if (isSubscribed) {
       if (out) logoutUser();
       setOut(false);  
     }
+
     return () => isSubscribed = false; 
   }, [out])
 
