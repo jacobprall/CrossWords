@@ -7,12 +7,13 @@ const { secretOrKey } = require('../../../config/keys');
  * @param {Object} res Express RES object
  * @returns {Object} decoded JWT token
  */
-const jwtDecode = (token, res) =>
-  jwt.verify(token, secretOrKey, (err, decoded) => {
-    if (err) {
-      return res.status(401).json(err);
+module.exports = (token, res) => {
+  const decoded = jwt.verify(token, secretOrKey, (err, dec) => {
+    const isExpired = dec.exp <= new Date().valueOf() / 1000;
+    if (err || isExpired) {
+      return res.status(401).json(err || 'Token expired.');
     }
-    return decoded;
+    return dec;
   });
-
-module.exports = jwtDecode;
+  return decoded;
+};

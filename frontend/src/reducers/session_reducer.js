@@ -20,7 +20,6 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: !!action.currentUser,
         user: action.currentUser,
-        activeGame: null,
       };
     case RECEIVE_USER_LOGOUT:
       return {

@@ -1,12 +1,12 @@
 const Game = require('../../../../../models/Game');
 const Word = require('../../../../../models/Word');
 
-const jwtDecode = require('../../jwtDecode');
+const jwtVerify = require('../../jwtVerify');
 
 module.exports = (req, res) => {
   const { gameId } = req.params;
   const jwt = req.headers.authorization.split(' ')[1];
-  const { id: userId } = jwtDecode(jwt, res);
+  const { id: userId } = jwtVerify(jwt, res);
 
   Game.findById(gameId).then(async (game) => {
     if (game.user !== userId) res.status(401);

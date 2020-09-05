@@ -6,6 +6,7 @@ const Word = require('../../../../../models/Word');
 const { guessSchema } = require('../validations');
 const { updateGameState, getNewGameState } = require('./utils');
 const getNextWord = require('./getNextWord');
+const refreshToken = require('../../user/refreshToken');
 
 /**
  * Receive a guessed word and retrieve the next clue and updated game state
@@ -16,7 +17,9 @@ const getNextWord = require('./getNextWord');
  * @param {Integer} req.body.timeElapsed  - Seconds elapsed in this game
  * @returns {gameDetails}
  */
-const patchGameCallback = (req, res) => {
+const patchGameCallback = async (req, res) => {
+  const refreshedToken = await refreshToken(req, res).then((tok) => tok);
+
   const { error, value: cleanedReqBody } = guessSchema.validate(req.body, {
     stripUnknown: true,
   });
@@ -27,8 +30,8 @@ const patchGameCallback = (req, res) => {
     .then(updateGameState)
     .then(async (game) => {
       const [nextWord, overlap, colStart] = await getNextWord(game);
-      const { wordsGuessed } = game
-      const prevGuess = wordsGuessed[wordsGuessed.length - 1]
+      const { wordsGuessed } = game;
+      const prevGuess = wordsGuessed[wordsGuessed.length - 1];
       const prevWordId = game.wordsSent[game.wordsSent.length - 1];
       const prevWord = await Word.findById(prevWordId, { answer: 1 });
 
@@ -54,7 +57,8 @@ const patchGameCallback = (req, res) => {
         overlap,
         nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
-        prevGuess
+        prevGuess,
+        token: refreshedToken,
       };
 
       res.json(returnObject);
