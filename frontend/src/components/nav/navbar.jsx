@@ -113,9 +113,7 @@ export default function Navbar({ sticky, ele, toggle }) {
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
 
-
-  let history = useHistory(); 
-
+  let history = useHistory();
 
   const logoutUser = async () => {
     await dispatch(logout());
@@ -123,7 +121,6 @@ export default function Navbar({ sticky, ele, toggle }) {
   };
 
   useEffect(() => {
-
     let isSubscribed = true;
 
     if (isSubscribed) {
@@ -133,7 +130,6 @@ export default function Navbar({ sticky, ele, toggle }) {
 
     return () => (isSubscribed = false);
   }, [out]);
-
 
   const handleAlt = (e) => {
     dispatch(clearSessionErrors());

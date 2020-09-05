@@ -3,23 +3,23 @@ import styled from 'styled-components';
 import { TimeElapsed } from './time_elapsed';
 import { Score } from './score';
 import { Clue } from './clue';
-
+import background from '../../images/textured_paper/textured_paper_@2X.png';
 export const Container = styled.div`
-
     height: 10rem;
     width: auto;
-    position: absolute;
+    position: relative;
     top: 0;  
-    left: 30%;
-    right: 30%;
+    margin-left: auto;
+    margin-right: auto;
     padding-bottom: 1rem; 
     display: flex; 
     flex-direction: column; 
-    background-color: #E8E8E8; 
     border: 1px solid #4e89ae
     border-radius: 0.2rem; 
-    box-shadow: 0px 0px 1rem #D3D3D3;
-   font-weight: 300;
+    font-weight: 300;
+    z-index: 1000000;
+    background-image: ${background}
+    
 `;
 
 export const Header = styled.div`
@@ -33,6 +33,8 @@ export const Header = styled.div`
   border: 1px solid lightgray;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.5);
+
+  z-index: 900000;
 `;
 
 export const HeaderEle = styled.div`
