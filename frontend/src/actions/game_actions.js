@@ -1,5 +1,6 @@
 import { getNewGame, patchGame } from '../util/game_util';
-// import jwt_decode from 'jwt-decode';
+import * as APIUtil from '../util/session_api_util';
+import { setUpToken } from './session_actions';
 
 export const RECEIVE_ACTIVE_GAME = 'RECEIVE_ACTIVE_GAME';
 export const RECEIVE_GAME_DETAILS = 'RECEIVE_GAME_DETAILS';
@@ -37,7 +38,10 @@ export const fetchNewGame = (boardWidth = 20, colStart = 100) => (dispatch) =>
 // gameUpdates is a POJO of the form: {gameId: String, guess: String, timeRemaining: Number, timeElapsed: Number }
 export const updateGameDetails = (gameUpdates) => (dispatch) =>
   patchGame(gameUpdates).then(
-    ({ data }) => dispatch(receiveGameDetails(data)),
+    ({ data }) => {
+      if (data.token) setUpToken(data.token, dispatch);
+      dispatch(receiveGameDetails(data));
+    },
     (err) => dispatch(receiveGameErrors(err.message)),
   );
 

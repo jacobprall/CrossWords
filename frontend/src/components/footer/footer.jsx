@@ -14,6 +14,6 @@ const FooterText = styled.p`
   `
 export const Footer = ({ loggedIn }) => (
     <Container loggedIn={loggedIn}>
-        <FooterText>Copyright &copy; 2020 AcrossWords</FooterText>
+        {/* <FooterText>Copyright &copy; 2020 AcrossWords</FooterText> */}
     </Container>
 )
