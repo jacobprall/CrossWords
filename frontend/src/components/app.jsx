@@ -13,6 +13,7 @@ import { Footer } from './footer/footer';
 import { useModal } from './custom_hooks/useModal';
 import useStick from './custom_hooks/useStick';
 import 'normalize.css';
+import SplashPage from './main/splash_page';
 
 const App = () => {
   const { stick, ele } = useStick();
@@ -41,7 +42,7 @@ const App = () => {
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <AppContainer>
-        <Navbar sticky={stick} ele={ele} toggle={toggle}/>
+        <Navbar sticky={stick} ele={ele} toggle={toggle} />
         <Switch>
           <ProtectedRoute
             exact
@@ -50,7 +51,8 @@ const App = () => {
             endGame={endGame}
             isShowing={isShowing}
           />
-          <ProtectedRoute exact path="/stats" component={StatsPage} />
+          <ProtectedRoute exact path="/home" component={SplashPage} />
+          <AuthRoute exact path="/" component={SplashPage} />
           <AuthRoute
             exact
             path="/login"
