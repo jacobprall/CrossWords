@@ -17,11 +17,11 @@ export default ({ clue, selected, rowPos, prevAnswer, wasCorrect }) => {
     // vvv this is all bad
 
     let gridItems = [];
-    for (let i = 0; i < clue.length; i++) {
+    for(let i = 0; i < clue.length; i++) {
       gridItems.push(
       <GridItem
         focus={Boolean(selected && i === 0)}
-        key={`grid-item-${clue.id}-${i}`}
+        key={`grid-item-${clue.id}-${i}-${rowPos}`}
         selected={selected}
         id={`grid-item-${i}`}
 

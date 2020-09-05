@@ -91,7 +91,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
   return (
     <GridInput 
       type="text"
-      className={`grid-item${selected ? ' selected-row' : ''}`}
+      className={`grid-item${selected ? ' selected-row' : ''} ${rowPos}`}
       value={char ? char.toUpperCase() : ''}
       onChange={handleChange}
       colPos={colPos}

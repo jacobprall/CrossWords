@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import { StateProvider } from './state/state';
 import Navbar from './nav/navbar';
-import MainPage from './main/main_page';
+import MainPage from './main/game_page';
 import SessionContainer from './session/session_container';
 import { StatsPage } from './stats/stats';
 import { mainReducer, initialState } from './react_reducers/main_reducer';
@@ -16,9 +16,8 @@ import 'normalize.css';
 import SplashPage from './main/splash_page';
 
 const App = () => {
-  const { stick, ele } = useStick();
+  // const { stick, ele } = useStick();
   const { isShowing, toggle } = useModal();
-  const [secondsElapsed, setSecondsElapsed] = useState();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
   const history = useHistory();
 
@@ -37,12 +36,16 @@ const App = () => {
 
   const AppContainer = styled.div`
     height: 100%;
+    width: 100%;
     position: relative;
   `;
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <AppContainer>
-        <Navbar sticky={stick} ele={ele} toggle={toggle} />
+
+        <Navbar
+          toggle={toggle}
+        />
         <Switch>
           <ProtectedRoute
             exact

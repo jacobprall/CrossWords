@@ -11,11 +11,9 @@ const Digits = styled.div`
 const Start = styled.div`
 `
 
-//whatever button starts the game sends in starGame=true as a prop
-
 export const TimeElapsed = ({ newGame, handleSeconds, endGame, game, timeRemaining }) => {
-  console.log("game state: ", game);
-  console.log('time remaining:', timeRemaining);
+//   console.log("game state: ", game);
+//   console.log('time remaining:', timeRemaining);
     const [seconds, setSeconds] = useState();
     const [isTicking, setIsTicking] = useState(false);
     const [state, dispatch] = useStateValue();
@@ -32,6 +30,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame, game, timeRemaini
 
     useEffect(() => {
         let isSubscribed = true; 
+
         const addSeconds = async () => await dispatch({
             type: 'addSeconds',
             seconds

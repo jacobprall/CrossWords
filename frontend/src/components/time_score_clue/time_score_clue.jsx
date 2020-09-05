@@ -5,14 +5,20 @@ import { Score } from './score';
 import { Clue } from './clue';
 
 export const Container = styled.div`
-  width: auto;
-  padding-bottom: 1rem;
-  display: flex;
-  border: 1px solid #4e89ae
-  background-color: #e8e8e8;
-  font-weight: 300;
-  border-radius: 0.2rem;
+
+    height: 10rem;
+    width: auto;
+    // position: sticky; 
+    padding-bottom: 1rem; 
+    display: flex; 
+    flex-direction: column; 
+    background-color: #E8E8E8; 
+    border: 1px solid #4e89ae
+    border-radius: 0.2rem; 
+    box-shadow: 0px 0px 1rem #D3D3D3;
+`   font-weight: 300;
 `;
+
 
 export const Header = styled.div`
   width: 100%;
@@ -33,44 +39,36 @@ export const HeaderEle = styled.div`
   color: #101010;
   justify-content: center;
 
-`;
 
 export const ScoreTime = styled.div`
   display: flex;
   justify-content: space-between;
   font-weight: 500;
-
 `;
 
-export const TimeScoreClue = ({
-  newGame,
-  clue,
-  score,
-  handleSeconds,
-  endGame,
-  game,
-  timeRemaining,
-}) => {
-  // console.log(clue);
-  return (
-    <Container>
-      <Header>
-        <HeaderEle>
-          <ScoreTime>
-            <Score score={score} />
-            <TimeElapsed
-              game={game} // game object
-              newGame={newGame} //
-              handleSeconds={handleSeconds} // function to tick
-              endGame={endGame} // game over callback
-              timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
-            />
-          </ScoreTime>
-        </HeaderEle>
-        <HeaderEle>
-          <Clue clue={clue} />
-        </HeaderEle>
-      </Header>
-    </Container>
-  );
-};
+
+export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game, timeRemaining }) => {
+    return (
+        <Container>
+            <Header>
+                <HeaderEle>
+                  <ScoreTime>
+                    <Score score={score} />
+                    <TimeElapsed
+                    game={game} // game object
+                    newGame={newGame} // 
+                    handleSeconds={handleSeconds} // function to tick
+                    endGame={endGame} // game over callback
+                    timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
+                  />
+                </HeaderEle>
+                  <ScoreTime />
+                <HeaderEle>
+                    <Clue clue={clue} />
+                </HeaderEle>
+            </Header>
+        </Container>
+    )
+}
+
+
