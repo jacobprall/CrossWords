@@ -13,8 +13,9 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start; 
   align-items: center; 
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
   overflow: hidden;
   overflow-x: scroll;
   overflow-y: scroll;

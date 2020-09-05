@@ -8,7 +8,10 @@ export const Container = styled.div`
 
     height: 10rem;
     width: auto;
-    // position: sticky; 
+    position: absolute;
+    top: 0;  
+    left: 30%;
+    right: 30%;
     padding-bottom: 1rem; 
     display: flex; 
     flex-direction: column; 
