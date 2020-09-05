@@ -3,7 +3,7 @@
 const Word = require('../../../../../models/Word');
 
 const PREFERRED_OVERLAP = 3;
-const WORD_FIND_LIMIT = 20;
+const WORD_FIND_LIMIT = 10;
 const FIRST_BREAK_MAX_LENGTH = 6;
 const SECOND_BREAK_MAX_LENGTH = 10;
 const THIRD_BREAK_MAX_LENGTH = 20;
@@ -180,25 +180,44 @@ const possibleNextWords = ({ wordsGuessed, dir, wordsSent }) => {
   const prevWord = wordsGuessed[wordsGuessed.length - 1];
 
   const wordSubArray = genWordSubArray(prevWord, dir);
-  const direction = dir ? 'suffixes' : 'prefixes';
+  const suffixesOrPrefixes = dir ? 'suffixes' : 'prefixes';
 
   const { minLength, maxLength } = getLength();
   const difficulty = getDifficulty(wordsGuessed);
   const options = {
     length: { $gte: minLength, $lt: maxLength },
     difficulty: { $lte: difficulty },
-    [direction]: { $in: wordSubArray },
+    [suffixesOrPrefixes]: { $in: wordSubArray },
     answer: { $nin: wordsGuessed },
     _id: { $nin: wordsSent },
   };
 
-  return Word.find(options, {
+  const fieldsReturned = {
     _id: 1,
-  })
-    .sort({
-      [direction]: 1,
-      length: 1,
-    })
+  };
+
+  //   MongoDB Sorting:
+  // { $sort: { <field1>: <sort order>, <field2>: <sort order> ... } }
+  // If sorting on multiple fields, sort order is
+  // evaluated from left to right. For example, in the form above,
+  // documents are first sorted by <field1>. Then documents with the
+  // same <field1> values are further sorted by <field2>.
+
+  // If difficulty is _easy_ or _hard_, prefer short words with a larger overlap
+  let sort = {
+    [suffixesOrPrefixes]: 1,
+    length: 1,
+  };
+
+  if (difficulty === 2)
+    sort = {
+      [suffixesOrPrefixes]: 1,
+      length: -1,
+      difficulty: -1,
+    };
+
+  return Word.find(options, fieldsReturned)
+    .sort(sort)
     .limit(WORD_FIND_LIMIT)
     .exec();
 };
