@@ -22,7 +22,6 @@ export const Container = styled.div`
    font-weight: 300;
 `;
 
-
 export const Header = styled.div`
   width: 100%;
   min-width: 500px;
@@ -41,37 +40,42 @@ export const HeaderEle = styled.div`
   margin-right: 20px;
   color: #101010;
   justify-content: center;
-
+`;
 
 export const ScoreTime = styled.div`
   display: flex;
   justify-content: space-between;
   font-weight: 500;
-;
+`;
 
-
-export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game, timeRemaining }) => {
-    return (
-        <Container>
-            <Header>
-                <HeaderEle>
-                  <ScoreTime>
-
-                      <Score score={score} />
-                      <TimeElapsed
-                      game={game} // game object
-                      newGame={newGame} // 
-                      handleSeconds={handleSeconds} // function to tick
-                      endGame={endGame} // game over callback
-                      timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
-                    />
-                  </ ScoreTime>
-
-                </HeaderEle>
-                <HeaderEle>
-                    <Clue clue={clue} />
-                </HeaderEle>
-            </Header>
-        </Container>
-    )
-}
+export const TimeScoreClue = ({
+  newGame,
+  clue,
+  score,
+  handleSeconds,
+  endGame,
+  game,
+  timeRemaining,
+}) => {
+  return (
+    <Container>
+      <Header>
+        <HeaderEle>
+          <ScoreTime>
+            <Score score={score} />
+            <TimeElapsed
+              game={game} // game object
+              newGame={newGame} //
+              handleSeconds={handleSeconds} // function to tick
+              endGame={endGame} // game over callback
+              timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
+            />
+          </ScoreTime>
+        </HeaderEle>
+        <HeaderEle>
+          <Clue clue={clue} />
+        </HeaderEle>
+      </Header>
+    </Container>
+  );
+};
