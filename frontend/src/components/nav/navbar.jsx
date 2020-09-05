@@ -141,13 +141,13 @@ export default function Navbar({ sticky, ele, toggle }) {
     if (loggedIn) {
       links = (
         <LoggedInNavigationSection>
-          <LoggedInNavLink to={'/stats'}>Home</LoggedInNavLink>
+          <LoggedInNavLink to={'/home'}>Home</LoggedInNavLink>
           <LoggedInNavLink to={'/newGame'} onClick={() => handleNewGame()}>
             New Game
           </LoggedInNavLink>
-          {/* <LoggedInNavLink to={'/stats'}>Stats</LoggedInNavLink> */}
+          <LoggedInNavLink to={'/home'}>Stats</LoggedInNavLink>
           {/* <LoggedInNavLink to={'/stats'}>Pause</LoggedInNavLink> */}
-          <LoggedInNavLink to={'/stats'}>Save</LoggedInNavLink>
+          {/* <LoggedInNavLink to={'/stats'}>Save</LoggedInNavLink> */}
           <LoggedInNavLink to={'https://github.com/jacobprall/CrossWords'}>
             Github
           </LoggedInNavLink>
@@ -178,7 +178,7 @@ export default function Navbar({ sticky, ele, toggle }) {
   return (
     <NavContainer sticky={sticky} ref={ele}>
       <LogoAndLinks>
-        <NavLink to={'/'}>
+        <NavLink to={'/home'}>
           <Logo src={logo}></Logo>
         </NavLink>
         <LinksContainer>{getLinks()}</LinksContainer>

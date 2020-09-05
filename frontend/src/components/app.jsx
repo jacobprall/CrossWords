@@ -51,7 +51,7 @@ const App = () => {
             endGame={endGame}
             isShowing={isShowing}
           />
-          <ProtectedRoute exact path="/stats" component={StatsPage} />
+          <ProtectedRoute exact path="/home" component={SplashPage} />
           <AuthRoute exact path="/" component={SplashPage} />
           <AuthRoute
             exact
