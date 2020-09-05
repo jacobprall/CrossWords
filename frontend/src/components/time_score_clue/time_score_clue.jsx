@@ -19,7 +19,7 @@ export const Container = styled.div`
     border: 1px solid #4e89ae
     border-radius: 0.2rem; 
     box-shadow: 0px 0px 1rem #D3D3D3;
-`   font-weight: 300;
+   font-weight: 300;
 `;
 
 
@@ -47,7 +47,7 @@ export const ScoreTime = styled.div`
   display: flex;
   justify-content: space-between;
   font-weight: 500;
-`;
+;
 
 
 export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, game, timeRemaining }) => {
@@ -56,16 +56,18 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, ga
             <Header>
                 <HeaderEle>
                   <ScoreTime>
-                    <Score score={score} />
-                    <TimeElapsed
-                    game={game} // game object
-                    newGame={newGame} // 
-                    handleSeconds={handleSeconds} // function to tick
-                    endGame={endGame} // game over callback
-                    timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
-                  />
+
+                      <Score score={score} />
+                      <TimeElapsed
+                      game={game} // game object
+                      newGame={newGame} // 
+                      handleSeconds={handleSeconds} // function to tick
+                      endGame={endGame} // game over callback
+                      timeRemaining={timeRemaining} // game's timeRemaining in Number of seconds
+                    />
+                  </ ScoreTime>
+
                 </HeaderEle>
-                  <ScoreTime />
                 <HeaderEle>
                     <Clue clue={clue} />
                 </HeaderEle>
@@ -73,5 +75,3 @@ export const TimeScoreClue = ({ newGame, clue, score, handleSeconds, endGame, ga
         </Container>
     )
 }
-
-
