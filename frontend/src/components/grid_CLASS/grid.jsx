@@ -10,6 +10,8 @@ const GridCSS = styled.div`
   margin-top: 3rem;
   margin-left: 0;
   margin-right: 0;
+  position: absolute;
+  bottom: 40%;
 `
 
 export default (props) => {
