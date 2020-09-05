@@ -8,10 +8,13 @@ const GridCSS = styled.div`
   grid-template-columns: repeat(20, 1fr);
   grid-template-rows: repeat(1, 1fr);
   margin-top: 3rem;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: 5%;
+  margin-right: 5%;
   position: absolute;
   bottom: 40%;
+  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: scroll;
 `
 
 export default (props) => {

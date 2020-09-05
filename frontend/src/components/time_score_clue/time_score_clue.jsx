@@ -8,22 +8,19 @@ export const Container = styled.div`
     height: 10rem;
     width: auto;
     position: relative;
-    top: 0;  
+    top: 10%;
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 1rem; 
     display: flex; 
-    flex-direction: column; 
-    border: 1px solid #4e89ae
-    border-radius: 0.2rem; 
+    flex-direction: column;
     font-weight: 300;
-    z-index: 1000000;
-    background-image: ${background}
-    
+    z-index: 3;
+    background-image: ${background};
 `;
 
 export const Header = styled.div`
-  width: 100%;
+  width: 40%;
   min-width: 500px;
   display: flex;
   justify-content: center;
@@ -34,7 +31,7 @@ export const Header = styled.div`
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.5);
 
-  z-index: 900000;
+  z-index: 3;
 `;
 
 export const HeaderEle = styled.div`

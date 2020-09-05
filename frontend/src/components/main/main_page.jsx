@@ -22,6 +22,7 @@ const Container = styled.div`
   align-items: center;
   overflow-x: hidden;
   background-image: url(${background});
+  background-repeat: repeat
 `;
 
 const MainContainer = styled.div`

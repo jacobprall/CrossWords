@@ -6,9 +6,10 @@ import { updateGameDetails } from '../../actions/game_actions';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import background from '../../images/textured_paper/textured_paper_@2X.png';
+
 const MainContainer = styled.div`
   display: flex;
-  padding-top: 5rem;
+  padding-top: 0;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -19,7 +20,22 @@ const MainContainer = styled.div`
   overflow-x: scroll;
   overflow-y: scroll;
   background-image: url(${background});
+  background-repeat: repeat;
 `;
+
+const ClueBoxBackground = styled.div`
+  width: 100%;
+  height: 20%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: auto;
+  background-image: url(${background});
+  background-repeat: repeat;
+  z-index: 3;
+`
 
 export default (props) => {
   const [state] = useStateValue();
@@ -46,6 +62,7 @@ export default (props) => {
 
   return (
     <MainContainer>
+      <ClueBoxBackground>
       <TimeScoreClue
         newGame={props.newGame}
         game={props.gameObj}
@@ -55,6 +72,7 @@ export default (props) => {
         endGame={props.endGame}
         timeRemaining={props.timeRemaining}
       />
+      </ClueBoxBackground>
       <GridContainerCLASS game={props.gameObj} />
     </MainContainer>
   );

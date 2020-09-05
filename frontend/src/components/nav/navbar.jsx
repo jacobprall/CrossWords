@@ -22,7 +22,7 @@ const NavContainer = styled.div`
   background-color: #f6f5f5;
   border-bottom: 0.05rem solid #8d93ab; 
   box-shadow: 0px 0px 5px #D3D3D3;
-  z-index: 1000;
+  z-index: 3;
 `;
 const LogoAndLinks = styled.div`
   display: flex;

@@ -72,7 +72,7 @@ export default function MainPage(props) {
  
   return (
     <Container>
-      <GameErrors />
+      {/* <GameErrors /> */}
       <Modal 
         isShowing={props.isShowing} 
         Comp={GameEnd} 
