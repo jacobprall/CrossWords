@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import magnifying_glass from '../../images/magnifying_glass.png';
 import { getClueAnswer } from '../../util/word_util';
+import { useStateValue } from '../state/state'; 
+import { useEffect } from 'react';
 
 const Container = styled.div``;
 
@@ -24,14 +26,29 @@ const YourClue = styled.h4`
 `;
 
 export const Clue = ({ clue }) => {
-  const [, dispatch] = useStateValue();
+  const [ , dispatch] = useStateValue();
+
+  useEffect(() => {
+    dispatch({
+      type: 'addRevealed',
+      answer: null,
+    })
+  }, [clue]);
 
   const handleReveal = async () => {
-    let answer = getClueAnswer(clue.id).then(res => res.data.answer);
-    if (answer) {
+    let revealed = null;
+    if (clue) {
+      if (clue._id) {
+        revealed = await getClueAnswer(clue._id).then(res => res.data.answer);
+      } else if (clue.id) {
+        revealed = await getClueAnswer(clue.id).then(res => res.data.answer);
+      }
+      console.log(revealed);
+    }
+    if (revealed) {
       await dispatch({
-        type: 'addAnswer',
-        answer
+        type: 'addRevealed',
+        revealed
       })
     }
   }
