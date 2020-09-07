@@ -41,7 +41,11 @@ export default function SplashPage() {
         <FooterItem>
           <span>Aatef Baransy</span>
           <SocialIconContainer>
-            <a href="https://www.linkedin.com/in/aatef-baransy-a55b71197/">
+            <a
+              href="https://www.linkedin.com/in/aatef-baransy-a55b71197/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
@@ -49,7 +53,18 @@ export default function SplashPage() {
         <FooterItem>
           <span>Jacob Prall</span>
           <SocialIconContainer>
-            <a href="https://www.linkedin.com/in/jacob-prall-01abb867/">
+            <a
+              href="https://github.com/jacobprall"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faGithub} color="#EEE" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jacob-prall-01abb867/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
@@ -57,7 +72,11 @@ export default function SplashPage() {
         <FooterItem>
           <span>Nick Sercel</span>
           <SocialIconContainer>
-            <a href="https://www.linkedin.com/in/nick-sercel-4402261a0/">
+            <a
+              href="https://www.linkedin.com/in/nick-sercel-4402261a0/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
@@ -65,10 +84,18 @@ export default function SplashPage() {
         <FooterItem>
           <span>Phil Gresham</span>
           <SocialIconContainer>
-            <a href="https://github.com/philgresh">
+            <a
+              href="https://github.com/philgresh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faGithub} color="#EEE" />
             </a>
-            <a href="https://www.linkedin.com/in/philgresham/">
+            <a
+              href="https://www.linkedin.com/in/philgresham/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
@@ -76,7 +103,11 @@ export default function SplashPage() {
         <FooterItem>
           <span>Tim Harding</span>
           <SocialIconContainer>
-            <a href="https://www.linkedin.com/in/timharding31/">
+            <a
+              href="https://www.linkedin.com/in/timharding31/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
