@@ -76,7 +76,7 @@ export const TagLine = styled.h3`
 export const Footer = styled.footer`
   background: #536878;
   width: 100%;
-  height: 7rem;
+  height: 5rem;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -85,26 +85,31 @@ export const Footer = styled.footer`
   justify-content: center;
 `;
 
-export const FooterItem = styled.a`
+export const FooterItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   justify-items: center;
   padding: 5px;
-  height: 100px;
   text-align: center;
   width: 100px;
   margin-left: 80px;
   border-radius: 5px;
-  &:hover {
-    background: #6d7f8c;
-    transition: 0.3s;
-  }
-`;
-
-export const FooterText = styled.span`
   color: white;
   font-weight: 200;
+`;
+
+export const SocialIconContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+  margin-top: 0.5rem;
+  & > a {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 `;
 
 export const LinkedIn = styled.img`
