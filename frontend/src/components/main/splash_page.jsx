@@ -48,6 +48,13 @@ export default function SplashPage() {
             >
               <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
+            <a
+              href="https://github.com/abaransy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faGithub} color="#EEE" />
+            </a>
           </SocialIconContainer>
         </FooterItem>
         <FooterItem>
