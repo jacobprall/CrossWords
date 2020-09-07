@@ -42,18 +42,18 @@ export default function SplashPage() {
           <span>Aatef Baransy</span>
           <SocialIconContainer>
             <a
-              href="https://www.linkedin.com/in/aatef-baransy-a55b71197/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
-            </a>
-            <a
               href="https://github.com/abaransy"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FontAwesomeIcon icon={faGithub} color="#EEE" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/aatef-baransy-a55b71197/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
             </a>
           </SocialIconContainer>
         </FooterItem>
