@@ -11,7 +11,7 @@ import { GameEnd } from '../game_end/game_end';
 // fetchNewGame()
 // updateGameDetails({ gameId: '', timeRemaining: 60, timeElapsed: 0, guess: '' })
 // mDTP=> fetchNewGame: () => dispatch(fetchNewGame())
-import GameErrors from '../errors/game_errors';
+// import GameErrors from '../errors/game_errors';
 import GameContainer from './game_container'; 
 
 const Container = styled.div`

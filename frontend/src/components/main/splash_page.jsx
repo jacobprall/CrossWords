@@ -1,5 +1,6 @@
 import React from 'react';
-import linkedin from '../../images/linkedin.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
   Container,
   MainContainer,
@@ -10,9 +11,8 @@ import {
   HeaderLetter4,
   HeaderLetter5,
   HeaderLetter6,
-  FooterText,
   TagLine,
-  LinkedIn,
+  SocialIconContainer,
   Byline,
   Footer,
   FooterItem,
@@ -36,44 +36,50 @@ export default function SplashPage() {
           <HeaderLetter1>S</HeaderLetter1>
         </HeaderMessage>
         <TagLine>A dynamic word game</TagLine>
-        {/* <Byline></Byline>
-          <BackgroundVideo></BackgroundVideo> */}
       </MainContainer>
       <Footer>
-        <FooterItem
-          href={'https://www.linkedin.com/in/aatef-baransy-a55b71197/'}
-          target={'_blank'}
-        >
-          <FooterText>Aatef Baransy</FooterText>
-          <LinkedIn src={linkedin}></LinkedIn>
+        <FooterItem>
+          <span>Aatef Baransy</span>
+          <SocialIconContainer>
+            <a href="https://www.linkedin.com/in/aatef-baransy-a55b71197/">
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
+            </a>
+          </SocialIconContainer>
         </FooterItem>
-        <FooterItem
-          href={'https://www.linkedin.com/in/jacob-prall-01abb867/'}
-          target={'_blank'}
-        >
-          <FooterText>Jacob Prall</FooterText>
-          <LinkedIn src={linkedin}></LinkedIn>
+        <FooterItem>
+          <span>Jacob Prall</span>
+          <SocialIconContainer>
+            <a href="https://www.linkedin.com/in/jacob-prall-01abb867/">
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
+            </a>
+          </SocialIconContainer>
         </FooterItem>
-        <FooterItem
-          href={'https://www.linkedin.com/in/nick-sercel-4402261a0/'}
-          target={'_blank'}
-        >
-          <FooterText>Nick Sercel</FooterText>
-          <LinkedIn src={linkedin}></LinkedIn>
+        <FooterItem>
+          <span>Nick Sercel</span>
+          <SocialIconContainer>
+            <a href="https://www.linkedin.com/in/nick-sercel-4402261a0/">
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
+            </a>
+          </SocialIconContainer>
         </FooterItem>
-        <FooterItem
-          href={'https://www.linkedin.com/in/philgresham/'}
-          target={'_blank'}
-        >
-          <FooterText>Phil Gresham</FooterText>
-          <LinkedIn src={linkedin}></LinkedIn>
+        <FooterItem>
+          <span>Phil Gresham</span>
+          <SocialIconContainer>
+            <a href="https://github.com/philgresh">
+              <FontAwesomeIcon icon={faGithub} color="#EEE" />
+            </a>
+            <a href="https://www.linkedin.com/in/philgresham/">
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
+            </a>
+          </SocialIconContainer>
         </FooterItem>
-        <FooterItem
-          href={'https://www.linkedin.com/in/timharding31/'}
-          target={'_blank'}
-        >
-          <FooterText>Tim Harding</FooterText>
-          <LinkedIn src={linkedin}></LinkedIn>
+        <FooterItem>
+          <span>Tim Harding</span>
+          <SocialIconContainer>
+            <a href="https://www.linkedin.com/in/timharding31/">
+              <FontAwesomeIcon icon={faLinkedinIn} color="#EEE" />
+            </a>
+          </SocialIconContainer>
         </FooterItem>
       </Footer>
     </Container>

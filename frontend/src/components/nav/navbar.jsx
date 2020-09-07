@@ -40,23 +40,22 @@ const LoggedInNavigationSection = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`;
-
-const LoggedInNavLink = styled(NavLink)`
-  padding: 0.5rem 0.5rem 0rem 0.5rem;
-  height: 1.7rem;
-  width: 6rem;
-  font-weight: 350;
-  text-align: center;
-  background-color: #f6f5f5;
-  border-radius: 0.2rem;
-  border: 0.01rem solid #f1f3f8;
-  &:hover {
-    transition: 0.5s;
+  & > a {
+    padding: 0.5rem 0.5rem 0rem 0.5rem;
+    height: 1.7rem;
+    width: 6rem;
+    font-weight: 350;
+    text-align: center;
     background-color: #f6f5f5;
-    cursor: pointer;
-    border: 0.01rem solid #536878;
-    color: #536878;
+    border-radius: 0.2rem;
+    border: 0.01rem solid #f1f3f8;
+    &:hover {
+      transition: 0.5s;
+      background-color: #f6f5f5;
+      cursor: pointer;
+      border: 0.01rem solid #536878;
+      color: #536878;
+    }
   }
 `;
 
@@ -77,29 +76,29 @@ const LogoutButton = styled.div`
   }
 `;
 
-const Links = styled.div`
+const SignedOutLinks = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
 
-const SignUpAndLogin = styled(NavLink)`
-  padding: 0.5rem 0.5rem 0rem 0.5rem;
-  color: white;
-  margin-right: 10px;
-  margin-left: 10px;
-  width: 6rem;
-  font-weight: 350;
-  text-align: center;
-  background-color: #536878;
-  border-radius: 0.2rem;
-  border: 0.01rem solid #536878;
-  &:hover {
-    transition: 0.3s;
-    background-color: #f6f5f5;
-    cursor: pointer;
+  & > a {
+    padding: 0.5rem 0.5rem 0rem 0.5rem;
+    color: white;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 6rem;
+    font-weight: 350;
+    text-align: center;
+    background-color: #536878;
+    border-radius: 0.2rem;
     border: 0.01rem solid #536878;
-    color: #536878;
+    &:hover {
+      transition: 0.3s;
+      background-color: #f6f5f5;
+      cursor: pointer;
+      border: 0.01rem solid #536878;
+      color: #536878;
+    }
   }
 `;
 
@@ -115,8 +114,8 @@ export default function Navbar({ sticky, ele, toggle }) {
 
   let history = useHistory();
 
-  const logoutUser = async () => {
-    await dispatch(logout());
+  const logoutUser = () => {
+    dispatch(logout());
     history.push('/');
   };
 
@@ -145,16 +144,11 @@ export default function Navbar({ sticky, ele, toggle }) {
     if (loggedIn) {
       links = (
         <LoggedInNavigationSection>
-          <LoggedInNavLink to={'/home'}>Home</LoggedInNavLink>
-          <LoggedInNavLink to={'/newGame'} onClick={() => handleNewGame()}>
+          <NavLink to={'/home'}>Home</NavLink>
+          <NavLink to={'/newGame'} onClick={() => handleNewGame()}>
             New Game
-          </LoggedInNavLink>
-          <LoggedInNavLink to={'/home'}>Stats</LoggedInNavLink>
-          {/* <LoggedInNavLink to={'/stats'}>Pause</LoggedInNavLink> */}
-          {/* <LoggedInNavLink to={'/stats'}>Save</LoggedInNavLink> */}
-          <LoggedInNavLink to={'https://github.com/jacobprall/CrossWords'}>
-            Github
-          </LoggedInNavLink>
+          </NavLink>
+          <a href="https://github.com/jacobprall/CrossWords">Github</a>
           <LogoutButton className="nav-right" onClick={() => setOut(true)}>
             Logout
           </LogoutButton>
@@ -162,17 +156,15 @@ export default function Navbar({ sticky, ele, toggle }) {
       );
     } else {
       links = (
-        <Links>
-          <SignUpAndLogin to={'https://github.com/jacobprall/CrossWords'}>
-            Github
-          </SignUpAndLogin>
-          <SignUpAndLogin to={'/signup'} onClick={handleAlt}>
+        <SignedOutLinks>
+          <a href="https://github.com/jacobprall/CrossWords">Github</a>
+          <NavLink to={'/signup'} onClick={handleAlt}>
             Sign Up
-          </SignUpAndLogin>
-          <SignUpAndLogin to={'/login'} onClick={handleAlt}>
+          </NavLink>
+          <NavLink to={'/login'} onClick={handleAlt}>
             Log In
-          </SignUpAndLogin>
-        </Links>
+          </NavLink>
+        </SignedOutLinks>
       );
     }
 

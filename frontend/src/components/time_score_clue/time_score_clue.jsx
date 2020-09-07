@@ -4,6 +4,8 @@ import { TimeElapsed } from './time_elapsed';
 import { Score } from './score';
 import { Clue } from './clue';
 import background from '../../images/textured_paper/textured_paper_@2X.png';
+
+
 export const Container = styled.div`
     height: 10rem;
     width: auto;
@@ -15,7 +17,7 @@ export const Container = styled.div`
     display: flex; 
     flex-direction: column;
     font-weight: 300;
-    z-index: 3;
+    z-index: 11;
     background-image: ${background};
 `;
 
@@ -29,9 +31,9 @@ export const Header = styled.div`
   margin-right: 2rem;
   border: 1px solid lightgray;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-
-  z-index: 3;
+  background-image: ${background};
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 2;
 `;
 
 export const HeaderEle = styled.div`

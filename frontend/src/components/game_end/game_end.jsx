@@ -28,6 +28,7 @@ const EndGameModal = styled.div`
   border: 1px solid lightgray;
   padding: 30px;
   background-color: white;
+  z-score: 15;
 `;
 
 export const GameEnd = ({ secondsElapsed, score }) => {
