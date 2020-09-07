@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: 18rem;
+  height: auto;
   width: 25rem;
   padding-bottom: 1rem;
   display: flex;
