@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import magnifying_glass from '../../images/magnifying_glass.png';
+import { getClueAnswer } from '../../util/word_util';
 
 const Container = styled.div``;
 
@@ -23,6 +24,17 @@ const YourClue = styled.h4`
 `;
 
 export const Clue = ({ clue }) => {
+  const [, dispatch] = useStateValue();
+
+  const handleReveal = async () => {
+    let answer = getClueAnswer(clue.id).then(res => res.data.answer);
+    if (answer) {
+      await dispatch({
+        type: 'addAnswer',
+        answer
+      })
+    }
+  }
   if (!clue) return null;
   return (
     <Container>
@@ -30,6 +42,7 @@ export const Clue = ({ clue }) => {
         <MagnifyingGlass src={magnifying_glass} />
         <YourClue>{`${clue.clue} (${clue.length} letters)`}</YourClue>
       </Header>
+      <button onClick={handleReveal}>Reveal</button>
     </Container>
   );
 };
