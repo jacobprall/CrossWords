@@ -34,7 +34,7 @@ const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
 }));
 
 
-export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placeholder, answer }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placeholder, answer, wasRevealed }) => {
   const [char, setChar] = useState("");
 
   // const update = () => {
@@ -92,7 +92,7 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placehold
     <GridInput 
       type="text"
       className={`grid-item${selected ? ' selected-row' : ''} ${rowPos}`}
-      value={selected ? (char ? char.toUpperCase() : '') : (char ? char.toUpperCase() : answer)}
+      value={selected ? (char ? char.toUpperCase() : '') : (wasRevealed ? answer : char.toUpperCase())}
       onChange={handleChange}
       colPos={colPos}
       rowPos={rowPos}

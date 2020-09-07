@@ -28,7 +28,7 @@ export default (props) => {
   let revealed = state['revealed'];
 
   const updateGame = ({ gameId, timeRemaining, timeElapsed, guess }, cheated=false) => {
-    console.log('here');
+    console.log('here, cheated: ', cheated);
     return dispatch(
       updateGameDetails({ gameId, timeRemaining, timeElapsed, guess }, cheated),
     );

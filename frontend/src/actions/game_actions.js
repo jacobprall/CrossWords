@@ -36,8 +36,8 @@ export const fetchNewGame = (boardWidth = 20, colStart = 100) => (dispatch) =>
   );
 
 // gameUpdates is a POJO of the form: {gameId: String, guess: String, timeRemaining: Number, timeElapsed: Number }
-export const updateGameDetails = (gameUpdates) => (dispatch) =>
-  patchGame(gameUpdates).then(
+export const updateGameDetails = (gameUpdates, cheated=false) => (dispatch) =>
+  patchGame(gameUpdates, cheated).then(
     ({ data }) => {
       if (data.token) setUpToken(data.token, dispatch);
       dispatch(receiveGameDetails(data));

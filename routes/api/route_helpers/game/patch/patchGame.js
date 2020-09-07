@@ -58,6 +58,7 @@ const patchGameCallback = async (req, res) => {
         nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
         prevGuess,
+        prevAnswerWasRevealed: req.body.cheated,
         token: refreshedToken,
       };
 

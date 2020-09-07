@@ -13,16 +13,16 @@ import { useStateValue } from '../state/state';
 //   })
 //   });
 
-export default ({ clue, selected, rowPos, prevAnswer, wasCorrect }) => {
+export default ({ clue, selected, rowPos, prevAnswer, thisAnswer, wasCorrect, wasRevealed }) => {
     // clue = { _id: '', length: '', clue: '', colStart: '' }
-  // const [state] = useStateValue();
-  // let revealed = state['revealed'];
+  const [state] = useStateValue();
+  let revealed = state['revealed'];
   let color;
-  // if (revealed) {
-  //   color = 'yellow';
-  // } else {
+  if (wasRevealed) {
+    color = 'yellow';
+  } else {
     color = wasCorrect ? 'green' : 'red';
-  // }
+  }
 
     let gridItems = [];
     for(let i = 0; i < clue.length; i++) {
@@ -36,8 +36,8 @@ export default ({ clue, selected, rowPos, prevAnswer, wasCorrect }) => {
         rowPos={rowPos}
         colPos={clue.colStart + i + 1}
         color={color}
-        // placeholder={placeholder}
-        // answer={revealed ? revealed[i] : ''}
+        wasRevealed={wasRevealed}
+        answer={wasRevealed ? thisAnswer[i] : ''}
         />);
     }
     return gridItems;
