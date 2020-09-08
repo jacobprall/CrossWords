@@ -39,14 +39,17 @@ export default (props) => {
   let gridRows = props.clueHistory.map((clue, idx) => {
     if (clue) {
       let prevAnswer = props.answerHistory[idx - 1] || null;
+      let thisAnswer = props.answerHistory[idx] || null;
       return (
       <GridRow
         key={`grid-row-${idx}`}
         clue={clue}
         rowPos={idx+1}
         prevAnswer={prevAnswer}
+        thisAnswer={thisAnswer}
         selected={Boolean(idx === props.clueHistory.length - 1)}
         wasCorrect={clue.wasCorrect}
+        wasRevealed={clue.wasRevealed}
       />)
     }
   });

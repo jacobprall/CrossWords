@@ -26,7 +26,7 @@ const patchGameCallback = async (req, res) => {
   if (error) res.status(400).json(error.details);
 
   return Game.findById(req.params.gameId)
-    .then((game) => getNewGameState(game, cleanedReqBody))
+    .then((game) => getNewGameState(game, cleanedReqBody, req.body.cheated))
     .then(updateGameState)
     .then(async (game) => {
       const [nextWord, overlap, colStart] = await getNextWord(game);
@@ -58,6 +58,7 @@ const patchGameCallback = async (req, res) => {
         nextDir: overlap < 0,
         prevAnswer: prevWord.answer,
         prevGuess,
+        prevAnswerWasRevealed: req.body.cheated,
         token: refreshedToken,
       };
 
