@@ -1,94 +1,108 @@
-import React, { useState, useEffect } from 'react'; 
-import styled from 'styled-components'; 
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useRef } from 'react';
 // import { use } from 'passport';
-
 
 const Input = styled.input`
   width: 2.3rem; 
   height: 2.3rem; 
   border-radius: 0 0 0 0;
-  grid-area: ${(props) => props.rowStart} / ${(props) => props.colStart};
   caret-color: transparent;
   text-align: center;
   font-size: 2.2rem;
   font-weight: 500;
   padding-bottom: 0rem;
+  &.selected-row {
+    background-color: #B1D8FB;
+  }
   &:focus {
     outline-style: none;
-    background-color: #c8c8c8;
+    background-color: #FADA4A;
   }
   &:hover {
     cursor: pointer;
-    background-color: #c8c8c8;
+    background-color: #FADA4A;
   }
-  background-color: ${props => props.highlight ? "blue;" : ";"}
-  display: ${props => !props.disp ? "none;" : ";" } 
 `;
 
-export const GridItem = ({ rowStart, colStart, addGridItem, value, focus, setFocus, setRow, width, setCol, populatedRow, highlight, setEnter}) => {
-    const [char, setChar] = useState(""); 
 
-    const update = () => {
-        return e => {
-            let input = e.target.value;
-            let lastChar = input[input.length - 1]; 
-            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
 
-            if (!chars.split("").concat("").includes(lastChar)) {
-                return;
-            }
+    gridColumn: `${colPos} / span 1`,
+    gridRow: `${rowPos} / span 1`,
+    color: `${color}`,
+}));
 
-            setChar(input[input.length - 1]); 
 
-            let gridItem = {};
-            gridItem[rowStart] = [colStart, lastChar];
-            addGridItem(
-                { ...gridItem}
-            )
-            // setFocus(false); 
+export const GridItem = ({ selected, id, rowPos, colPos, focus, color }) => {
+  const [char, setChar] = useState("");
+
+  // const update = () => {
+  //   return e => {
+  //     let input = e.target.value;
+  //     let lastChar = input[input.length - 1];
+  //     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+
+  const handleChange = (e) => {
+    let input = e.target.value;
+    let lastChar = input[input.length - 1];
+    let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+    if (chars.includes(lastChar)) {
+      setChar(lastChar);
+      let nextInput = e.currentTarget.nextSibling;
+      if (nextInput) nextInput.focus();
+    }
+  }
+
+  const clickHandler = () => {
+    return e => {
+      // e.currentTarget.value = '';
+      e.currentTarget.focus();
+    }
+  }
+
+  const handleKeyDown = () => {
+    return e => {
+      if (e) {
+        if (e.key === 'Backspace') {
+          let prevInput = e.currentTarget.previousSibling;
+          if (prevInput) {
+            setChar('');
+            prevInput.focus();
+            // prevInput.focus();
+          }
+        } else if (e.key === 'ArrowLeft') {
+          let prevInput = e.currentTarget.previousSibling;
+          if (prevInput) prevInput.focus();
+        } else if (e.key === 'ArrowRight') {
+          let nextInput = e.currentTarget.nextSibling;
+          if (nextInput) nextInput.focus();
         }
+      }
     }
 
-    useEffect(() => {
-        setChar(value); 
-    }, [value])
+  }
+  
 
-    const handleKeyDown = () => {
-        return e => {
-            if (e && e.key === 'Backspace') {
-                setChar("");
-            } else if (e && e.key === 'Enter') {
-                setEnter(true); 
-            }
-        }
-    }
-    
-    const handleClick = () => {
-        // setFocus(true); 
-        // if (colStart === width) {
-        //     setRow(rowStart + 1); 
-        //     setCol(1)
-        // } else {
-        //     setRow(rowStart); 
-        //     setCol(colStart + 1);
-        // }
+  return (
+    <GridInput 
+      type="text"
+      className={`grid-item${selected ? ' selected-row' : ''} ${rowPos}`}
+      value={char ? char.toUpperCase() : ''}
+      onChange={handleChange}
+      colPos={colPos}
+      rowPos={rowPos}
+      autoFocus={focus}
+      onKeyDown={handleKeyDown()}
+      onClick={clickHandler()}
+      id={id}
+      color={selected ? 'black' : color}
+      disabled={!selected}
 
-    }
-
-    let disp = (highlight || char.length); 
-    // (rowStart === populatedRow) && 
-    return (
-        <Input type="text"
-            rowStart={rowStart}  
-            colStart={colStart} 
-            value={char.toUpperCase()}
-            onKeyDown={handleKeyDown()}
-            onChange={update()}
-            onClick={() => handleClick()}
-            highlight={highlight}
-            // ref={focus ? input => input && input.focus() : null}
-            disabled={!highlight}
-            disp={disp}
-        />
-    )
+    />
+  )
 }
