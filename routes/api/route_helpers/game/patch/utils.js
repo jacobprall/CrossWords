@@ -6,7 +6,7 @@ const GAME_DURATION = 60;
 const TIME_CONSTANT = 12;
 const BASELINE_TIME_ADDITION = 7 / 6; // baseline time addition => ((7/6) - 1) * TIME_CONSTANT
 
-const handleTime = (isCorrect, game) => {
+const handleTime = (isCorrect, game, cheated) => {
   if (!isCorrect) {
     return 0;
   } // dont detract time for missed answer
@@ -29,7 +29,7 @@ const handleTime = (isCorrect, game) => {
   timeAddition = Math.floor(
     timeAddition * (Math.abs(1 - (timeRemaining / MAX_TIME)) + 1));
 
-  return timeAddition;
+  return cheated ? -timeAddition : timeAddition;
 
   // at^3 + d => t - time in deca seconds, a = -1/216 - time will decrease
   //   over 1 minute(s) until it hits a min, d = 1/6 -- min time if
@@ -40,7 +40,8 @@ const handleTime = (isCorrect, game) => {
   //   (abs(double(1 - timeRemaining/MAX_TIME)) + 1))
 };
 
-const handleScore = (isCorrect, difficulty, length, timeChange) => {
+const handleScore = (isCorrect, difficulty, length, timeChange, cheated) => {
+  if (cheated) return 0;
   let pointsEarned = 0;
 
   const pointsConstant = 6; // baseline value for points per word char in length
@@ -78,19 +79,20 @@ const handleScore = (isCorrect, difficulty, length, timeChange) => {
  * @returns {Number} scoreChange
  * @returns {Number} secondsChange
  */
-const checkGuess = (guess, game, lastClueIdSent) => {
+const checkGuess = (guess, game, lastClueIdSent, cheated) => {
   // console.log(guess);
   return Word.findById(lastClueIdSent)
     .then((word) => {
       const isCorrect = word.answer === guess;
       const { length, difficulty } = word;
 
-      const timeChange = handleTime(isCorrect, game);
+      const timeChange = handleTime(isCorrect, game, cheated);
       const scoreChange = handleScore(
         isCorrect,
         difficulty,
         length,
         timeChange,
+        cheated,
       );
       return {
         scoreChange,
@@ -107,14 +109,14 @@ const updateGameState = ({ game, guess, timeChange, scoreChange }) => {
   return game.save().then((g) => g);
 };
 
-const getNewGameState = async (game, reqBody) => {
+const getNewGameState = async (game, reqBody, cheated) => {
   const { guess, timeRemaining, timeElapsed } = reqBody;
   game.timeRemaining = timeRemaining;
   game.timeElapsed = timeElapsed;
 
   const lastClueIdSent = game.wordsSent.slice(-1)[0];
 
-  const result = await checkGuess(guess, game, lastClueIdSent);
+  const result = await checkGuess(guess, game, lastClueIdSent, cheated);
   return { game, guess, ...result };
 };
 

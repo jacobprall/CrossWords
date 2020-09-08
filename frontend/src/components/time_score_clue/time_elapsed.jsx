@@ -72,7 +72,7 @@ export const TimeElapsed = ({ newGame, handleSeconds, endGame, game, timeRemaini
     return (
         <Container>
             <Digits>
-                Time left: {seconds < 60 ? seconds : minutes }
+                Time left: {timeRemaining >= 0 ? (seconds < 60 ? seconds : minutes) : 0}
             </Digits>
         </Container>
     )
