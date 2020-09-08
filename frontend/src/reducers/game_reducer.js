@@ -30,11 +30,13 @@ const clueHistoryReducer = (state=[], { type, game, gameDetails }) => {
     case RECEIVE_ACTIVE_GAME:
       return nextState.concat([game.nextWord]);
     case RECEIVE_GAME_DETAILS:
-      const wasCorrect = gameDetails.prevGuess === gameDetails.prevAnswer
+      const wasCorrect = gameDetails.prevAnswerWasRevealed ? false : gameDetails.prevGuess === gameDetails.prevAnswer;
+      const wasRevealed = gameDetails.prevAnswerWasRevealed;
 
       if (nextState.length) {
         const prevClue = nextState.pop();
         prevClue.wasCorrect = wasCorrect;
+        prevClue.wasRevealed = wasRevealed;
         nextState = [...nextState, prevClue];
       }
 

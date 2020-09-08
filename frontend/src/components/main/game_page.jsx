@@ -63,6 +63,10 @@ export default function MainPage(props) {
   //   return () => isSubscribed = false; 
   // }, [])
 
+  useEffect(() => {
+    if(!secondsElapsed) setSecondsElapsed(0);
+  }, [])
+
 
   const handleSeconds = (secs, secsElapsed) => {
     if (secs) setSeconds(secs);

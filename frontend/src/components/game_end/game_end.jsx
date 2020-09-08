@@ -42,11 +42,23 @@ export const GameEnd = ({ secondsElapsed, score }) => {
   const guesses = useSelector((state) => state.game.clueHistory);
   let numTotal = 1;
   let numCorrect = 0;
+  let numRevealed = 0;
   if (guesses[0]) {
     numTotal = guesses.length;
     numCorrect = guesses
       .map((ele) => {
         if (ele.wasCorrect) {
+          return 1;
+        } else {
+          return 0;
+        }
+      })
+      .reduce((acc, ele) => {
+        return (acc += ele);
+      });
+    numRevealed = guesses
+      .map((ele) => {
+        if (ele.wasRevealed) {
           return 1;
         } else {
           return 0;
@@ -71,6 +83,7 @@ export const GameEnd = ({ secondsElapsed, score }) => {
         </HeaderEle>
         <HeaderEle>{'Time Elapsed: ' + (s < 60 ? s + 1 : minutes)}</HeaderEle>
         <HeaderEle>{`${numCorrect} out of ${numTotal} Correct`}</HeaderEle>
+        <HeaderEle>{`${numRevealed} out of ${numTotal} Revealed`}</HeaderEle>
       </EndGameModal>
     </EndGameModalContainer>
   );
