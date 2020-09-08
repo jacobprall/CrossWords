@@ -37,9 +37,15 @@ const RevealButton = styled.button`
   background-color: transparent;
   color: #101010;
   outline: none;
-  border: 1px solid #4e89ae;
   font-weight: 300;
   border-radius: 0.2rem;
+  border: 1px solid #f1f3f8;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid #536878;
+      color: #536878;
 `;
 
 export const Clue = ({ clue }) => {
