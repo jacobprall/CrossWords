@@ -1,5 +1,5 @@
 # AcrossWords
-AcrossWords is a variation on the classic Cross Words. Players are provided with a clue and a limited amount of time to fill out as many words as they can.
+AcrossWords is a variation on the classic Cross Words game. Players are provided with a clue and a limited amount of time to fill out as many words as they can.
 
 ## Some Key Features
 * BCRYPT and JWT aided user authentication
@@ -14,15 +14,20 @@ AcrossWords is a variation on the classic Cross Words. Players are provided with
 ## Gameplay 
 
 ### Grid
+*Presents one row at a time, aligning it with the previous row depending on the overlap between the new and old word
+*Allows players to easily navigate through the input boxes using arrow keys
+*Answers are colored in red and green to indicate correctness 
 
-### Score, Timer, and Clue 
-
+### Score, TimeElapsed, and Clue Components
+*All values are fetched and adjusted in real time
+*State is mantained using a custom useStateValue hook
 
 <!-- if you want to add a gif, use the format below -->
 <!-- ![name_of_gif](source of gif) -->
 <!-- I added an images folder, add the gifs there. -->
 <!-- example: -->
-<!-- ![user_asset_details](app/assets/images/user_asset_details.png) -->
+### Game Play Example: 
+![game_play_gif](frontend/images/game_play_gif.gif)
 
 ### Technologies 
 
