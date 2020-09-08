@@ -51,13 +51,6 @@ const RevealButton = styled.button`
 export const Clue = ({ clue }) => {
   const [ , dispatch] = useStateValue();
 
-  // useEffect(() => {
-  //   dispatch({
-  //     type: 'addRevealed',
-  //     answer: null,
-  //   })
-  // }, [clue]);
-
   const handleReveal = async () => {
     let revealed = null;
     if (clue) {
@@ -83,7 +76,6 @@ export const Clue = ({ clue }) => {
         <YourClue>{`${clue.clue} (${clue.length} letters)`}</YourClue>
       </Header>
       <RevealButton onClick={handleReveal}>Reveal</RevealButton>
-      {/* {clue._id ? null : <button onClick={handleReveal}>Reveal</button>} */}
     </Container>
   );
 };
