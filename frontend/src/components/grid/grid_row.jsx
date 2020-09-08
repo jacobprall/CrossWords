@@ -1,7 +1,7 @@
 import React from 'react';
 import { GridItem } from './grid_item';
 import styled from 'styled-components'; 
-import { useStateValue } from '../state/state';
+import { useStateValue } from '../custom_hooks/useState';
 
 export default ({ clue, selected, rowPos, prevAnswer, thisAnswer, wasCorrect, wasRevealed }) => {
     // clue = { _id: '', length: '', clue: '', colStart: '' }
