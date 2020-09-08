@@ -12,9 +12,6 @@ export default ({
   wasCorrect,
   wasRevealed,
 }) => {
-  // clue = { _id: '', length: '', clue: '', colStart: '' }
-  const [state] = useStateValue();
-  let revealed = state['revealed'];
   let color;
   if (wasRevealed) {
     color = 'yellow';
