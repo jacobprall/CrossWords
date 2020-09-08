@@ -12,12 +12,12 @@ AcrossWords is a variation on the classic Cross Words game. Players are provided
 - Utilizes function components as well as React Hooks
 
 ## MongoDB Database
-<<<<<<< HEAD
+
 <!-- use ### for subsections within the MongoDB Databse section -->
 <!--  -->
 <!-- [Click here for more info](https://github.com/jacobprall/CrossWords/blob/f36ec37313de785ceb7e6a9bc92948aef588bf17/routes/api/route_helpers/game/patch/getNextWord.js#L48) -->
 ## Gameplay 
-=======
+
 
 On our MongoDB database, we store game data (clues given and guesses made) and a users collection for authentication, as well as a collection of almost 16,000 words and clues drawn from New York Times crossword puzzles.
 
@@ -32,7 +32,7 @@ Our variation of a crossword puzzle gives users a few "free" letters at either t
 We decided to add a couple fields to each document in the database (`prefixes` & `suffixes`) which were calculated in the seed script and include a list of substrings from the front and end of the clue's answer, respectively. Indexing on each, as well as `length` and `difficulty`, allow us to get O(log n) performance when fetching a selection of possible new clues. We then apply a little randomness to ensure that each game is unique.
 
 ## Gameplay
->>>>>>> master
+
 
 ### Grid
 * Presents one row at a time, aligning it with the previous row depending on the overlap between the new and old word
