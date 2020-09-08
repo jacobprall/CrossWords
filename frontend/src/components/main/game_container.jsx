@@ -25,11 +25,12 @@ export default (props) => {
   const [state] = useStateValue();
   const dispatch = useDispatch();
   let guess = state['guess'];
+  let revealed = state['revealed'];
 
-  const updateGame = ({ gameId, timeRemaining, timeElapsed, guess }) => {
-    console.log('here');
+  const updateGame = ({ gameId, timeRemaining, timeElapsed, guess }, cheated=false) => {
+    console.log('here, cheated: ', cheated);
     return dispatch(
-      updateGameDetails({ gameId, timeRemaining, timeElapsed, guess }),
+      updateGameDetails({ gameId, timeRemaining, timeElapsed, guess }, cheated),
     );
   };
 
@@ -43,6 +44,17 @@ export default (props) => {
       });
     }
   }, [guess]);
+
+  useEffect(() => {
+    if (revealed) {
+      updateGame({
+        gameId: props.gameId,
+        timeRemaining: props.seconds,
+        timeElapsed: props.secondsElapsed,
+        guess: revealed,
+      }, true);
+    }
+  }, [revealed]);
 
   return (
     <MainContainer>

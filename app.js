@@ -7,6 +7,7 @@ const passport = require('passport');
 const db = require('./config/keys').mongoURI;
 const users = require('./routes/api/users');
 const games = require('./routes/api/games');
+const words = require('./routes/api/words');
 
 require('./config/passport')(passport);
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api/users', users);
 app.use('/api/games', games);
+app.use('/api/words', words);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/build'));
