@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import magnifying_glass from '../../images/magnifying_glass.png';
 import { getClueAnswer } from '../../util/word_util';
-import { useStateValue } from '../state/state'; 
+import { useStateValue } from '../custom_hooks/useState'; 
 import { useEffect } from 'react';
 
 const Container = styled.div`
