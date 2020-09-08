@@ -11,6 +11,8 @@ AcrossWords is a variation on the classic Cross Words game. Players are provided
 
 ## MongoDB Database
 <!-- use ### for subsections within the MongoDB Databse section -->
+<!--  -->
+[Click here for more info](https://github.com/jacobprall/CrossWords/blob/f36ec37313de785ceb7e6a9bc92948aef588bf17/routes/api/route_helpers/game/patch/getNextWord.js#L48)
 ## Gameplay 
 
 ### Grid
