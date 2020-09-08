@@ -1,44 +1,35 @@
-import React, { useState, useEffect } from 'react'; 
-import { useStateValue } from '../state/state'; 
+import React from 'react';
 import { GridItem } from './grid_item';
-import { WIDTH } from './grid_container';
+import styled from 'styled-components'; 
 
-export const GridRow = () => {
-    // const [gridItems, setGridItems] = useState([]);
-    // const [state, dispatch] = useStateValue(); 
+// const GridRowStyle = styled.div(props => {
+//   let leftWidth = `${props.colStart * 10}em`;
+//   let topHeight = `${props.topHeight * 10}em`;
+//   return ({
+//     display: 'flex',
+//     flexDirection: 'row',
+//     // marginLeft: leftWidth,
+//   })
+//   });
 
-    // const addGridItem = (gridItem) => {
-    //     setGridItems(
-    //         gridItems.concat(gridItem)
-    //     );
-    //     // setFocus(false); 
-    // }
+export default ({ clue, selected, rowPos, prevAnswer, wasCorrect }) => {
+    // clue = { _id: '', length: '', clue: '', colStart: '' }
+    // vvv this is all bad
 
-    return (
-        <div>
-            
-        </div>
-    )
+    let gridItems = [];
+    for(let i = 0; i < clue.length; i++) {
+      gridItems.push(
+      <GridItem
+        focus={Boolean(selected && i === 0)}
+        key={`grid-item-${clue.id}-${i}-${rowPos}`}
+        selected={selected}
+        id={`grid-item-${i}`}
+
+        rowPos={rowPos}
+        colPos={clue.colStart + i + 1}
+        color={wasCorrect ? 'green' : 'red'}
+        />);
+    }
+    return gridItems;
 }
 
-
-
-// newWordLength; 
-// newWordOverlap; 
-// prevEnd; 
-// prevStart 
-// newEnd
-// newStart
-
-// // some logic to determine the coordinates of the next word
-// //
-
-// for(let i = 0; i < wordHistory.length; i++) {
-//     for(let j = 0; j < WIDTH; j++) {
-//         if (i and j are within newBegin and newEnd) {
-//             add some thing to make sure that these inputs are highlighted
-//         } 
-
-//         just render the elements according to how they are stored in the state 
-//     }
-// }

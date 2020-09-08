@@ -3,20 +3,17 @@ import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
-import { StateProvider } from './state/state';
+import { StateProvider } from './custom_hooks/useState';
 import Navbar from './nav/navbar';
 import MainPage from './main/game_page';
 import SessionContainer from './session/session_container';
-import { StatsPage } from './stats/stats';
 import { mainReducer, initialState } from './react_reducers/main_reducer';
 import { Footer } from './footer/footer';
 import { useModal } from './custom_hooks/useModal';
-import useStick from './custom_hooks/useStick';
 import 'normalize.css';
 import SplashPage from './main/splash_page';
 
 const App = () => {
-  // const { stick, ele } = useStick();
   const { isShowing, toggle } = useModal();
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
   const history = useHistory();

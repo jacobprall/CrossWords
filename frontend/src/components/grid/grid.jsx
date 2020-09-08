@@ -1,6 +1,6 @@
 import React from 'react';
 import GridRow from './grid_row';
-import { useStateValue } from '../state/state'; 
+import { useStateValue } from '../custom_hooks/useState'; 
 import styled from 'styled-components';
 
 const GridCSS = styled.div`

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useStateValue } from '../state/state';
-import GridContainerCLASS from '../grid_CLASS/grid_container';
+import { useStateValue } from '../custom_hooks/useState';
+import GridContainerCLASS from '../grid/grid_container';
 import { TimeScoreClue } from '../time_score_clue/time_score_clue';
 import { updateGameDetails } from '../../actions/game_actions';
 import { useDispatch } from 'react-redux';

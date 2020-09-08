@@ -6,7 +6,7 @@ import {
   HeaderEle,
 } from '../time_score_clue/time_score_clue';
 import { Score } from '../time_score_clue/score';
-import { useStateValue } from '../state/state';
+import { useStateValue } from '../custom_hooks/useState';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 const EndGameModalContainer = styled.div`
