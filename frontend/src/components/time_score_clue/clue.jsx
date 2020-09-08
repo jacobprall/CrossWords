@@ -28,12 +28,12 @@ const YourClue = styled.h4`
 export const Clue = ({ clue }) => {
   const [ , dispatch] = useStateValue();
 
-  useEffect(() => {
-    dispatch({
-      type: 'addRevealed',
-      answer: null,
-    })
-  }, [clue]);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: 'addRevealed',
+  //     answer: null,
+  //   })
+  // }, [clue]);
 
   const handleReveal = async () => {
     let revealed = null;
@@ -59,6 +59,7 @@ export const Clue = ({ clue }) => {
         <MagnifyingGlass src={magnifying_glass} />
         <YourClue>{`${clue.clue} (${clue.length} letters)`}</YourClue>
       </Header>
+      {/* {clue._id ? null : <button onClick={handleReveal}>Reveal</button>} */}
       <button onClick={handleReveal}>Reveal</button>
     </Container>
   );
