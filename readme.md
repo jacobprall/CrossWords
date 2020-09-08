@@ -28,9 +28,9 @@ We decided to add a couple fields to each document in the database (`prefixes` &
 ## Gameplay
 
 ### Grid
-*Presents one row at a time, aligning it with the previous row depending on the overlap between the new and old word
-*Allows players to easily navigate through the input boxes using arrow keys
-*Answers are colored in red and green to indicate correctness 
+* Presents one row at a time, aligning it with the previous row depending on the overlap between the new and old word
+* Allows players to easily navigate through the input boxes using arrow keys
+* Answers are colored in red and green to indicate correctness 
 
 
 The length of the correct answer is given to the player by a series of blank `input` tags. No matter what answer is given, the following word will line up to either the front or end of the previous word guessed. To improve the dynamism of gameplay, we used a CSS grid to align the words in columns and rows. The starting column is calculated on the back end based on the previous answer, and is sent with the response, and then lined up on the board. CSS Grid proved easy to use and allowed things to flow well.
@@ -48,8 +48,8 @@ The length of the correct answer is given to the player by a series of blank `in
 ![game_play_gif](frontend/images/game_play_gif.gif)
 
 ### Backend
-*The Backend handles the majority of the game logic, including testing for correct answers and manipulating score and time remaining. 
-*The Backend also handles all database queries, with the following code used to search for a clue with the proper overlap.
+* The Backend handles the majority of the game logic, including testing for correct answers and manipulating score and time remaining. 
+* The Backend also handles all database queries, with the following code used to search for a clue with the proper overlap.
 ```javascript
 /**
  * Get the overlap between two words and a vector from the beginning
@@ -88,7 +88,7 @@ const getOverlap = (a, b, oneTimeOnly = false) => {
 
 ```
 
-*The addition of time is handled by a cubic algorithm that offers players diminishing time increases as the game continues.
+* The addition of time is handled by a cubic algorithm that offers players diminishing time increases as the game continues.
 ```javascript
 const MAX_TIME = 60;
 const GAME_DURATION = 60;
