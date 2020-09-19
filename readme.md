@@ -1,6 +1,6 @@
 # AcrossWords
 
-AcrossWords is a variation on the classic Crosswords game. Players are provided with a clue and a limited amount of time to fill out as many words as they can.
+[AcrossWords](https://acrosswords.herokuapp.com/) is a variation on the classic Crosswords game. Players are provided with a clue and a limited amount of time to fill out as many words as they can.
 
 
 [Live Game Here](https://acrosswords.herokuapp.com/)
