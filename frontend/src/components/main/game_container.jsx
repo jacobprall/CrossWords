@@ -19,6 +19,8 @@ const MainContainer = styled.div`
   overflow-x: scroll;
   overflow-y: scroll;
   background-image: url(${background});
+  background-size: 40% 40%;
+  background-repeat: repeat;
 `;
 
 export default (props) => {
