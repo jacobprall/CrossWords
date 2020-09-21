@@ -18,6 +18,18 @@ import {
   FooterItem,
 } from './splash_page_styled_components';
 
+import GridRow from '../grid/grid_row';
+import styled from 'styled-components';
+
+const GridContainerSplash = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  margin: auto;
+  margin-top: -5%;
+  margin-left: 30%;
+`
+
 export default function SplashPage() {
   return (
     <Container>
@@ -35,7 +47,45 @@ export default function SplashPage() {
           <HeaderLetter2>D</HeaderLetter2>
           <HeaderLetter1>S</HeaderLetter1>
         </HeaderMessage>
-        <TagLine>A dynamic word game</TagLine>
+        {/* <TagLine>A dynamic word game</TagLine> */}
+        <GridContainerSplash>
+        <GridRow
+          clue={{ colStart: 6, length: 1, id: 0, splash: true }}
+          selected={false}
+          rowPos={1}
+          prevAnswer={null}
+          thisAnswer={'A'}
+          wasCorrect={true}
+          wasRevealed={true}
+        />
+        <GridRow
+          clue={{ colStart: 3, length: 7, id: 1, splash: true }}
+          selected={false}
+          rowPos={2}
+          prevAnswer={null}
+          thisAnswer={'DYNAMIC'}
+          wasCorrect={true}
+          wasRevealed={true}
+        />
+        <GridRow
+          clue={{ colStart: 0, length: 4, id: 2, splash: true }}
+          selected={false}
+          rowPos={3}
+          prevAnswer={null}
+          thisAnswer={'WORD'}
+          wasCorrect={true}
+          wasRevealed={true}
+        />
+        <GridRow
+          clue={{ colStart: 3, length: 4, id: 3, splash: true }}
+          selected={false}
+          rowPos={4}
+          prevAnswer={null}
+          thisAnswer={'DUEL'}
+          wasCorrect={true}
+          wasRevealed={true}
+        />
+        </GridContainerSplash>
       </MainContainer>
       <Footer>
         <FooterItem>
