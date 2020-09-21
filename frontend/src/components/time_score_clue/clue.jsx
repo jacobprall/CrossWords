@@ -35,17 +35,18 @@ const RevealButton = styled.button`
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   background-color: transparent;
-  color: #101010;
+  color: rgba(52, 98, 209, 0.7);
   outline: none;
-  font-weight: 300;
+  font-weight: 500;
   border-radius: 0.2rem;
-  border: 1px solid #f1f3f8;
+  border: 2px solid rgba(52, 98, 209, 0.7);
   align-items: center;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     &:hover {
       cursor: pointer;
-      border: 1px solid #536878;
-      color: #536878;
+      border: 2px solid #3462D1;
+      background-color: rgba(52, 98, 209, 0.2);
+      color: #3462D1;
 `;
 
 export const Clue = ({ clue }) => {
