@@ -118,4 +118,11 @@ export const LinkedIn = styled.img`
   margin: auto;
 `;
 
-// url
+export const GridContainerSplash = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  margin: auto;
+  margin-top: -3%;
+  margin-left: 30%;
+`;
