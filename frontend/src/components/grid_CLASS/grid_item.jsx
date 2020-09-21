@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRef } from 'react';
-// import { use } from 'passport';
 
 const Input = styled.input`
   width: 2.3rem; 
@@ -34,14 +33,8 @@ const GridInput = styled(Input)(({colPos, rowPos, color}) => ({
 }));
 
 
-export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placeholder, answer, wasRevealed }) => {
+export const GridItem = ({ selected, id, rowPos, colPos, focus, color, answer, wasRevealed }) => {
   const [char, setChar] = useState("");
-
-  // const update = () => {
-  //   return e => {
-  //     let input = e.target.value;
-  //     let lastChar = input[input.length - 1];
-  //     let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
 
@@ -60,7 +53,6 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placehold
 
   const clickHandler = () => {
     return e => {
-      // e.currentTarget.value = '';
       e.currentTarget.focus();
     }
   }
@@ -73,7 +65,6 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placehold
           if (prevInput) {
             setChar('');
             prevInput.focus();
-            // prevInput.focus();
           }
         } else if (e.key === 'ArrowLeft') {
           let prevInput = e.currentTarget.previousSibling;
@@ -102,7 +93,6 @@ export const GridItem = ({ selected, id, rowPos, colPos, focus, color, placehold
       id={id}
       color={selected ? 'black' : color}
       disabled={!selected}
-      placeholder={placeholder}
     />
   )
 }

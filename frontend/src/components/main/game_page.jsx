@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'; 
 import { GridContainer } from '../grid/grid_container'; 
-import GridContainerCLASS from '../grid_CLASS/grid_container'; 
+import GridContainerCLASS from '../grid/grid_container'; 
 import { TimeScoreClue } from '../time_score_clue/time_score_clue';
 import { useFetchRedux } from '../custom_hooks/useFetchRedux'; 
 import { fetchNewGame, updateGameDetails } from '../../actions/game_actions';

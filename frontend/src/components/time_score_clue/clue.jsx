@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import magnifying_glass from '../../images/magnifying_glass.png';
 import { getClueAnswer } from '../../util/word_util';
-import { useStateValue } from '../state/state'; 
+import { useStateValue } from '../custom_hooks/useState'; 
 import { useEffect } from 'react';
 
 const Container = styled.div`
@@ -37,20 +37,19 @@ const RevealButton = styled.button`
   background-color: transparent;
   color: #101010;
   outline: none;
-  border: 1px solid #4e89ae;
   font-weight: 300;
   border-radius: 0.2rem;
+  border: 1px solid #f1f3f8;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid #536878;
+      color: #536878;
 `;
 
 export const Clue = ({ clue }) => {
   const [ , dispatch] = useStateValue();
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: 'addRevealed',
-  //     answer: null,
-  //   })
-  // }, [clue]);
 
   const handleReveal = async () => {
     let revealed = null;
@@ -77,7 +76,6 @@ export const Clue = ({ clue }) => {
         <YourClue>{`${clue.clue} (${clue.length} letters)`}</YourClue>
       </Header>
       <RevealButton onClick={handleReveal}>Reveal</RevealButton>
-      {/* {clue._id ? null : <button onClick={handleReveal}>Reveal</button>} */}
     </Container>
   );
 };
