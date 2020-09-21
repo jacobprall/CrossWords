@@ -26,7 +26,7 @@ const GridContainerSplash = styled.div`
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(1, 1fr);
   margin: auto;
-  margin-top: -5%;
+  margin-top: -3%;
   margin-left: 30%;
 `
 
@@ -47,7 +47,6 @@ export default function SplashPage() {
           <HeaderLetter2>D</HeaderLetter2>
           <HeaderLetter1>S</HeaderLetter1>
         </HeaderMessage>
-        {/* <TagLine>A dynamic word game</TagLine> */}
         <GridContainerSplash>
         <GridRow
           clue={{ colStart: 6, length: 1, id: 0, splash: true }}
