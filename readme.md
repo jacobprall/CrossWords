@@ -2,6 +2,14 @@
 
 [AcrossWords](https://acrosswords.herokuapp.com/) is a variation on the classic Crosswords game. Players are provided with a clue and a limited amount of time to fill out as many words as they can.
 
+### Technologies
+
+- MongoDB
+- Express.js
+- React.js, Redux.js, React & React-Redux Hooks
+- Node.js
+- Styled Components
+- Passport and JWT
 
 
 ## Some Key Features
@@ -127,11 +135,3 @@ const handleTime = (isCorrect, game) => {
 };
 ```
 
-### Technologies
-
-- MongoDB
-- Express.js
-- React.js, Redux.js, React & React-Redux Hooks
-- Node.js
-- Styled Components
-- Passport and JWT
