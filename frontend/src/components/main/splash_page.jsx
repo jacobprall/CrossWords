@@ -111,6 +111,13 @@ export default function SplashPage() {
           <span>Tim Harding</span>
           <SocialIconContainer>
             <a
+              href="https://github.com/timharding31"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faGithub} color="#EEE" />
+            </a>
+            <a
               href="https://www.linkedin.com/in/timharding31/"
               target="_blank"
               rel="noopener noreferrer"
