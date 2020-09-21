@@ -13,10 +13,12 @@ export default ({
   wasRevealed,
 }) => {
   let color;
-  if (wasRevealed) {
-    color = 'yellow';
+  if (clue.splash) {
+    color = 'black'
+  } else if (wasRevealed) {
+    color = '#3462D1';
   } else {
-    color = wasCorrect ? 'green' : 'red';
+    color = wasCorrect ? '#628D53' : '#D5443D';
   }
   let gridItems = [];
   for (let i = 0; i < clue.length; i++) {
