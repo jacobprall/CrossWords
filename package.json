@@ -30,6 +30,7 @@
     "mongoose-seed": "^0.6.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "polished": "^3.6.7",
     "redux-devtools-extension": "^2.13.8",
     "validator": "^13.1.1"
   },

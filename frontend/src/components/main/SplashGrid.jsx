@@ -12,8 +12,9 @@ const clues = [
 const SplashGrid = () => {
   return (
     <GridContainerSplash>
-      {clues.map((clue, idx) => {
+      {clues.map((clue, idx) => (
         <GridRow
+          key={clue.id}
           clue={{ ...clue }}
           selected={false}
           rowPos={idx + 1}
@@ -21,8 +22,8 @@ const SplashGrid = () => {
           thisAnswer={clue.thisAnswer}
           wasCorrect={true}
           wasRevealed={true}
-        />;
-      })}
+        />
+      ))}
     </GridContainerSplash>
   );
 };

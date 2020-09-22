@@ -1,29 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  HeaderMessage,
-  HeaderLetter1,
-  HeaderLetter2,
-  HeaderLetter3,
-  HeaderLetter4,
-  HeaderLetter5,
-  HeaderLetter6,
-} from './splash_page_styled_components';
+import { HeaderMessage, HeaderLetter } from './splash_page_styled_components';
 
-const Header = (props) => {
+const title = 'ACROSSWORDS';
+const maxContrastingGray = '#111';
+const minContrastingGray = '#7f7f7f';
+const minFontSize = 48;
+const maxFontSize = 128;
+const fontSizeStep = (maxFontSize - minFontSize) / Math.floor(title.length / 2);
+
+const Header = () => {
   return (
-    <HeaderMessage>
-      <HeaderLetter1>A</HeaderLetter1>
-      <HeaderLetter2>C</HeaderLetter2>
-      <HeaderLetter3>R</HeaderLetter3>
-      <HeaderLetter4>O</HeaderLetter4>
-      <HeaderLetter5>S</HeaderLetter5>
-      <HeaderLetter6>S</HeaderLetter6>
-      <HeaderLetter5>W</HeaderLetter5>
-      <HeaderLetter4>O</HeaderLetter4>
-      <HeaderLetter3>R</HeaderLetter3>
-      <HeaderLetter2>D</HeaderLetter2>
-      <HeaderLetter1>S</HeaderLetter1>
+    <HeaderMessage
+      maxContrastingGray={maxContrastingGray}
+      minContrastingGray={minContrastingGray}
+    >
+      {title.split('').map((letter, idx) => {
+        const relativePosition = Math.abs(Math.floor(title.length / 2) - idx);
+        const fontSize = Math.floor(
+          minFontSize + relativePosition * fontSizeStep,
+        );
+        return (
+          <HeaderLetter
+            key={`${letter}-${relativePosition}-${idx}`}
+            fontSize={fontSize}
+          >
+            {letter}
+          </HeaderLetter>
+        );
+      })}
     </HeaderMessage>
   );
 };
