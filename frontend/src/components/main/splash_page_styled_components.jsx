@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { lighten, modularScale, linearGradient } from 'polished';
 // import {
 //   Container,
 //   MainContainer,
@@ -31,47 +32,29 @@ export const MainContainer = styled.div`
   flex-direction: column;
 `;
 
-export const HeaderMessage = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+export const HeaderMessage = styled.div((props) => {
+  const minColor = props.minContrastingGray;
+  const maxColor = props.maxContrastingGray;
+  const gradient = linearGradient({
+    colorStops: [`${maxColor} 0%`, `${minColor} 50%`, `${maxColor} 100%`],
+    toDirection: 'to right',
+    fallback: maxColor,
+  });
+  console.log(gradient);
+  return {
+    display: 'flex',
+    justifyContent: 'space-between',
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    ...gradient,
+    WebkitTextFillColor: 'transparent',
+  };
+});
 
-export const HeaderLetter1 = styled.span`
-  font-size: 128px;
-  margin: 30px;
-`;
-export const HeaderLetter2 = styled.span`
-  font-size: 100px;
-  color: #383838;
-  margin: 30px;
-`;
-export const HeaderLetter3 = styled.span`
-  font-size: 90px;
-  margin: 30px;
-  color: #585858;
-`;
-export const HeaderLetter4 = styled.span`
-  font-size: 72px;
-  margin: 30px;
-  color: #808080;
-`;
-export const HeaderLetter5 = styled.span`
-  font-size: 64px;
-  margin: 30px;
-  color: #a8a8a8;
-`;
-
-export const HeaderLetter6 = styled.span`
-  font-size: 58px;
-  margin: 30px;
-  color: #b8b8b8;
-`;
-
-export const TagLine = styled.h3`
-  font-size: 24px;
-  margin: auto;
-  font-weight: 200;
-`;
+export const HeaderLetter = styled.span(({ fontSize }) => ({
+  fontSize: `${fontSize}px`,
+  margin: 30,
+}));
 
 export const Footer = styled.footer`
   background: #536878;
@@ -118,4 +101,9 @@ export const LinkedIn = styled.img`
   margin: auto;
 `;
 
-// url
+export const GridContainerSplash = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  margin: auto;
+`;
